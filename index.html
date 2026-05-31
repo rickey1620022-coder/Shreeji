@@ -9,7 +9,28 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
-  v84  —  2026-05-31  (00:34 IST)
+  v85  —  2026-05-31  (18:09 IST)
+  ------------------------------------------------------------------
+    MONEY FLOW fixes:
+    1. ENTRY-MISS  The Received/Expense lists rendered ONLY the current
+            15→14 cycle, and that block was collapsed by default — so
+            entries (especially ones dated before the 15th, which map to
+            the previous cycle) vanished from view even though the grand
+            total still counted them. Now the list shows ALL months
+            (newest first), the current month auto-expands, and the
+            "Entries" counter reflects every entry. No data was ever lost.
+    2. CROSS-DEVICE  Money-flow entries were pushed to the cloud only once,
+            at add-time; a single failed POST meant the entry never reached
+            the other device. The 5-min sync cron now RETRIES every unsynced
+            money-flow entry (MF_ADD) until it lands, and after a pull it
+            now RE-RENDERS the Money Flow screen. Opening Money Flow also
+            forces an immediate sync. (Requires the Google Apps Script
+            backend to support MF_ADD / money-flow rows.)
+    3. PWA CACHE  Service-worker cache bumped v83 → v85. The old name never
+            changed, so phones/laptops kept serving the stale cached app and
+            never saw updates. Bumping forces a fresh fetch on next load.
+
+
   ------------------------------------------------------------------
     1. FIX  Order/PI "Qty (pcs)" field appeared to reset to zero on
             mobile. Added id="qty-inp-${i}" to the qty input so
@@ -56,7 +77,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v84 PWA</title>
+<title>Shreeji Industries — Full System v85 PWA</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#eef1f6;--white:#fff;--border:#cdd5e0;--primary:#1a3a6b;--text:#1a1f2e;--muted:#5a6480;--input-bg:#f5f8ff;--radius:10px;--shadow:0 2px 12px rgba(26,58,107,.10);}
@@ -853,6 +874,27 @@ async function v42PushUnsynced(){
       }catch(e){ failed++; }
     }
   }
+  // v85 FIX (money-flow cross-device): money flow entries used to be pushed only
+  // once, at add-time. If that single POST failed (offline/race), the entry was
+  // never retried and never reached the other device. Now the cron retries every
+  // unsynced money-flow entry via MF_ADD, then marks it synced — same pattern as
+  // orders above.
+  try{
+    const MF=[['mf_recv_entries','recv'],['mf_exp_entries','exp']];
+    for(const [lsKey,type] of MF){
+      const arr = JSON.parse(localStorage.getItem(lsKey)||'[]');
+      let changed=false;
+      for(const rec of arr){
+        if(rec && (rec.synced===false||rec.synced===undefined)){
+          try{
+            await v42Post({action:'MF_ADD', type, entry:rec});
+            rec.synced=true; changed=true; pushed++;
+          }catch(e){ failed++; }
+        }
+      }
+      if(changed) localStorage.setItem(lsKey, JSON.stringify(arr));
+    }
+  }catch(e){}
   return {pushed, failed};
 }
 
@@ -895,6 +937,10 @@ async function v42PullMerge(){
   // Trigger UI refresh if available
   if(typeof render==='function') try{render();}catch(e){}
   if(typeof refreshPrev==='function') try{refreshPrev();}catch(e){}
+  // v85 FIX (money-flow cross-device): the pull merged money-flow data into
+  // localStorage but never re-rendered the Money Flow screen, so entries added
+  // on another device stayed invisible until a manual Refresh. Re-render now.
+  if(typeof mfRenderRecv==='function') try{ mfRenderRecv(); mfRenderExp(); }catch(e){}
   return merged;
 }
 
@@ -6637,13 +6683,15 @@ function mfRenderRecv(){
 
   document.getElementById('mf-recv-grand').textContent     = mfFmt(grand);
   document.getElementById('mf-recv-thismonth').textContent = mfFmt(thisMo);
-  // BUG FIX: show current month count, not all-time count
-  document.getElementById('mf-recv-count').textContent     = entries.filter(e=>mfGetMonthKey(e.date)===curMK).length;
+  // v85: count all entries (the list now shows every month)
+  document.getElementById('mf-recv-count').textContent     = entries.length;
 
   const container = document.getElementById('mfr-months');
-  // BUG FIX: only show current month entries, not all months
-  const curEntries = entries.filter(e=>mfGetMonthKey(e.date)===curMK);
-  const groups = mfGroupByMonth(curEntries);
+  // v85 FIX (entry-miss): show ALL months so no entry is ever hidden.
+  // Entries dated before the 15th map to the previous 15→14 cycle, which
+  // used to make them vanish from a current-month-only list even though the
+  // grand total still counted them. Current month is auto-expanded below.
+  const groups = mfGroupByMonth(entries);
   if(!groups.length){
     container.innerHTML='<div class="mf-empty"><div class="big">💚</div>No payments received yet.<br>Add your first entry above.</div>';
     return;
@@ -6661,10 +6709,10 @@ function mfRenderRecv(){
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="mf-month-total">${mfFmt(tot)}</span>
-            <span class="mf-month-arrow">▼</span>
+            <span class="mf-month-arrow"${isCur?' style="transform:rotate(180deg)"':''}>▼</span>
           </div>
         </div>
-        <div class="mf-month-body">
+        <div class="mf-month-body${isCur?' open':''}">
           ${body}
           <div class="mf-month-footer">
             <span class="mf-month-footer-lbl">Total Received — ${g.month}</span>
@@ -6684,13 +6732,12 @@ function mfRenderExp(){
 
   document.getElementById('mf-exp-grand').textContent     = mfFmt(grand);
   document.getElementById('mf-exp-thismonth').textContent = mfFmt(thisMo);
-  // BUG FIX: show current month count, not all-time count
-  document.getElementById('mf-exp-count').textContent     = entries.filter(e=>mfGetMonthKey(e.date)===curMK).length;
+  // v85: count all entries (the list now shows every month)
+  document.getElementById('mf-exp-count').textContent     = entries.length;
 
   const container = document.getElementById('mfe-months');
-  // BUG FIX: only show current month entries, not all months
-  const curEntries = entries.filter(e=>mfGetMonthKey(e.date)===curMK);
-  const groups    = mfGroupByMonth(curEntries);
+  // v85 FIX (entry-miss): show ALL months so no entry is ever hidden.
+  const groups    = mfGroupByMonth(entries);
   if(!groups.length){
     container.innerHTML='<div class="mf-empty"><div class="big">🔶</div>No expenses added yet.<br>Add your first expense above.</div>';
     return;
@@ -6708,10 +6755,10 @@ function mfRenderExp(){
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="mf-month-total exp-total">${mfFmt(tot)}</span>
-            <span class="mf-month-arrow">▼</span>
+            <span class="mf-month-arrow"${isCur?' style="transform:rotate(180deg)"':''}>▼</span>
           </div>
         </div>
-        <div class="mf-month-body">
+        <div class="mf-month-body${isCur?' open':''}">
           ${body}
           <div class="mf-month-footer">
             <span class="mf-month-footer-lbl">Total Expense — ${g.month}</span>
@@ -6759,7 +6806,12 @@ function mfInit(){
   mfRenderRecv();
   mfRenderExp();
   mfSyncStatus();
-  // MF pull handled by v42CronTick — no separate mfPullSheets on init (prevents triple sync)
+  // v85 FIX (money-flow cross-device): force one sync when the screen opens so
+  // entries added on another device appear right away (the busy-lock inside
+  // v42CronTick prevents any overlap with the 5-min background sync).
+  if(navigator.onLine && typeof v42CronTick==='function'){
+    setTimeout(function(){ try{ v42CronTick(); }catch(e){} }, 300);
+  }
 }
 </script>
 
@@ -6769,7 +6821,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v83';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v85';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
