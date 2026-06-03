@@ -9,9 +9,33 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
-  v85  —  2026-05-31  (18:09 IST)
+  v87  —  2026-06-03   |   S/N: SHJ-87-030626
   ------------------------------------------------------------------
-    MONEY FLOW fixes:
+    1. ADD  AUTO-UPDATE for the desktop (.exe) app. On launch (and from
+            File → Check for Updates…) the app fetches the GitHub source
+            file, reads its build marker (version | serial | date) and,
+            if it is newer than what is running, downloads it and offers
+            to restart & apply. The exe never needs rebuilding just for
+            content updates. Build marker added to this file:
+              <meta name="shj-build" content="vNN|SHJ-NN-DDMMYY|YYYY-MM-DD">
+            Source URL is read from:
+              <meta name="shj-update-source" content="…raw GitHub url…">
+            (Bump BOTH the marker and the PIN-screen serial each release.)
+
+
+  ------------------------------------------------------------------
+    1. FIX  Customer DB (Cust DB tab): adding a customer and "Pull from
+            Sheet" failed with "(s || '').replace is not a function".
+            Cause: Google Sheets returns mobile / GST as NUMBERS, and the
+            cdbEsc() escaper assumed a string, which crashed the whole
+            table render. cdbEsc now coerces any value to a string, and
+            the pull now stores every field as a string. Add + pull work.
+    2. EDIT Quotation logo WATERMARK made smaller (was 60%/460px, now
+            40%/320px wide) so it sits lighter behind the text.
+    3. ADD  PIN unlock screen now shows the version, the update date and
+            a serial number (v86 · Updated 3 June 2026 · S/N SHJ-86-030626).
+
+
     1. ENTRY-MISS  The Received/Expense lists rendered ONLY the current
             15→14 cycle, and that block was collapsed by default — so
             entries (especially ones dated before the 15th, which map to
@@ -77,7 +101,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v85 PWA</title>
+<title>Shreeji Industries — Full System v87 PWA</title>
+<meta name="shj-build" content="v87|SHJ-87-030626|2026-06-03">
+<meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#eef1f6;--white:#fff;--border:#cdd5e0;--primary:#1a3a6b;--text:#1a1f2e;--muted:#5a6480;--input-bg:#f5f8ff;--radius:10px;--shadow:0 2px 12px rgba(26,58,107,.10);}
@@ -147,7 +173,7 @@ input[type=number]{-moz-appearance:textfield;}
 #page-invoice{padding:0;background:#cdd2da;}
 .inv-wrap{padding:10px 10px 110px;overflow:hidden;}
 .inv-doc{background:white;border:1px solid #aaa;font-family:'Source Sans 3',sans-serif;font-size:11.5px;box-shadow:0 3px 20px rgba(0,0,0,.18);color:#111;width:780px;position:relative;}
-.inv-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;max-width:460px;opacity:0.07;pointer-events:none;z-index:0;}
+.inv-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40%;max-width:320px;opacity:0.07;pointer-events:none;z-index:0;}
 .inv-doc > *:not(.inv-watermark){position:relative;z-index:1;}
 .inv-co-header{display:flex;align-items:flex-start;padding:12px 16px 10px;gap:12px;border-bottom:2px solid #222;}
 .inv-co-info .co-name{font-family:'Libre Baskerville',serif;font-size:1.3rem;font-weight:700;color:#111;line-height:1.1;}
@@ -1074,7 +1100,10 @@ body { padding-bottom: env(safe-area-inset-bottom); }
     <button class="pn" onclick="pinKey('del')" style="font-size:1.3rem;color:rgba(255,255,255,.5);">⌫</button>
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
-  <div style="margin-top:32px;font-size:.6rem;color:rgba(255,255,255,.18);letter-spacing:1px;">SHREEJI v72 · PROTECTED</div>
+  <div style="margin-top:32px;text-align:center;line-height:1.7;">
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v87 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 3 June 2026 &nbsp;·&nbsp; S/N: SHJ-87-030626</div>
+  </div>
 </div>
 <style>
 .pn{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);color:#fff;font-family:'Roboto Mono',monospace;font-size:1.4rem;font-weight:700;cursor:pointer;transition:all .12s;outline:none;}
@@ -5397,7 +5426,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //  Company, Mobile, GST — reads/writes same shj_customer_db store
 // ═══════════════════════════════════════════════════════════════
 
-function cdbEsc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function cdbEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function cdbRender(){
   const q   = (document.getElementById('cdb-search')?.value||'').trim().toLowerCase();
@@ -5514,22 +5543,25 @@ async function cdbPullAll(){
     // Merge: sheet wins for matching codes, keep local-only records
     const localCusts = custDbLoad();
     const remoteMap = {};
+    // v85: Google Sheets returns mobile/GST as NUMBERS, which crashed the render
+    // ((s||'').replace is not a function). Coerce every field to a string.
+    const S = v => (v==null?'':String(v));
     remote.forEach(rc=>{
-      const key = (rc.code||'').toUpperCase();
+      const key = S(rc.code).toUpperCase();
       if(key) remoteMap[key] = {
-        code: rc.code||'',
-        name: rc.name||'',
-        contact: rc.contact||'',
-        mobile: rc.mobile||rc.phone||'',
-        phone: rc.mobile||rc.phone||'',
-        email: rc.email||'',
-        gst: rc.gst||'',
-        updatedOn: rc.updatedOn||''
+        code: S(rc.code),
+        name: S(rc.name),
+        contact: S(rc.contact),
+        mobile: S(rc.mobile||rc.phone),
+        phone: S(rc.mobile||rc.phone),
+        email: S(rc.email),
+        gst: S(rc.gst),
+        updatedOn: S(rc.updatedOn)
       };
     });
     // Keep local records not in sheet
     localCusts.forEach(lc=>{
-      const key = (lc.code||'').toUpperCase();
+      const key = S(lc.code).toUpperCase();
       if(key && !remoteMap[key]) remoteMap[key] = lc;
     });
     const merged = Object.values(remoteMap);
@@ -6821,7 +6853,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v85';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v87';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
