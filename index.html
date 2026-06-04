@@ -9,6 +9,17 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
+  v93  —  2026-06-04   |   S/N: SHJ-93-040626
+  ------------------------------------------------------------------
+    1. CHANGE  Product NAME format. Now written as plain lowercase words
+               with the code on the end, e.g.
+                 45mm 18line 4mos white tapping c450
+               (was "45mm · 18line · 4MOSFET · Neutral White · Tapping").
+               "mos" short for mosfet, finish shortened to its last word
+               (Neutral White → white, Black → black). Pushing rebuilds
+               the name so existing rows update to the new format too.
+
+  ------------------------------------------------------------------
   v92  —  2026-06-04   |   S/N: SHJ-92-040626
   ------------------------------------------------------------------
     1. ADD  PRODUCT DB is now pre-linked to its Products Google Sheet
@@ -154,8 +165,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v92 PWA</title>
-<meta name="shj-build" content="v92|SHJ-92-040626|2026-06-04">
+<title>Shreeji Industries — Full System v93 PWA</title>
+<meta name="shj-build" content="v93|SHJ-93-040626|2026-06-04">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1154,8 +1165,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v92 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 4 June 2026 &nbsp;·&nbsp; S/N: SHJ-92-040626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v93 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 4 June 2026 &nbsp;·&nbsp; S/N: SHJ-93-040626</div>
   </div>
 </div>
 <style>
@@ -5801,13 +5812,17 @@ function pdbEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/<
 
 // Build a readable name from the boxes, e.g. "45mm · 18line · 3MOSFET · Neutral White · Tapping"
 function pdbName(p){
+  // e.g. "45mm 18line 4mos white tapping c450"
+  // finish short = last word ("Neutral White"->"white", "Black"->"black")
+  const finishShort = String(p.finish==null?'':p.finish).trim().split(/\s+/).pop();
   return [
     p.size,
     p.section,
-    (p.mosfet!=='' && p.mosfet!=null) ? (p.mosfet+'MOSFET') : '',
-    p.finish,
-    p.process
-  ].map(x=>String(x==null?'':x).trim()).filter(Boolean).join(' · ');
+    (p.mosfet!=='' && p.mosfet!=null) ? (p.mosfet+'mos') : '',
+    finishShort,
+    p.process,
+    p.code
+  ].map(x=>String(x==null?'':x).trim()).filter(Boolean).join(' ').toLowerCase();
 }
 
 function pdbRender(){
@@ -5878,7 +5893,7 @@ function pdbSave(){
     process: process,
     price: price,
     hsn: hsn,
-    name: pdbName({size,section,mosfet,finish,process}),
+    name: pdbName({size,section,mosfet,finish,process,code}),
     updatedOn: new Date().toISOString().slice(0,10)
   };
 
@@ -5972,7 +5987,7 @@ async function pdbPushAll(){
       await pdbPost({ action:'SAVE_PRODUCT', code:p.code, size:p.size||'',
         section:p.section||'', mosfet:p.mosfet||'', finish:p.finish||'',
         process:p.process||'', price:p.price||'', hsn:p.hsn||'',
-        name:p.name||pdbName(p), updatedOn:p.updatedOn||'' });
+        name:pdbName(p), updatedOn:p.updatedOn||'' });
       ok++;
     }catch(e){}
   }
@@ -7244,7 +7259,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v92';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v93';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
