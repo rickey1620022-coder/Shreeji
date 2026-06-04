@@ -9,7 +9,50 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
-  v88  —  2026-06-03   |   S/N: SHJ-88-030626
+  v92  —  2026-06-04   |   S/N: SHJ-92-040626
+  ------------------------------------------------------------------
+    1. ADD  PRODUCT DB is now pre-linked to its Products Google Sheet
+            web-app URL out of the box (no need to paste it on each
+            device). Added a "🔌 Test" button and an automatic
+            connection check when the tab opens — it shows on screen
+            "✓ Connected — N product(s) in sheet" or a clear error so
+            you can see at a glance whether the sheet is reachable.
+
+  ------------------------------------------------------------------
+  v91  —  2026-06-04   |   S/N: SHJ-91-040626
+  ------------------------------------------------------------------
+    1. CHANGE  PRODUCT DB now uses its OWN separate Google Sheet +
+               web-app URL (not the main Orders/Stock script). A
+               "Product Sheet Link" box was added at the top of the
+               Product DB tab — paste the Products web-app URL and tap
+               "Link Sheet"; Push / Pull / auto-save then go to that
+               sheet only. Server side = the standalone Products-Code.gs
+               (same dedup-by-code / ScriptLock no-duplicate method).
+
+  ------------------------------------------------------------------
+  v90  —  2026-06-04   |   S/N: SHJ-90-040626
+  ------------------------------------------------------------------
+    1. NEW  PRODUCT DB tab (in Invoice & Quotes). Add a product with a
+            code + 6 boxes: Size (mm/inch), Section, No. of MOSFET holes,
+            Finish (Neutral White / Black), Tapping or Drill, and a
+            manual Code (the unique key). Plus optional Price (kept for
+            later use) and optional HSN. Example:
+              45mm · 18line · 3MOSFET · Neutral White · Tapping · C450
+            Stored in its own local store (shj_product_db) and synced to
+            a separate PRODUCTS sheet. Uses the SAME no-duplicate /
+            no-data-miss method as Customers: dedup by code (re-saving a
+            code updates it in place), and all fields are read as text so
+            numbers from the sheet can never crash the table.
+
+
+  ------------------------------------------------------------------
+    1. FIX  Desktop window would not close on the X button (had to be
+            killed from Task Manager). A page 'beforeunload' handler was
+            cancelling the close in Electron. It is now skipped in the
+            desktop app (data is auto-saved anyway), and main.js also
+            allows the close via the 'will-prevent-unload' event.
+
+
   ------------------------------------------------------------------
     1. FIX  Order/PI Qty parsing. Verified (via a full DOM simulation)
             that qty no longer auto-zeros when editing — it survives
@@ -111,8 +154,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v88 PWA</title>
-<meta name="shj-build" content="v88|SHJ-88-030626|2026-06-03">
+<title>Shreeji Industries — Full System v92 PWA</title>
+<meta name="shj-build" content="v92|SHJ-92-040626|2026-06-04">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1111,8 +1154,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v88 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 3 June 2026 &nbsp;·&nbsp; S/N: SHJ-88-030626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v92 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 4 June 2026 &nbsp;·&nbsp; S/N: SHJ-92-040626</div>
   </div>
 </div>
 <style>
@@ -1209,6 +1252,7 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   <div class="inv-tab" onclick="go('quote')">🗂 Quotes</div>
   <div class="inv-tab" onclick="go('nmquote')">🛒 Trade Quote</div>
   <div class="inv-tab" onclick="go('custdb')">🗃 Cust DB</div>
+  <div class="inv-tab" onclick="go('proddb')">📦 Product DB</div>
 </div>
 
 <div class="page active" id="page-form">
@@ -1526,6 +1570,80 @@ body { padding-bottom: env(safe-area-inset-bottom); }
         </thead>
         <tbody id="cdb-tbody">
           <tr><td colspan="6" style="text-align:center;padding:22px;color:#aaa;">No customers saved yet. Add one above ↑</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="page" id="page-proddb">
+
+  <!-- Search Bar -->
+  <div class="card" style="margin-bottom:11px;">
+    <div class="card-header">📦 Product Database</div>
+    <div class="field-row" style="flex-wrap:wrap;gap:6px;">
+      <div class="field-icon">🔗</div>
+      <div class="field-info"><div class="field-name">Product Sheet Link</div><div class="field-sub">Paste the Products web-app URL (separate sheet)</div></div>
+      <input type="text" id="pdb-url" class="wide" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" style="font-size:.72rem;">
+      <div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap;">
+        <button onclick="pdbSetUrl()" style="padding:6px 16px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:.74rem;font-weight:700;cursor:pointer;">🔗 Link Sheet</button>
+        <button onclick="pdbTestConn()" style="padding:6px 16px;background:#6b3aa0;color:#fff;border:none;border-radius:7px;font-size:.74rem;font-weight:700;cursor:pointer;">🔌 Test</button>
+        <span id="pdb-url-status" style="font-size:.7rem;color:#7b8499;"></span>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-icon">🔍</div>
+      <div class="field-info"><div class="field-name">Search</div><div class="field-sub">Code, size, section or finish</div></div>
+      <input type="text" id="pdb-search" class="wide" placeholder="Search…" oninput="pdbRender()" autocomplete="off">
+      <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <button onclick="pdbPushAll()" style="padding:7px 18px;background:#1a5a30;color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;letter-spacing:.5px;">↑ Push All to Sheet</button>
+        <button onclick="pdbPullAll()" style="padding:7px 18px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;letter-spacing:.5px;">↓ Pull from Sheet</button>
+        <span id="pdb-push-status" style="font-size:.7rem;color:#7b8499;"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add / Edit Form -->
+  <details id="pdb-form-wrap" style="margin-bottom:11px;">
+    <summary class="card-header" style="cursor:pointer;list-style:none;border-radius:10px;font-size:.78rem;font-weight:700;letter-spacing:.5px;">➕ Add / Edit Product</summary>
+    <div class="card" style="border-radius:0 0 10px 10px;border-top:none;margin-top:0;">
+      <input type="hidden" id="pdb-edit-code">
+      <div class="field-row"><div class="field-icon">📏</div><div class="field-info"><div class="field-name">Size (mm or inch)</div><div class="field-sub">Box 1 — e.g. 45mm</div></div><input type="text" class="wide" id="pdb-size" placeholder="e.g. 45mm"></div>
+      <div class="field-row"><div class="field-icon">📐</div><div class="field-info"><div class="field-name">Section Name</div><div class="field-sub">Box 2 — e.g. 18line</div></div><input type="text" class="wide" id="pdb-section" placeholder="e.g. 18line"></div>
+      <div class="field-row"><div class="field-icon">🔩</div><div class="field-info"><div class="field-name">No. of MOSFET Holes</div><div class="field-sub">Box 3 — e.g. 3</div></div><input type="text" class="wide" id="pdb-mosfet" placeholder="e.g. 3"></div>
+      <div class="field-row"><div class="field-icon">🎨</div><div class="field-info"><div class="field-name">Finish</div><div class="field-sub">Box 4 — Neutral White or Black</div></div><select class="wide" id="pdb-finish"><option value="Neutral White">Neutral White</option><option value="Black">Black</option></select></div>
+      <div class="field-row"><div class="field-icon">🛠️</div><div class="field-info"><div class="field-name">Tapping or Drill</div><div class="field-sub">Box 5</div></div><select class="wide" id="pdb-process"><option value="Tapping">Tapping</option><option value="Drill">Drill</option></select></div>
+      <div class="field-row"><div class="field-icon">🏷️</div><div class="field-info"><div class="field-name">Product Code</div><div class="field-sub">Box 6 — manual, e.g. C450</div></div><input type="text" class="wide" id="pdb-code" placeholder="e.g. C450" style="text-transform:uppercase;letter-spacing:1px;font-family:'Roboto Mono',monospace;" oninput="this.value=this.value.toUpperCase()"></div>
+      <div class="field-row"><div class="field-icon">💰</div><div class="field-info"><div class="field-name">Price</div><div class="field-sub">Optional — for later use</div></div><input type="text" inputmode="decimal" class="wide" id="pdb-price" placeholder="optional"></div>
+      <div class="field-row"><div class="field-icon">🧾</div><div class="field-info"><div class="field-name">HSN Code</div><div class="field-sub">Optional</div></div><input type="text" class="wide" id="pdb-hsn" placeholder="optional e.g. 7604"></div>
+      <div class="field-row" style="background:#f0f4ff;border-top:1px solid #c0d0f0;min-height:auto;padding:10px 12px;gap:8px;flex-wrap:wrap;">
+        <button onclick="pdbSave()" style="flex:1;background:#1a3a6b;color:white;border:none;border-radius:7px;padding:9px 14px;font-size:.82rem;font-weight:700;cursor:pointer;">💾 Save Product</button>
+        <button onclick="pdbClearForm()" style="flex:0 0 auto;background:#aaa;color:white;border:none;border-radius:7px;padding:9px 12px;font-size:.82rem;font-weight:700;cursor:pointer;">✕ Clear</button>
+      </div>
+    </div>
+  </details>
+
+  <!-- Table -->
+  <div class="card" style="margin-bottom:80px;overflow-x:auto;">
+    <div style="overflow-x:auto;">
+      <table id="pdb-table" style="width:100%;border-collapse:collapse;font-size:.76rem;min-width:680px;">
+        <thead>
+          <tr style="background:#1a3a6b;color:#fff;position:sticky;top:0;">
+            <th style="padding:8px 6px;text-align:center;width:30px;">#</th>
+            <th style="padding:8px 6px;text-align:center;width:62px;">Code</th>
+            <th style="padding:8px 6px;text-align:center;width:58px;">Size</th>
+            <th style="padding:8px 6px;text-align:center;width:62px;">Section</th>
+            <th style="padding:8px 6px;text-align:center;width:58px;">MOSFET</th>
+            <th style="padding:8px 6px;text-align:center;width:90px;">Finish</th>
+            <th style="padding:8px 6px;text-align:center;width:64px;">Process</th>
+            <th style="padding:8px 6px;text-align:center;width:60px;">Price</th>
+            <th style="padding:8px 6px;text-align:center;width:62px;">HSN</th>
+            <th style="padding:8px 5px;text-align:center;width:60px;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="pdb-tbody">
+          <tr><td colspan="10" style="text-align:center;padding:22px;color:#aaa;">No products saved yet. Add one above ↑</td></tr>
         </tbody>
       </table>
     </div>
@@ -2294,7 +2412,7 @@ function scaleInvoice(){
 
 // ─── Tab navigation ───
 function go(name){
-  const pages=['form','calc','invoice','quote','nmquote','custdb'];
+  const pages=['form','calc','invoice','quote','nmquote','custdb','proddb'];
   pages.forEach((n,i)=>{
     const tab=document.querySelectorAll('#section-invoice .inv-tab')[i];
     if(tab)tab.classList.toggle('active',n===name);
@@ -2309,6 +2427,7 @@ function go(name){
   if(name==='nmquote'){nmqRender();nmqAutoDate();}
   if(name==='invoice')setTimeout(scaleInvoice,60);
   if(name==='custdb')cdbRender();
+  if(name==='proddb'){pdbRender();pdbTestConn();}
 }
 window.addEventListener('resize',scaleInvoice);
 
@@ -5260,6 +5379,10 @@ async function exitPushNow(){
 
 // Popup on browser close / tab close
 window.addEventListener('beforeunload', function(e){
+  // v89 FIX: in the desktop (Electron) app this used to cancel the close, so the
+  // X button did nothing and you had to kill it from Task Manager. The desktop
+  // app already auto-saves to C:\shreeji data db and syncs, so never block it.
+  if(window.__SHJ_ELECTRON__) return;
   var url = getUrl() || mfGetSheetUrl();
   if(!url) return;
   showExitPopup();
@@ -5608,6 +5731,260 @@ function cdbClearForm(){
   ['cdb-edit-code','cdb-nickname','cdb-contact','cdb-company','cdb-mobile','cdb-gst'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.value='';
   });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  PRODUCT DB  (separate local store + Google Sheet, same method
+//  as Customer DB: dedup by CODE, all fields coerced to strings)
+//  Local key: shj_product_db   |   Sheet actions: SAVE_PRODUCT /
+//  DELETE_PRODUCT / GET_PRODUCTS  (see Code.gs PRODUCTS sheet)
+// ═══════════════════════════════════════════════════════════════
+const PROD_DB_KEY = 'shj_product_db';
+const PROD_URL_KEY = 'shj_prod_gs_url';   // SEPARATE web-app URL for the Products sheet
+// Built-in default Products web-app URL (separate script). A device can still
+// override it by pasting its own in the Product Sheet Link box.
+const DEFAULT_PROD_GS_URL = 'https://script.google.com/macros/s/AKfycbwej5rJOPvAAN3DDzKE9uhpggY5Wfa4CUlkGWuAtknCr8HmNn4dMvqBDZdGKPKPZ14M/exec';
+
+function prodDbLoad(){ try{ return JSON.parse(localStorage.getItem(PROD_DB_KEY)||'[]'); }catch{ return []; } }
+function prodDbSave(arr){ localStorage.setItem(PROD_DB_KEY, JSON.stringify(arr)); }
+
+// ── Product sheet URL (independent of the main Orders/Stock URL) ──
+function pdbGetUrl(){
+  const u = (localStorage.getItem(PROD_URL_KEY)||'').trim();
+  return u || DEFAULT_PROD_GS_URL;
+}
+function pdbSetUrl(){
+  const inp = document.getElementById('pdb-url');
+  const url = (inp?.value||'').trim();
+  localStorage.setItem(PROD_URL_KEY, url);
+  pdbTestConn();
+}
+function pdbUrlStatus(){
+  const el = document.getElementById('pdb-url-status');
+  if(el) el.textContent = pdbGetUrl() ? 'Linked — tap Test to check' : '⚠ Not linked — paste the Product web-app URL';
+}
+// Live connection test: pings GET_PRODUCTS and reports on screen
+async function pdbTestConn(){
+  const el = document.getElementById('pdb-url-status');
+  const url = pdbGetUrl();
+  if(!url){ if(el) el.textContent='⚠ Not linked'; return; }
+  if(el) el.textContent='⏳ Testing connection…';
+  try{
+    const res = await fetch(url + '?action=GET_PRODUCTS&v=' + Date.now(), { redirect:'follow' });
+    const j = await res.json();
+    if(j && j.status==='ok' && Array.isArray(j.data)){
+      if(el) el.textContent = '✓ Connected — ' + j.data.length + ' product(s) in sheet';
+    } else {
+      if(el) el.textContent = '⚠ Reached server but reply looks wrong: ' + ((j&&j.message)||JSON.stringify(j).slice(0,50));
+    }
+  }catch(e){
+    if(el) el.textContent = '✗ Cannot reach sheet (' + e.message + ') — check the URL / "Anyone" access';
+  }
+}
+// Direct POST to the Product web app (text/plain avoids CORS preflight), fire-and-forget
+async function pdbPost(payload){
+  const url = pdbGetUrl();
+  if(!url) return null;
+  const ctrl = new AbortController();
+  const timer = setTimeout(()=>ctrl.abort(), 15000);
+  try{
+    const res = await fetch(url, { method:'POST', redirect:'follow', signal:ctrl.signal,
+      headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) });
+    const json = await res.json();
+    if(json.status !== 'ok') throw new Error(json.message||'Server error');
+    return json;
+  } finally { clearTimeout(timer); }
+}
+
+// Coerce ANY value to a safe HTML string (numbers from the sheet won't crash)
+function pdbEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// Build a readable name from the boxes, e.g. "45mm · 18line · 3MOSFET · Neutral White · Tapping"
+function pdbName(p){
+  return [
+    p.size,
+    p.section,
+    (p.mosfet!=='' && p.mosfet!=null) ? (p.mosfet+'MOSFET') : '',
+    p.finish,
+    p.process
+  ].map(x=>String(x==null?'':x).trim()).filter(Boolean).join(' · ');
+}
+
+function pdbRender(){
+  const urlInp = document.getElementById('pdb-url');
+  if(urlInp && !urlInp.value) urlInp.value = pdbGetUrl();
+  pdbUrlStatus();
+  const q  = (document.getElementById('pdb-search')?.value||'').trim().toLowerCase();
+  const db = prodDbLoad();
+  const filtered = q
+    ? db.filter(p =>
+        String(p.code||'').toLowerCase().includes(q) ||
+        String(p.size||'').toLowerCase().includes(q) ||
+        String(p.section||'').toLowerCase().includes(q) ||
+        String(p.finish||'').toLowerCase().includes(q) ||
+        String(p.process||'').toLowerCase().includes(q) ||
+        pdbName(p).toLowerCase().includes(q))
+    : db;
+
+  const tbody = document.getElementById('pdb-tbody');
+  if(!tbody) return;
+
+  if(!filtered.length){
+    tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:22px;color:#aaa;">${q?'No products match your search.':'No products saved yet. Add one above ↑'}</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map((p,i) => {
+    const safeJson = pdbEsc(JSON.stringify(p));
+    return `<tr style="border-bottom:1px solid #e4e8f0;${i%2===0?'':'background:#f8faff;'}">
+      <td style="text-align:center;padding:7px 5px;font-weight:700;color:#1a3a6b;">${i+1}</td>
+      <td style="text-align:center;padding:7px 5px;font-family:'Roboto Mono',monospace;font-size:.75rem;font-weight:700;color:#2252a0;letter-spacing:1px;">${pdbEsc(p.code||'—')}</td>
+      <td style="text-align:center;padding:7px 5px;">${pdbEsc(p.size||'—')}</td>
+      <td style="text-align:center;padding:7px 5px;">${pdbEsc(p.section||'—')}</td>
+      <td style="text-align:center;padding:7px 5px;">${pdbEsc(p.mosfet||'—')}</td>
+      <td style="text-align:center;padding:7px 5px;">${pdbEsc(p.finish||'—')}</td>
+      <td style="text-align:center;padding:7px 5px;">${pdbEsc(p.process||'—')}</td>
+      <td style="text-align:center;padding:7px 5px;font-family:'Roboto Mono',monospace;font-size:.72rem;">${p.price!==''&&p.price!=null&&p.price!=='—'?pdbEsc(p.price):'—'}</td>
+      <td style="text-align:center;padding:7px 5px;font-family:'Roboto Mono',monospace;font-size:.72rem;color:#555;">${pdbEsc(p.hsn||'—')}</td>
+      <td style="text-align:center;padding:5px 4px;">
+        <button onclick='pdbEdit(${safeJson})' style="background:#1a3a6b;color:white;border:none;border-radius:5px;padding:4px 8px;font-size:.68rem;font-weight:700;cursor:pointer;margin-bottom:3px;display:block;width:100%;">✏️ Edit</button>
+        <button onclick='pdbDelete("${pdbEsc(p.code)}")' style="background:#dc2626;color:white;border:none;border-radius:5px;padding:4px 8px;font-size:.68rem;font-weight:700;cursor:pointer;display:block;width:100%;">🗑 Del</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function pdbSave(){
+  const size    = (document.getElementById('pdb-size')?.value||'').trim();
+  const section = (document.getElementById('pdb-section')?.value||'').trim();
+  const mosfet  = (document.getElementById('pdb-mosfet')?.value||'').trim();
+  const finish  = (document.getElementById('pdb-finish')?.value||'').trim();
+  const process = (document.getElementById('pdb-process')?.value||'').trim();
+  const code    = (document.getElementById('pdb-code')?.value||'').trim().toUpperCase();
+  const price   = (document.getElementById('pdb-price')?.value||'').trim();
+  const hsn     = (document.getElementById('pdb-hsn')?.value||'').trim();
+  const editCode= (document.getElementById('pdb-edit-code')?.value||'').trim().toUpperCase();
+
+  if(!code){ alert('Enter a Product Code (Box 6) — it is the unique key.'); return; }
+  if(!size && !section){ alert('Enter at least a Size or a Section.'); return; }
+
+  const db = prodDbLoad();
+  const rec = {
+    code: code,
+    size: size,
+    section: section,
+    mosfet: mosfet,
+    finish: finish,
+    process: process,
+    price: price,
+    hsn: hsn,
+    name: pdbName({size,section,mosfet,finish,process}),
+    updatedOn: new Date().toISOString().slice(0,10)
+  };
+
+  // Dedup by code: update in place if the code already exists (incl. the one being edited)
+  const idx = db.findIndex(p => String(p.code||'').toUpperCase() === (editCode||code));
+  if(idx >= 0){ db[idx] = { ...db[idx], ...rec }; }
+  else { db.unshift(rec); }
+  prodDbSave(db);
+  pdbClearForm();
+  pdbRender();
+  const wrap = document.getElementById('pdb-form-wrap');
+  if(wrap) wrap.removeAttribute('open');
+  // Auto-push to the Products Google Sheet (separate web app)
+  pdbPost({ action:'SAVE_PRODUCT',
+    code:rec.code, size:rec.size, section:rec.section, mosfet:rec.mosfet,
+    finish:rec.finish, process:rec.process, price:rec.price, hsn:rec.hsn,
+    name:rec.name, updatedOn:rec.updatedOn }).catch(()=>{});
+  alert('✓ Product saved!');
+}
+
+function pdbEdit(rec){
+  if(typeof rec === 'string'){ try{ rec = JSON.parse(rec); }catch(e){} }
+  const set = (id,v) => { const el=document.getElementById(id); if(el) el.value=(v==null?'':v); };
+  set('pdb-edit-code', rec.code);
+  set('pdb-size',      rec.size);
+  set('pdb-section',   rec.section);
+  set('pdb-mosfet',    rec.mosfet);
+  set('pdb-finish',    rec.finish||'Neutral White');
+  set('pdb-process',   rec.process||'Tapping');
+  set('pdb-code',      rec.code);
+  set('pdb-price',     rec.price);
+  set('pdb-hsn',       rec.hsn);
+  const wrap = document.getElementById('pdb-form-wrap');
+  if(wrap){ wrap.setAttribute('open',''); wrap.scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+
+function pdbDelete(code){
+  if(!confirm('Delete product: ' + code + '?')) return;
+  const db = prodDbLoad().filter(p => String(p.code||'').toUpperCase() !== String(code||'').toUpperCase());
+  prodDbSave(db);
+  pdbRender();
+  pdbPost({ action:'DELETE_PRODUCT', code }).catch(()=>{});
+}
+
+async function pdbPullAll(){
+  const url = pdbGetUrl();
+  if(!url){ alert('Paste your Product web-app URL in the box above first.'); return; }
+  const el = document.getElementById('pdb-push-status');
+  if(el) el.textContent = '↓ Pulling products…';
+  try{
+    const res = await fetch(url + '?action=GET_PRODUCTS&v=' + Date.now(), { redirect:'follow' });
+    const j = await res.json();
+    if(j.status !== 'ok') throw new Error(j.message||'Server error');
+    const remote = Array.isArray(j.data) ? j.data : [];
+    if(!remote.length){ if(el) el.textContent = '⚠ No products found in sheet'; return; }
+    // Merge: sheet wins for matching codes, keep local-only records.
+    // Coerce every field to a string (sheet returns price/mosfet as NUMBERS).
+    const S = v => (v==null?'':String(v));
+    const local = prodDbLoad();
+    const map = {};
+    remote.forEach(rc=>{
+      const key = S(rc.code).toUpperCase();
+      if(key) map[key] = {
+        code:S(rc.code), size:S(rc.size), section:S(rc.section),
+        mosfet:S(rc.mosfet), finish:S(rc.finish), process:S(rc.process),
+        price:S(rc.price), hsn:S(rc.hsn),
+        name:S(rc.name)||pdbName(rc), updatedOn:S(rc.updatedOn)
+      };
+    });
+    local.forEach(lc=>{
+      const key = S(lc.code).toUpperCase();
+      if(key && !map[key]) map[key] = lc;
+    });
+    prodDbSave(Object.values(map));
+    pdbRender();
+    if(el) el.textContent = '✓ Pulled ' + remote.length + ' products at ' + new Date().toLocaleTimeString('en-GB');
+  }catch(e){
+    if(el) el.textContent = '✗ Pull failed: ' + e.message;
+  }
+}
+
+async function pdbPushAll(){
+  if(!pdbGetUrl()){ alert('Paste your Product web-app URL in the box above first.'); return; }
+  const db = prodDbLoad();
+  if(!db.length){ alert('No products to push.'); return; }
+  const el = document.getElementById('pdb-push-status');
+  if(el) el.textContent = '↑ Pushing ' + db.length + ' products…';
+  let ok = 0;
+  for(const p of db){
+    try{
+      await pdbPost({ action:'SAVE_PRODUCT', code:p.code, size:p.size||'',
+        section:p.section||'', mosfet:p.mosfet||'', finish:p.finish||'',
+        process:p.process||'', price:p.price||'', hsn:p.hsn||'',
+        name:p.name||pdbName(p), updatedOn:p.updatedOn||'' });
+      ok++;
+    }catch(e){}
+  }
+  if(el) el.textContent = '✓ Pushed ' + ok + '/' + db.length + ' at ' + new Date().toLocaleTimeString('en-GB');
+}
+
+function pdbClearForm(){
+  ['pdb-edit-code','pdb-size','pdb-section','pdb-mosfet','pdb-code','pdb-price','pdb-hsn'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  const f=document.getElementById('pdb-finish'); if(f) f.value='Neutral White';
+  const pr=document.getElementById('pdb-process'); if(pr) pr.value='Tapping';
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -6867,7 +7244,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v88';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v92';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
