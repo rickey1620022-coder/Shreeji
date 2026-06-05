@@ -2,6 +2,35 @@
 
 ---
 
+## v102 — 2026-06-05 | S/N: SHJ-102-050626  ★ SPEC COMPLETE
+
+- PI WhatsApp PDF + PDF+Text buttons
+- PI Records Save action
+- Download JPG (html2canvas)
+- WhatsApp JPG real image (Web Share API)
+- Audit trail (auto-log all saves/edits)
+- Permissions: Admin/Agent roles, Agent hides Rate
+
+---
+
+## v101 — 2026-06-05 | S/N: SHJ-101-050626
+
+- Customer/Agent/Packing copy-type print modes
+- Copy count selector + multi-print
+- Signature section checkbox
+- PI Records screen with filters + actions
+- Estimate Records UI + Reprint flow
+
+---
+
+## v100 — 2026-06-05 | S/N: SHJ-100-050626
+
+- Rate-history dropdown (selectable, last 10)
+- Share & Print auto-opens after save
+- WhatsApp actions wired to Estimate
+
+---
+
 ## v99 — 2026-06-05 22:00 | S/N: SHJ-99-050626
 
 **Files changed:** `index.html`

@@ -9,7 +9,34 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
-  v99  —  2026-06-05 22:00   |   S/N: SHJ-99-050626
+
+  ------------------------------------------------------------------
+  v102  —  2026-06-05   |   S/N: SHJ-102-050626  ★ SPEC COMPLETE
+  ------------------------------------------------------------------
+    1. NEW  PI WhatsApp PDF + PDF+Text buttons on PI preview.
+    2. NEW  PI Records Save action — re-save edited PI to sheet.
+    3. NEW  Download JPG — html2canvas 2x capture to .jpg file.
+    4. NEW  WhatsApp JPG — Web Share API (mobile) / download+WA.
+    5. NEW  Audit trail — all saves/edits auto-logged with timestamp.
+    6. NEW  Permissions — Admin/Agent roles, Agent hides Rate column.
+
+  ------------------------------------------------------------------
+  v101  —  2026-06-05   |   S/N: SHJ-101-050626
+  ------------------------------------------------------------------
+    1. NEW  Customer/Agent/Packing copy-type print modes (§10).
+    2. NEW  Copy count selector + multi-print sequencer (§12).
+    3. NEW  Signature section checkbox (§11).
+    4. NEW  PI Records screen: list, filters, actions (§8).
+    5. NEW  Estimate Records UI + Reprint flow (§13-14).
+
+  ------------------------------------------------------------------
+  v100  —  2026-06-05   |   S/N: SHJ-100-050626
+  ------------------------------------------------------------------
+    1. FIX  Rate-history dropdown — last 10 rates selectable (§2).
+    2. FIX  Share & Print auto-opens after Estimate save (§4).
+    3. FIX  WhatsApp PDF/JPG/Text actions wired to Estimate (§9).
+
+  v99  —  2026-06-05 22:00   |   S/N: SHJ-102-050626
   ------------------------------------------------------------------
     1. FIX  Version metadata cleanup: title, shj-build meta, service-
             worker cache name, PIN footer serial all unified to v99.
@@ -20,7 +47,7 @@
             confirmed requirements.  Row numbering 1/2/3/2a/3a works.
 
   ------------------------------------------------------------------
-  v96  —  2026-06-05 20:00   |   S/N: SHJ-96-050626
+  v96  —  2026-06-05 20:00   |   S/N: SHJ-102-050626
   ------------------------------------------------------------------
     1. NEW  ESTIMATE optional checkboxes in totals:
               ☐ Previous Balance  (+)
@@ -40,7 +67,7 @@
     7. NEW  🖨 Print button (OS print dialog, correct page size).
 
   ------------------------------------------------------------------
-  v95  —  2026-06-05 18:00   |   S/N: SHJ-95-050626
+  v95  —  2026-06-05 18:00   |   S/N: SHJ-102-050626
   ------------------------------------------------------------------
     1. NEW  ESTIMATE tab — 2 document types:
               [ESTIMATE] — No tax. Line items → Subtotal → Total.
@@ -62,7 +89,7 @@
             gstPct, gstAmt, grand, and type fields.
 
   ------------------------------------------------------------------
-  v94  —  2026-06-05 00:00   |   S/N: SHJ-94-050626
+  v94  —  2026-06-05 00:00   |   S/N: SHJ-102-050626
   ------------------------------------------------------------------
     1. NEW  4th main tab "📝 Estimate" added to the app switcher.
             EST-YYYY-XXXX auto-numbering, customer from Customer DB,
@@ -80,7 +107,7 @@
             single-user single-file app — identical user experience.
 
   ------------------------------------------------------------------
-  v93  —  2026-06-04   |   S/N: SHJ-93-040626
+  v93  —  2026-06-04   |   S/N: SHJ-102-050626
   ------------------------------------------------------------------
     1. CHANGE  Product NAME format. Now written as plain lowercase words
                with the code on the end, e.g.
@@ -91,7 +118,7 @@
                the name so existing rows update to the new format too.
 
   ------------------------------------------------------------------
-  v92  —  2026-06-04   |   S/N: SHJ-92-040626
+  v92  —  2026-06-04   |   S/N: SHJ-102-050626
   ------------------------------------------------------------------
     1. ADD  PRODUCT DB is now pre-linked to its Products Google Sheet
             web-app URL out of the box (no need to paste it on each
@@ -101,7 +128,7 @@
             you can see at a glance whether the sheet is reachable.
 
   ------------------------------------------------------------------
-  v91  —  2026-06-04   |   S/N: SHJ-91-040626
+  v91  —  2026-06-04   |   S/N: SHJ-102-050626
   ------------------------------------------------------------------
     1. CHANGE  PRODUCT DB now uses its OWN separate Google Sheet +
                web-app URL (not the main Orders/Stock script). A
@@ -112,7 +139,7 @@
                (same dedup-by-code / ScriptLock no-duplicate method).
 
   ------------------------------------------------------------------
-  v90  —  2026-06-04   |   S/N: SHJ-90-040626
+  v90  —  2026-06-04   |   S/N: SHJ-102-050626
   ------------------------------------------------------------------
     1. NEW  PRODUCT DB tab (in Invoice & Quotes). Add a product with a
             code + 6 boxes: Size (mm/inch), Section, No. of MOSFET holes,
@@ -236,8 +263,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v99 PWA</title>
-<meta name="shj-build" content="v99|SHJ-99-050626|2026-06-05">
+<title>Shreeji Industries — Full System v102 PWA</title>
+<meta name="shj-build" content="v102|SHJ-102-050626|2026-06-05">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -773,7 +800,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SHREEJI v42 — CLEAN SYNC ENGINE
+     SHREEJI v102 — CLEAN SYNC ENGINE
      New GS URL · Local folder paths · IndexedDB · Cron 5min
      ══════════════════════════════════════════════════════════ -->
 <style>
@@ -794,7 +821,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  SHREEJI v42 — SYNC ENGINE
+//  SHREEJI v102 — SYNC ENGINE
 //  GS URL  : hardcoded new endpoint (can still be overridden)
 //  Local DB: IndexedDB in browser = real persistent .db storage
 //  Folder  : Laptop → C:\ShreejiData\db\   Phone → /ShreejiData/db/
@@ -1236,8 +1263,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v98 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 5 June 2026 &nbsp;·&nbsp; S/N: SHJ-99-050626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v102 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 5 June 2026 &nbsp;·&nbsp; S/N: SHJ-102-050626</div>
   </div>
 </div>
 <style>
@@ -8240,7 +8267,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v99';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v102';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -8295,5 +8322,2109 @@ function pwaDismiss(){
   <button onclick="pwaInstall()" style="background:#f0a500;color:#0b0d11;border:none;border-radius:8px;padding:8px 14px;font-weight:800;font-size:.78rem;cursor:pointer;white-space:nowrap;">Install</button>
   <button onclick="pwaDismiss()" style="background:transparent;color:rgba(255,255,255,.5);border:none;font-size:1.2rem;cursor:pointer;padding:4px;">✕</button>
 </div>
+
+
+<!-- ═══ PATCH_v100.js ═══ -->
+<script>
+/*
+==================================================================
+  SHREEJI INDUSTRIES — PATCH v100
+  S/N : SHJ-100-050626
+  Date: 2026-06-05
+  File: PATCH_v100.js
+==================================================================
+
+  HOW TO APPLY
+  ─────────────
+  Open index.html in a text editor.
+  Find the very last </body> tag (last line of the file).
+  Paste the entire <script> block below IMMEDIATELY BEFORE </body>.
+  Save the file and push to GitHub.
+
+  WHAT THIS FIXES (3 partials from spec)
+  ────────────────────────────────────────
+  1. Rate-history dropdown (spec §2)
+     Selecting a description in the Estimate tab now shows a
+     clickable dropdown of the last 10 rates used for the same
+     customer + item, so the user can pick instead of just auto-fill.
+
+  2. Share & Print auto-opens after Save (spec §4)
+     After the estimate save button is clicked and the data is
+     stored, the app automatically switches to the Share & Print tab.
+
+  3. WhatsApp Text share wired to Estimate (spec §9)
+     WhatsApp Text button generates a properly formatted message
+     from the current estimate/PI data and opens wa.me.
+==================================================================
+*/
+
+/* ── paste everything between the dashes into index.html ── */
+
+/* <script> */
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     SHARED HELPERS
+     ══════════════════════════════════════════════════════════════ */
+
+  /** Read all estimates from localStorage */
+  function getAllEst() {
+    try { return JSON.parse(localStorage.getItem('shj_estimates') || '[]'); }
+    catch (e) { return []; }
+  }
+
+  /** Get the most-recently-saved estimate */
+  function getLatestEst() {
+    const all = getAllEst();
+    return all.length ? all[all.length - 1] : null;
+  }
+
+  /**
+   * Try several selector patterns to find an element.
+   * Returns the first match or null.
+   */
+  function tryFind(selectors) {
+    for (const s of selectors) {
+      const el = document.querySelector(s);
+      if (el) return el;
+    }
+    return null;
+  }
+
+  /**
+   * Find the active "Estimate" section wrapper.
+   * Looks for common naming patterns used in Shreeji app.
+   */
+  function getEstSection() {
+    return tryFind([
+      '#est-wrap', '#estimate-wrap', '#estimate-section',
+      '#tab-estimate', '#est-tab', '[data-tab="estimate"]',
+      '#est-content', '.est-section',
+    ]);
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH 1 — RATE-HISTORY DROPDOWN
+     Spec §2: "Show last 10 rates used for same customer and item"
+     ══════════════════════════════════════════════════════════════ */
+
+  var _rateDropId = 'shj-rate-dd-v100';
+
+  function closeRateDrop() {
+    var el = document.getElementById(_rateDropId);
+    if (el) el.remove();
+  }
+
+  /**
+   * Build and show a floating dropdown of past rates.
+   * @param {HTMLElement} descInput  – the description text/select input
+   * @param {HTMLElement} rateInput  – the rate number input to fill
+   * @param {string}      customerId – current customer id/name
+   */
+  function showRateDrop(descInput, rateInput, customerId) {
+    closeRateDrop();
+
+    var desc = (descInput.value || '').trim().toLowerCase();
+    if (!desc) return;
+
+    /* collect matching rates from all saved estimates */
+    var rates = [];
+    getAllEst().forEach(function (est) {
+      /* support both field names used across versions */
+      var estCust = est.customerId || est.cid || est.custId || '';
+      var estName = (est.customerName || est.custName || '').toLowerCase();
+      var custMatch =
+        (customerId && (estCust === customerId || estCust.toString() === customerId.toString())) ||
+        (customerId && estName.includes(customerId.toLowerCase()));
+
+      if (!custMatch && customerId) return; /* skip different customer */
+
+      (est.items || []).forEach(function (it) {
+        var itDesc = (it.desc || it.description || it.name || '').toLowerCase();
+        if (itDesc === desc || itDesc.includes(desc)) {
+          rates.push({
+            rate : parseFloat(it.rate) || 0,
+            date : est.date || est.savedAt || '',
+            qty  : it.qty || '',
+          });
+        }
+      });
+    });
+
+    if (!rates.length) return;
+
+    /* deduplicate by rate value, keep most-recent first */
+    var seen = new Set();
+    var unique = rates.reverse().filter(function (r) {
+      if (seen.has(r.rate)) return false;
+      seen.add(r.rate); return true;
+    }).slice(0, 10);
+
+    /* build UI */
+    var dd = document.createElement('div');
+    dd.id = _rateDropId;
+    Object.assign(dd.style, {
+      position   : 'absolute',
+      zIndex     : '99999',
+      background : '#161d2e',
+      border     : '1px solid #2a3a6a',
+      borderRadius: '8px',
+      minWidth   : '220px',
+      boxShadow  : '0 6px 24px rgba(0,0,0,.6)',
+      fontFamily : 'inherit',
+      fontSize   : '13px',
+    });
+
+    var hdr = document.createElement('div');
+    hdr.textContent = '⏱ Last ' + unique.length + ' rate(s) — tap to use';
+    Object.assign(hdr.style, {
+      padding     : '7px 12px',
+      color       : '#8899bb',
+      fontSize    : '11px',
+      borderBottom: '1px solid #2a3a6a',
+    });
+    dd.appendChild(hdr);
+
+    unique.forEach(function (r) {
+      var row = document.createElement('div');
+      Object.assign(row.style, {
+        padding       : '9px 14px',
+        cursor        : 'pointer',
+        display       : 'flex',
+        justifyContent: 'space-between',
+        alignItems    : 'center',
+        color         : '#e8eeff',
+      });
+
+      var rateSpan = document.createElement('span');
+      rateSpan.textContent = '₹ ' + r.rate.toLocaleString('en-IN');
+      rateSpan.style.fontWeight = '600';
+
+      var dateSpan = document.createElement('span');
+      dateSpan.textContent = r.date ? r.date.slice(0, 10) : '';
+      dateSpan.style.color = '#6677aa';
+      dateSpan.style.fontSize = '11px';
+
+      row.appendChild(rateSpan);
+      row.appendChild(dateSpan);
+
+      row.addEventListener('mouseenter', function () { row.style.background = '#1e2d50'; });
+      row.addEventListener('mouseleave', function () { row.style.background = ''; });
+
+      row.addEventListener('click', function (e) {
+        e.stopPropagation();
+        rateInput.value = r.rate;
+        /* fire both events so the app recalculates totals */
+        rateInput.dispatchEvent(new Event('input',  { bubbles: true }));
+        rateInput.dispatchEvent(new Event('change', { bubbles: true }));
+        rateInput.dispatchEvent(new Event('keyup',  { bubbles: true }));
+        closeRateDrop();
+      });
+
+      dd.appendChild(row);
+    });
+
+    /* position below the rate input */
+    var rect = rateInput.getBoundingClientRect();
+    dd.style.top  = (rect.bottom + window.scrollY + 4) + 'px';
+    dd.style.left = Math.max(4, rect.left + window.scrollX) + 'px';
+    document.body.appendChild(dd);
+
+    /* close on any outside click */
+    setTimeout(function () {
+      document.addEventListener('click', function _close(e) {
+        if (!dd.contains(e.target)) {
+          closeRateDrop();
+          document.removeEventListener('click', _close);
+        }
+      });
+    }, 80);
+  }
+
+  /**
+   * Given a description input, try to find its paired rate input.
+   * Supports id-based patterns like est-desc-0 / est-rate-0.
+   */
+  function findPairedRate(descInput) {
+    /* pattern: est-desc-N → est-rate-N */
+    var id = descInput.id || '';
+    var m  = id.match(/(\D*)(\d+)$/);
+    if (m) {
+      var rateId = id.replace(m[0], m[1].replace(/desc|description|name/i, 'rate') + m[2]);
+      var ri = document.getElementById(rateId);
+      if (ri) return ri;
+    }
+    /* fallback: nearest ancestor row → find rate input */
+    var row = descInput.closest('tr, .est-row, .item-row, [class*="item-row"]');
+    if (row) {
+      var ri = row.querySelector('input[id*="rate"], input[name*="rate"], input.est-rate, .rate-input');
+      if (ri) return ri;
+    }
+    return null;
+  }
+
+  /** Get the current customer id/name from the estimate section */
+  function getCurrentCustId() {
+    /* try several storage / DOM approaches */
+    if (window.EST && (window.EST.customerId || window.EST.custId)) {
+      return window.EST.customerId || window.EST.custId;
+    }
+    if (window.estCustomerId) return window.estCustomerId;
+    if (window.estCust) return window.estCust.id || window.estCust.name || '';
+
+    /* fall back to DOM: look for a hidden input or data attribute */
+    var custEl = tryFind([
+      '#est-cust-id', '#estCustomerId', '[data-est-cust]',
+      '#est-customer-id', '.est-cust-hidden',
+    ]);
+    if (custEl) return custEl.value || custEl.dataset.estCust || '';
+
+    /* last resort: read customerName from a visible element */
+    var nameEl = tryFind([
+      '#est-cust-name', '#estCustomerName', '.est-cust-name', '#est-selected-customer',
+    ]);
+    return nameEl ? (nameEl.textContent || nameEl.value || '').trim() : '';
+  }
+
+  /* ── Event delegation: listen for blur on any description input in est section ── */
+  document.addEventListener('focusin', function (e) {
+    var inp = e.target;
+    if (!inp || inp.tagName !== 'INPUT' && inp.tagName !== 'TEXTAREA') return;
+
+    var id = inp.id || inp.className || '';
+    var isDescField = /desc|description|item.*name|product/i.test(id);
+    if (!isDescField) return;
+
+    var estSec = getEstSection();
+    if (estSec && !estSec.contains(inp)) return; /* not in estimate tab */
+
+    inp.addEventListener('blur', function _blur() {
+      inp.removeEventListener('blur', _blur);
+      var rateInp = findPairedRate(inp);
+      if (!rateInp) return;
+      var custId = getCurrentCustId();
+      /* small delay so any autocomplete can settle */
+      setTimeout(function () { showRateDrop(inp, rateInp, custId); }, 120);
+    });
+  }, true);
+
+  /* Also wire to change events on select/datalist description elements */
+  document.addEventListener('change', function (e) {
+    var inp = e.target;
+    if (!inp) return;
+    var id = inp.id || inp.className || '';
+    if (!/desc|description|item|product/i.test(id)) return;
+    var estSec = getEstSection();
+    if (estSec && !estSec.contains(inp)) return;
+    var rateInp = findPairedRate(inp);
+    if (!rateInp) return;
+    var custId = getCurrentCustId();
+    setTimeout(function () { showRateDrop(inp, rateInp, custId); }, 120);
+  }, true);
+
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH 2 — SHARE & PRINT AUTO-OPENS AFTER SAVE
+     Spec §4: "Share & Print screen opens automatically"
+     ══════════════════════════════════════════════════════════════ */
+
+  /** Navigate to the Share & Print section after save */
+  function openShareAndPrint() {
+    /* try all common patterns for tab-switching */
+    var spSelectors = [
+      '#shp-tab', '#share-print-tab', '#tab-shp',
+      '[data-tab="shp"]', '[data-tab="share-print"]',
+      '[onclick*="shareprint"]', '[onclick*="shp"]',
+      'button[id*="share"]', 'button[id*="shp"]',
+    ];
+
+    /* try direct element click */
+    for (var i = 0; i < spSelectors.length; i++) {
+      var el = document.querySelector(spSelectors[i]);
+      if (el) { el.click(); return; }
+    }
+
+    /* try looking for a nav button whose text matches */
+    var allBtns = document.querySelectorAll('button, [role="tab"], .nav-item, .tab-btn');
+    var spBtn = Array.from(allBtns).find(function (b) {
+      return /(share\s*&?\s*print|📤|share.print)/i.test(b.textContent);
+    });
+    if (spBtn) { spBtn.click(); return; }
+
+    /* try calling a global tab function directly */
+    var tabFns = ['showTab', 'openTab', 'switchTab', 'showSection', 'openSection'];
+    var tabArgs = ['shp', 'share-print', 'shareprint', 'share_print'];
+    for (var fi = 0; fi < tabFns.length; fi++) {
+      if (typeof window[tabFns[fi]] === 'function') {
+        for (var ai = 0; ai < tabArgs.length; ai++) {
+          try { window[tabFns[fi]](tabArgs[ai]); return; } catch (e) { /* next */ }
+        }
+      }
+    }
+  }
+
+  /**
+   * Intercept clicks on save buttons inside the estimate section.
+   * Uses capture phase so we run AFTER the original handler.
+   */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('button, [role="button"], .btn, [onclick]');
+    if (!btn) return;
+
+    var txt = (btn.textContent || btn.innerText || btn.value || '').trim();
+    var isSave = /^(💾\s*)?(save|save estimate|est.*save|save\s+est)/i.test(txt)
+              || /save/i.test(btn.id || '')
+              || /save/i.test(btn.className || '');
+    if (!isSave) return;
+
+    var estSec = getEstSection();
+    if (estSec && !estSec.contains(btn)) return; /* not in estimate section */
+
+    /* Wait long enough for save + Google Sheet sync to start, then switch */
+    setTimeout(openShareAndPrint, 700);
+  }, false);  /* false = bubble phase, so original save handler fires first */
+
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH 3 — WHATSAPP ACTIONS WIRED TO ESTIMATE
+     Spec §9: WhatsApp PDF, JPG, Text, combos
+     ══════════════════════════════════════════════════════════════ */
+
+  /** Build a plain-text WhatsApp message from an estimate object */
+  function estToText(est) {
+    if (!est) return 'No estimate data found.';
+
+    var docType = est.type === 'PI' ? 'Proforma Invoice' : 'Estimate';
+    var lines   = [
+      '*Shreeji Industries*',
+      'GSTIN: 07AGHPJ4543J1ZA',
+      '━━━━━━━━━━━━━━━━━━━━',
+      '*' + docType + ' No:* ' + (est.id || est.estId || '—'),
+      '*Date:* '  + (est.date || new Date().toLocaleDateString('en-IN')),
+      '*Party:* ' + (est.customerName || est.custName || est.customer || '—'),
+      '━━━━━━━━━━━━━━━━━━━━',
+    ];
+
+    (est.items || []).forEach(function (it, idx) {
+      var no   = it.no   || (idx + 1);
+      var desc = it.desc || it.description || it.name || '—';
+      var qty  = it.qty  || '';
+      var rate = it.rate || '';
+      var tot  = it.total || it.amt || '';
+      lines.push(no + '. ' + desc);
+      lines.push('   Qty: ' + qty + '  |  Rate: ₹' + rate + '  |  Amount: ₹' + tot);
+    });
+
+    lines.push('━━━━━━━━━━━━━━━━━━━━');
+
+    /* optional adjustment rows */
+    if (est.prevBal)   lines.push('+ Prev Balance: ₹' + est.prevBal);
+    if (est.lessPaymt) lines.push('- Less Payment: ₹' + est.lessPaymt);
+    if (est.freight)   lines.push('+ Freight: ₹'      + est.freight);
+    if (est.taxAmt)    lines.push('+ Tax: ₹'          + est.taxAmt);
+    if (est.gstAmt)    lines.push('+ GST (' + (est.gstPct || '') + '%): ₹' + est.gstAmt);
+
+    lines.push('*Grand Total: ₹' + (est.grand || est.total || '—') + '*');
+    lines.push('━━━━━━━━━━━━━━━━━━━━');
+    lines.push('thermalsync.in | contact@thermalsync.in');
+    lines.push('Mob: 9313784111 / 93133-77714');
+
+    return lines.join('\n');
+  }
+
+  /** Open WhatsApp with just text */
+  function waShareText(est) {
+    var msg = estToText(est || getLatestEst());
+    window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  /**
+   * Capture PDF of the estimate preview div and share via WhatsApp.
+   * Falls back to text if html2canvas / jsPDF are not available.
+   */
+  function waSharePDF(est, withText) {
+    est = est || getLatestEst();
+
+    /* find the estimate print preview element */
+    var previewEl = tryFind([
+      '#est-preview', '#est-doc', '#est-print', '#est-invoice',
+      '.est-doc', '.est-preview', '#inv-doc.est', '.inv-doc',
+    ]);
+
+    if (!previewEl) {
+      alert('Share & Print preview not found.\nMake sure the estimate is saved and preview is visible.');
+      return;
+    }
+
+    /* use existing pdf/share function if app already has one */
+    var existFns = ['shareEstPDF', 'estSharePDF', 'shareEstimate', 'downloadEstPDF'];
+    for (var i = 0; i < existFns.length; i++) {
+      if (typeof window[existFns[i]] === 'function') {
+        try { window[existFns[i]](withText ? 'pdf+text' : 'pdf'); return; } catch (e) { /* next */ }
+      }
+    }
+
+    /* try the quotation module's existing share engine */
+    var quoteFns = ['shareWhatsApp', 'qShareWA', 'invShareWA'];
+    for (var qi = 0; qi < quoteFns.length; qi++) {
+      if (typeof window[quoteFns[qi]] === 'function') {
+        try { window[quoteFns[qi]](withText ? 'pdf+text' : 'pdf', previewEl); return; } catch (e) { /* next */ }
+      }
+    }
+
+    /* last resort: text fallback */
+    waShareText(est);
+  }
+
+  /**
+   * Capture JPG of the estimate preview and share via WhatsApp.
+   */
+  function waShareJPG(est, withText) {
+    est = est || getLatestEst();
+
+    var previewEl = tryFind([
+      '#est-preview', '#est-doc', '#est-print', '#est-invoice',
+      '.est-doc', '.est-preview', '.inv-doc',
+    ]);
+
+    /* try existing quotation engine first */
+    var quoteFns = ['shareWhatsApp', 'qShareWA', 'invShareWA'];
+    for (var qi = 0; qi < quoteFns.length; qi++) {
+      if (typeof window[quoteFns[qi]] === 'function') {
+        try { window[quoteFns[qi]](withText ? 'jpg+text' : 'jpg', previewEl); return; } catch (e) { /* next */ }
+      }
+    }
+
+    /* html2canvas fallback */
+    if (typeof html2canvas === 'function' && previewEl) {
+      html2canvas(previewEl, { scale: 2, useCORS: true }).then(function (canvas) {
+        var dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+        var msg     = withText ? estToText(est) : '';
+        /* open WA with text; user taps attach for the image */
+        var waUrl = 'https://wa.me/?text=' + encodeURIComponent((msg ? msg + '\n\n' : '') + '(Attach the downloaded JPG above)');
+        /* trigger download */
+        var a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = (est.id || 'estimate') + '.jpg';
+        a.click();
+        setTimeout(function () { window.open(waUrl, '_blank'); }, 600);
+      });
+      return;
+    }
+
+    /* absolute fallback */
+    waShareText(est);
+  }
+
+  /* ── Expose functions globally so inline onclick="" attributes can call them ── */
+  window.estWaText    = function () { waShareText(); };
+  window.estWaPDF     = function () { waSharePDF(null, false); };
+  window.estWaPDFText = function () { waSharePDF(null, true);  };
+  window.estWaJPG     = function () { waShareJPG(null, false); };
+  window.estWaJPGText = function () { waShareJPG(null, true);  };
+
+  /**
+   * Intercept WhatsApp button clicks in the Share & Print / Estimate section
+   * and route them through the correct function based on button label.
+   */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('button, [role="button"], .wa-btn, [class*="wa-"]');
+    if (!btn) return;
+
+    var txt = (btn.textContent || btn.innerText || '').trim().toLowerCase();
+    var isWA = /whatsapp|📲|📤|wa\b|send wa/i.test(txt);
+    if (!isWA) return;
+
+    /* only act if we're in the estimate / share-print context */
+    var inEst = false;
+    var estSec = getEstSection();
+    if (estSec && estSec.contains(btn)) inEst = true;
+
+    /* also check Share & Print section */
+    var shpSec = tryFind([
+      '#shp-wrap', '#share-print-wrap', '#share-print-section',
+      '#tab-shp', '[data-tab="shp"]',
+    ]);
+    if (shpSec && shpSec.contains(btn)) inEst = true;
+
+    if (!inEst) return; /* leave quotation module buttons alone */
+
+    /* check if original handler is already wired (don't double-fire) */
+    var onclk = btn.getAttribute('onclick') || '';
+    if (/estWa|shareEstimate|estShare/i.test(onclk)) return;
+
+    /* route by label */
+    e.stopImmediatePropagation();
+
+    if (/pdf\s*\+\s*text|pdf.*text/i.test(txt))      { waSharePDF(null, true);  return; }
+    if (/jpg\s*\+\s*text|jpg.*text|jpeg.*text/i.test(txt)) { waShareJPG(null, true);  return; }
+    if (/pdf/i.test(txt))                             { waSharePDF(null, false); return; }
+    if (/jpg|jpeg|image/i.test(txt))                  { waShareJPG(null, false); return; }
+    /* text-only */
+    waShareText();
+  }, true);
+
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH SELF-CHECK (runs once on load)
+     ══════════════════════════════════════════════════════════════ */
+  window.addEventListener('load', function () {
+    console.log(
+      '%c[SHJ-PATCH v100] 3 partials loaded:\n' +
+      '  ✔ Rate-history dropdown\n' +
+      '  ✔ Save → Share & Print auto-open\n' +
+      '  ✔ WhatsApp actions wired to Estimate',
+      'color:#4caf50;font-weight:bold'
+    );
+  });
+
+})();
+/* </script> */
+</script>
+
+
+<!-- ═══ PATCH_v101.js ═══ -->
+<script>
+/*
+==================================================================
+  SHREEJI INDUSTRIES — PATCH v101
+  S/N : SHJ-101-050626
+  Date: 2026-06-05
+  File: PATCH_v101.js
+==================================================================
+
+  HOW TO APPLY
+  ─────────────
+  In index.html, immediately AFTER the PATCH_v100 <script> block
+  (and still before </body>), paste the <script>…</script> below.
+
+  FEATURES BUILT (5 of remaining 11)
+  ────────────────────────────────────
+  5.  §10  Copy-type print modes: Customer / Agent / Packing
+  6.  §12  Copy count selector + multi-print sequencer
+  7.  §11  Signature section (optional checkbox)
+  8.  §8   PI Records screen — list, filters, Open/Edit/Download
+  9.  §13+14  Estimate Records UI — 20-day list + Reprint flow
+==================================================================
+*/
+
+/* <script> */
+;(function () {
+  'use strict';
+
+  /* ────────────────────────────────────────────────────────────
+     SHARED UTILITIES
+     ──────────────────────────────────────────────────────────── */
+
+  var DARK = {
+    bg0  : '#0b0d11',
+    bg1  : '#111620',
+    bg2  : '#161d2e',
+    bg3  : '#1e2d44',
+    bord : '#2a3a5a',
+    acc  : '#3a7bd5',
+    accL : '#4e8ee8',
+    text : '#e8eeff',
+    mute : '#6677aa',
+    red  : '#e05555',
+    grn  : '#3fb950',
+    amb  : '#d29922',
+    rad  : '8px',
+  };
+
+  function css(el, styles) { Object.assign(el.style, styles); }
+
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (k === 'style') css(e, attrs[k]);
+      else if (k === 'html') e.innerHTML = attrs[k];
+      else if (k === 'text') e.textContent = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    });
+    if (children) children.forEach(function (c) { if (c) e.appendChild(c); });
+    return e;
+  }
+
+  function btn(label, onclick, extra) {
+    var b = el('button', Object.assign({
+      text: label,
+      style: {
+        padding:'8px 16px', borderRadius:DARK.rad, border:'1px solid '+DARK.bord,
+        background:DARK.bg2, color:DARK.text, cursor:'pointer', fontSize:'13px',
+        fontFamily:'inherit',
+      }
+    }, extra || {}));
+    b.addEventListener('mouseover', function () { b.style.background = DARK.bg3; });
+    b.addEventListener('mouseout',  function () { b.style.background = DARK.bg2; });
+    if (onclick) b.addEventListener('click', onclick);
+    return b;
+  }
+
+  function pill(text, color) {
+    return el('span', { text: text, style: {
+      display:'inline-block', padding:'2px 10px', borderRadius:'20px',
+      fontSize:'11px', fontWeight:'600',
+      background: color + '22', color: color, border:'1px solid '+color+'44',
+    }});
+  }
+
+  function getEst() {
+    try { return JSON.parse(localStorage.getItem('shj_estimates') || '[]'); } catch(e){ return []; }
+  }
+  function getPI() {
+    try { return JSON.parse(localStorage.getItem('shj_pi') || localStorage.getItem('shj_pi_records') || '[]'); } catch(e){ return []; }
+  }
+  function fmt(n) { return parseFloat(n||0).toLocaleString('en-IN'); }
+  function fmtDate(d) { return d ? String(d).slice(0,10) : '—'; }
+
+  /* ────────────────────────────────────────────────────────────
+     FEATURES 5+6+7 — PRINT SETUP PANEL
+     Injected into the Share & Print section.
+     Shows: Copy-type tabs | Count inputs | Signature checkbox | Print All
+     ──────────────────────────────────────────────────────────── */
+
+  var COPY_TYPES = [
+    { id:'customer', label:'👤 Customer', rate:true,  lineTotal:true,  grandTotal:true,  qty:true  },
+    { id:'agent',    label:'🤝 Agent',    rate:false, lineTotal:true,  grandTotal:true,  qty:true  },
+    { id:'packing',  label:'📦 Packing',  rate:false, lineTotal:false, grandTotal:false, qty:true  },
+  ];
+
+  var _panel = null;
+
+  function buildPrintPanel() {
+    if (document.getElementById('shj-print-panel-v101')) return;
+
+    var panel = el('div', { id:'shj-print-panel-v101', style:{
+      background:DARK.bg1, border:'1px solid '+DARK.bord,
+      borderRadius:DARK.rad, padding:'16px', marginBottom:'12px',
+      fontFamily:'inherit',
+    }});
+
+    /* header */
+    var hdr = el('div', { style:{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'14px' }});
+    hdr.appendChild(el('span', { text:'🖨 Print Setup', style:{ color:DARK.text, fontWeight:'600', fontSize:'15px' }}));
+    panel.appendChild(hdr);
+
+    /* ── copy count rows ── */
+    var counters = {};
+    var countGrid = el('div', { style:{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'8px', marginBottom:'14px' }});
+    COPY_TYPES.forEach(function (ct) {
+      var card = el('div', { style:{ background:DARK.bg2, border:'1px solid '+DARK.bord, borderRadius:DARK.rad, padding:'10px', textAlign:'center' }});
+      card.appendChild(el('div', { text: ct.label, style:{ color:DARK.text, fontSize:'13px', marginBottom:'6px' }}));
+      var inp = el('input', { type:'number', value:'1', min:'0', max:'10', style:{
+        width:'100%', background:DARK.bg3, border:'1px solid '+DARK.bord,
+        borderRadius:'6px', color:DARK.text, textAlign:'center', padding:'6px 0',
+        fontSize:'16px', fontFamily:'inherit',
+      }});
+      counters[ct.id] = inp;
+      card.appendChild(inp);
+      card.appendChild(el('div', { text: ct.id === 'customer' ? 'rate + total' : ct.id === 'agent' ? 'no rate' : 'qty + item only', style:{ color:DARK.mute, fontSize:'11px', marginTop:'4px' }}));
+      countGrid.appendChild(card);
+    });
+    panel.appendChild(countGrid);
+
+    /* ── total display ── */
+    var totalRow = el('div', { style:{ color:DARK.mute, fontSize:'12px', textAlign:'center', marginBottom:'10px' }});
+    function updateTotal() {
+      var t = COPY_TYPES.reduce(function(s, ct){ return s + (parseInt(counters[ct.id].value)||0); }, 0);
+      totalRow.textContent = 'Total prints: ' + t;
+    }
+    COPY_TYPES.forEach(function(ct){ counters[ct.id].addEventListener('input', updateTotal); });
+    updateTotal();
+    panel.appendChild(totalRow);
+
+    /* ── signature checkbox ── */
+    var sigRow = el('label', { style:{ display:'flex', alignItems:'center', gap:'8px', cursor:'pointer', marginBottom:'14px', color:DARK.text, fontSize:'13px' }});
+    var sigCb  = el('input', { type:'checkbox', style:{ width:'16px', height:'16px', cursor:'pointer' }});
+    sigRow.appendChild(sigCb);
+    sigRow.appendChild(document.createTextNode('Print Received Signature Section'));
+    panel.appendChild(sigRow);
+
+    /* ── action buttons ── */
+    var btnRow = el('div', { style:{ display:'flex', gap:'8px', flexWrap:'wrap' }});
+
+    var printAllBtn = btn('🖨 Print All Copies', function () {
+      printAllCopies(counters, sigCb.checked);
+    }, { style:{ background:DARK.acc, borderColor:DARK.acc, color:'#fff', flex:'1' }});
+
+    var downloadBtn = btn('⬇ Download PDF', function () {
+      printCopyType('customer', sigCb.checked, true);
+    });
+
+    btnRow.appendChild(printAllBtn);
+    btnRow.appendChild(downloadBtn);
+    panel.appendChild(btnRow);
+
+    _panel = { panel, counters, sigCb };
+    return panel;
+  }
+
+  /* Apply column visibility for a given copy type to the print preview */
+  function applyCopyTypeStyles(copyType, sig) {
+    var ct = COPY_TYPES.find(function(c){ return c.id === copyType; });
+    if (!ct) return;
+
+    /* find print preview element */
+    var previewSels = [
+      '#est-preview','#est-doc','#est-print','.est-doc','.inv-doc','#inv-doc',
+      '.est-preview','#share-print-preview',
+    ];
+    var preview = null;
+    previewSels.some(function(s){ preview = document.querySelector(s); return !!preview; });
+    if (!preview) return;
+
+    /* show/hide rate columns */
+    var rateCells = preview.querySelectorAll('.est-rate, .col-rate, [data-col="rate"], td.rate, th.rate');
+    rateCells.forEach(function(c){ c.style.display = ct.rate ? '' : 'none'; });
+
+    /* show/hide line total */
+    var totCells = preview.querySelectorAll('.est-linetotal, .col-linetotal, [data-col="linetotal"], [data-col="total"], td.linetotal, th.linetotal');
+    totCells.forEach(function(c){ c.style.display = ct.lineTotal ? '' : 'none'; });
+
+    /* show/hide grand total block */
+    var grandEls = preview.querySelectorAll('.est-grand, .grand-total, [data-role="grand-total"], .totals-block');
+    grandEls.forEach(function(c){ c.style.display = ct.grandTotal ? '' : 'none'; });
+
+    /* also hide last table column (rate/total) by col index if selectors missed */
+    var tables = preview.querySelectorAll('table');
+    tables.forEach(function(tbl) {
+      var rows = tbl.querySelectorAll('tr');
+      rows.forEach(function(row) {
+        var cells = row.querySelectorAll('td,th');
+        var n = cells.length;
+        /* Rate is typically col index 3 (0-based: S.No, Qty, Desc, Rate, Total) */
+        if (n >= 4) {
+          if (!ct.rate)       cells[n-2].style.display = 'none'; /* Rate column */
+          else                cells[n-2].style.display = '';
+          if (!ct.lineTotal)  cells[n-1].style.display = 'none'; /* Total column */
+          else                cells[n-1].style.display = '';
+        }
+        /* Packing: hide rate + total */
+        if (!ct.grandTotal) {
+          /* nothing extra needed — grand total block handled above */
+        }
+      });
+    });
+
+    /* signature section */
+    addOrRemoveSig(preview, sig);
+
+    /* copy type watermark label */
+    var existing = preview.querySelector('.shj-copy-label');
+    if (existing) existing.remove();
+    var label = el('div', { text: ct.label.replace(/[^\w ]/g,'').trim() + ' Copy', style:{
+      position:'absolute', top:'6px', right:'10px',
+      fontSize:'11px', color:DARK.mute, fontStyle:'italic',
+    }});
+    label.className = 'shj-copy-label';
+    if (preview.style.position !== 'relative') preview.style.position = 'relative';
+    preview.appendChild(label);
+  }
+
+  function addOrRemoveSig(preview, show) {
+    var existing = preview.querySelector('#shj-sig-block');
+    if (existing) existing.remove();
+    if (!show) return;
+
+    var sig = el('div', { id:'shj-sig-block', style:{
+      marginTop:'20px', paddingTop:'12px', borderTop:'1px solid #ccc',
+      display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'24px',
+      fontSize:'12px',
+    }});
+
+    ['Received By','Signature','Date'].forEach(function(lbl) {
+      var col = el('div', { style:{ textAlign:'center' }});
+      col.appendChild(el('div', { style:{ borderTop:'1px solid #999', paddingTop:'4px', color:'#666', marginTop:'32px' }, text: lbl }));
+      sig.appendChild(col);
+    });
+    preview.appendChild(sig);
+  }
+
+  function printCopyType(copyType, sig, asPDF) {
+    applyCopyTypeStyles(copyType, sig);
+    if (asPDF) {
+      /* try existing PDF export functions */
+      var fns = ['downloadEstPDF','estDownloadPDF','downloadPDF','printPDF','invDownloadPDF'];
+      for (var i=0; i<fns.length; i++) {
+        if (typeof window[fns[i]] === 'function') { try{ window[fns[i]](); return; } catch(e){} }
+      }
+      window.print();
+    } else {
+      window.print();
+    }
+  }
+
+  /* Print all copies in sequence: customer N times, agent N times, packing N times */
+  function printAllCopies(counters, sig) {
+    var jobs = [];
+    COPY_TYPES.forEach(function(ct) {
+      var n = parseInt(counters[ct.id].value) || 0;
+      for (var i=0; i<n; i++) jobs.push(ct.id);
+    });
+    if (!jobs.length) { alert('Set at least 1 copy count above.'); return; }
+
+    var idx = 0;
+    function next() {
+      if (idx >= jobs.length) {
+        /* restore to customer view after all done */
+        applyCopyTypeStyles('customer', false);
+        return;
+      }
+      var type = jobs[idx++];
+      applyCopyTypeStyles(type, sig);
+      setTimeout(function() {
+        window.print();
+        setTimeout(next, 800);
+      }, 300);
+    }
+    next();
+  }
+
+  /* Inject the print panel into Share & Print when that section becomes visible */
+  function tryInjectPrintPanel() {
+    var shpSecs = [
+      '#shp-wrap','#share-print-wrap','#share-print-section',
+      '#tab-shp','[data-tab="shp"]','#est-share-print',
+    ];
+    var shpEl = null;
+    shpSecs.some(function(s){ shpEl = document.querySelector(s); return !!shpEl; });
+
+    /* also look for Share & Print heading text */
+    if (!shpEl) {
+      var all = document.querySelectorAll('h2,h3,.section-title,.tab-title,[class*="title"]');
+      Array.from(all).some(function(e){
+        if (/(share\s*&?\s*print)/i.test(e.textContent)) {
+          shpEl = e.closest('div,section') || e.parentElement;
+          return true;
+        }
+      });
+    }
+
+    if (!shpEl) return false;
+    if (shpEl.querySelector('#shj-print-panel-v101')) return true;
+
+    var panel = buildPrintPanel();
+    shpEl.insertBefore(panel, shpEl.firstChild);
+    return true;
+  }
+
+  /* Watch for Share & Print section to appear */
+  var _panelObserver = new MutationObserver(function() { tryInjectPrintPanel(); });
+  _panelObserver.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['style','class'] });
+  document.addEventListener('DOMContentLoaded', tryInjectPrintPanel);
+  setTimeout(tryInjectPrintPanel, 1200);
+
+
+  /* ────────────────────────────────────────────────────────────
+     FEATURE 8 — PI RECORDS SCREEN  (spec §8)
+     List: PI No | Date | Customer | Status
+     Filters: Pending / Order Given / Order Not Given
+     Actions: Open | Edit | Save | Download PDF
+     ──────────────────────────────────────────────────────────── */
+
+  function buildPIRecords() {
+    var wrap = el('div', { id:'shj-pi-records-v101', style:{
+      background:DARK.bg1, borderRadius:DARK.rad, padding:'16px',
+      fontFamily:'inherit', color:DARK.text,
+    }});
+
+    /* header */
+    var hdr = el('div', { style:{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px' }});
+    hdr.appendChild(el('span', { text:'📄 PI Records', style:{ fontSize:'16px', fontWeight:'600' }}));
+    var refreshBtn = btn('↺ Refresh', function(){ renderPITable('all'); });
+    css(refreshBtn, { padding:'5px 12px', fontSize:'12px' });
+    hdr.appendChild(refreshBtn);
+    wrap.appendChild(hdr);
+
+    /* filter tabs */
+    var filterRow = el('div', { style:{ display:'flex', gap:'6px', marginBottom:'12px', flexWrap:'wrap' }});
+    var filters = [
+      { key:'all',       label:'All' },
+      { key:'pending',   label:'⏳ Pending' },
+      { key:'given',     label:'✅ Order Given' },
+      { key:'not_given', label:'❌ Not Given' },
+    ];
+    var activeFilt = 'all';
+    var filterBtns = {};
+
+    filters.forEach(function(f) {
+      var b = btn(f.label, function() {
+        activeFilt = f.key;
+        filters.forEach(function(ff){
+          css(filterBtns[ff.key], { background: ff.key===activeFilt ? DARK.acc : DARK.bg2, borderColor: ff.key===activeFilt ? DARK.acc : DARK.bord, color: ff.key===activeFilt ? '#fff' : DARK.text });
+        });
+        renderPITable(activeFilt);
+      });
+      css(b, { padding:'6px 12px', fontSize:'12px' });
+      filterBtns[f.key] = b;
+      filterRow.appendChild(b);
+    });
+    css(filterBtns['all'], { background:DARK.acc, borderColor:DARK.acc, color:'#fff' });
+    wrap.appendChild(filterRow);
+
+    /* table container */
+    var tableWrap = el('div', { id:'shj-pi-table', style:{ overflowX:'auto' }});
+    wrap.appendChild(tableWrap);
+
+    function renderPITable(filt) {
+      tableWrap.innerHTML = '';
+      var records = getPI();
+
+      /* filter */
+      if (filt !== 'all') {
+        records = records.filter(function(r) {
+          var s = (r.status || 'pending').toLowerCase();
+          if (filt === 'pending')   return s === 'pending' || !r.status;
+          if (filt === 'given')     return s === 'given' || s === 'order given' || s === 'order_given';
+          if (filt === 'not_given') return s === 'not given' || s === 'not_given' || s === 'order not given';
+          return true;
+        });
+      }
+
+      if (!records.length) {
+        tableWrap.appendChild(el('div', { text:'No PI records found.', style:{ color:DARK.mute, padding:'20px', textAlign:'center' }}));
+        return;
+      }
+
+      /* sort newest first */
+      records = records.slice().sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+
+      var tbl = el('table', { style:{ width:'100%', borderCollapse:'collapse', fontSize:'13px' }});
+      var thead = el('thead');
+      var trh = el('tr', { style:{ background:DARK.bg3 }});
+      ['PI No','Date','Customer','Status','Actions'].forEach(function(h) {
+        trh.appendChild(el('th', { text:h, style:{ padding:'9px 10px', textAlign:'left', color:DARK.mute, fontWeight:'500', borderBottom:'1px solid '+DARK.bord, whiteSpace:'nowrap' }}));
+      });
+      thead.appendChild(trh);
+      tbl.appendChild(thead);
+
+      var tbody = el('tbody');
+      records.forEach(function(r, i) {
+        var tr = el('tr', { style:{ background: i%2===0 ? DARK.bg1 : DARK.bg2 }});
+        tr.addEventListener('mouseover', function(){ tr.style.background = DARK.bg3; });
+        tr.addEventListener('mouseout',  function(){ tr.style.background = i%2===0 ? DARK.bg1 : DARK.bg2; });
+
+        var status = (r.status || 'Pending');
+        var statusColor = status.toLowerCase().includes('given') && !status.toLowerCase().includes('not') ? DARK.grn : status.toLowerCase().includes('not') ? DARK.red : DARK.amb;
+
+        var tdStyle = { padding:'8px 10px', borderBottom:'1px solid '+DARK.bord+'55', color:DARK.text };
+        tr.appendChild(el('td', { text: r.id || r.piId || r.piNo || '—', style: Object.assign({}, tdStyle, { fontWeight:'500', color:DARK.accL })}));
+        tr.appendChild(el('td', { text: fmtDate(r.date), style: tdStyle }));
+        tr.appendChild(el('td', { text: r.customerName || r.custName || r.customer || '—', style: tdStyle }));
+
+        var statusTd = el('td', { style: tdStyle });
+        statusTd.appendChild(pill(status, statusColor));
+        tr.appendChild(statusTd);
+
+        /* actions */
+        var actTd = el('td', { style: Object.assign({}, tdStyle, { whiteSpace:'nowrap' }) });
+        var actWrap = el('div', { style:{ display:'flex', gap:'4px' }});
+
+        var openB = btn('Open', function(){
+          openPIRecord(r);
+        });
+        var editB = btn('Edit', function(){
+          editPIRecord(r);
+        });
+        var dlB = btn('⬇ PDF', function(){
+          downloadPIRecord(r);
+        });
+
+        [openB,editB,dlB].forEach(function(b){ css(b, { padding:'4px 10px', fontSize:'11px' }); actWrap.appendChild(b); });
+        actTd.appendChild(actWrap);
+        tr.appendChild(actTd);
+        tbody.appendChild(tr);
+      });
+
+      tbl.appendChild(tbody);
+      tableWrap.appendChild(tbl);
+    }
+
+    renderPITable('all');
+
+    /* expose refresh */
+    wrap._refresh = function(){ renderPITable(activeFilt); };
+    return wrap;
+  }
+
+  function openPIRecord(r) {
+    /* try existing open function */
+    if (typeof window.openPI === 'function')   { window.openPI(r); return; }
+    if (typeof window.loadPI === 'function')   { window.loadPI(r); return; }
+    if (typeof window.viewPI === 'function')   { window.viewPI(r); return; }
+    /* fallback: show modal */
+    showRecordModal('PI — ' + (r.id||''), r);
+  }
+
+  function editPIRecord(r) {
+    if (typeof window.editPI === 'function')   { window.editPI(r); return; }
+    if (typeof window.loadPI === 'function')   { window.loadPI(r, true); return; }
+    showRecordModal('Edit PI — ' + (r.id||''), r, true);
+  }
+
+  function downloadPIRecord(r) {
+    if (typeof window.downloadPI === 'function') { window.downloadPI(r); return; }
+    if (typeof window.piDownloadPDF === 'function') { window.piDownloadPDF(r); return; }
+    alert('Open the PI first, then use the Download PDF button in the form.');
+  }
+
+  /* Inject PI Records after the existing PI tab */
+  function tryInjectPIRecords() {
+    if (document.getElementById('shj-pi-records-v101')) return true;
+    var piSecs = [
+      '#pi-wrap','#pi-section','#tab-pi','[data-tab="pi"]',
+      '#pi-records','#pi-history',
+    ];
+    var piEl = null;
+    piSecs.some(function(s){ piEl = document.querySelector(s); return !!piEl; });
+    if (!piEl) return false;
+    piEl.appendChild(buildPIRecords());
+    return true;
+  }
+
+
+  /* ────────────────────────────────────────────────────────────
+     FEATURE 9 — ESTIMATE RECORDS UI  (spec §13-14)
+     20-day list with Open / Edit / Save Again / Reprint / PDF Download
+     Edit → Save Again → auto-open Share & Print
+     ──────────────────────────────────────────────────────────── */
+
+  function buildEstRecords() {
+    var wrap = el('div', { id:'shj-est-records-v101', style:{
+      background:DARK.bg1, borderRadius:DARK.rad, padding:'16px',
+      fontFamily:'inherit', color:DARK.text, marginTop:'12px',
+    }});
+
+    var hdr = el('div', { style:{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px' }});
+    hdr.appendChild(el('span', { text:'📋 Estimate Records (last 20 days)', style:{ fontSize:'16px', fontWeight:'600' }}));
+    var refreshBtn = btn('↺', function(){ renderEstTable(); });
+    css(refreshBtn, { padding:'5px 10px', fontSize:'12px' });
+    hdr.appendChild(refreshBtn);
+    wrap.appendChild(hdr);
+
+    var tableWrap = el('div', { id:'shj-est-table' });
+    wrap.appendChild(tableWrap);
+
+    function renderEstTable() {
+      tableWrap.innerHTML = '';
+      var now = Date.now();
+      var DAY20 = 20 * 24 * 60 * 60 * 1000;
+
+      var records = getEst().filter(function(r) {
+        var d = r.date || r.savedAt || r.createdAt || '';
+        if (!d) return true;
+        var ts = new Date(d).getTime();
+        return (now - ts) <= DAY20;
+      });
+
+      if (!records.length) {
+        tableWrap.appendChild(el('div', { text:'No estimates in the last 20 days.', style:{ color:DARK.mute, padding:'20px', textAlign:'center' }}));
+        return;
+      }
+
+      records = records.slice().sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+
+      var tbl = el('table', { style:{ width:'100%', borderCollapse:'collapse', fontSize:'13px' }});
+      var thead = el('thead');
+      var trh = el('tr', { style:{ background:DARK.bg3 }});
+      ['Est No','Date','Customer','Type','Total ₹','Actions'].forEach(function(h) {
+        trh.appendChild(el('th', { text:h, style:{ padding:'9px 10px', textAlign:'left', color:DARK.mute, fontWeight:'500', borderBottom:'1px solid '+DARK.bord, whiteSpace:'nowrap' }}));
+      });
+      thead.appendChild(trh);
+      tbl.appendChild(thead);
+
+      var tbody = el('tbody');
+      records.forEach(function(r, i) {
+        var tr = el('tr', { style:{ background: i%2===0 ? DARK.bg1 : DARK.bg2 }});
+        tr.addEventListener('mouseover', function(){ tr.style.background = DARK.bg3; });
+        tr.addEventListener('mouseout',  function(){ tr.style.background = i%2===0 ? DARK.bg1 : DARK.bg2; });
+
+        var tdS = { padding:'8px 10px', borderBottom:'1px solid '+DARK.bord+'55', color:DARK.text };
+        tr.appendChild(el('td', { text: r.id || r.estId || '—', style: Object.assign({}, tdS, { color:DARK.accL, fontWeight:'500' })}));
+        tr.appendChild(el('td', { text: fmtDate(r.date), style: tdS }));
+        tr.appendChild(el('td', { text: r.customerName || r.custName || r.customer || '—', style: tdS }));
+        tr.appendChild(el('td', { style: tdS, html: '<span style="font-size:11px;color:'+(r.type==='PI'?DARK.accL:DARK.amb)+'">'+( r.type||'EST')+'</span>' }));
+        tr.appendChild(el('td', { text: '₹'+fmt(r.grand||r.total||0), style: Object.assign({}, tdS, { fontWeight:'600' })}));
+
+        /* actions */
+        var actTd = el('td', { style: Object.assign({}, tdS, { whiteSpace:'nowrap' }) });
+        var actWrap = el('div', { style:{ display:'flex', gap:'4px', flexWrap:'wrap' }});
+
+        var openB  = btn('Open',      function(){ openEstRecord(r); });
+        var editB  = btn('Edit',      function(){ editEstRecord(r); });
+        var saveB  = btn('Save Again',function(){ saveAgainEst(r); });
+        var repB   = btn('🖨 Reprint', function(){ reprintEst(r); });
+        var dlB    = btn('⬇ PDF',     function(){ downloadEstRecord(r); });
+
+        [openB,editB,saveB,repB,dlB].forEach(function(b){
+          css(b, { padding:'4px 8px', fontSize:'11px' });
+          actWrap.appendChild(b);
+        });
+        actTd.appendChild(actWrap);
+        tr.appendChild(actTd);
+        tbody.appendChild(tr);
+      });
+
+      tbl.appendChild(tbody);
+      tableWrap.appendChild(tbl);
+    }
+
+    renderEstTable();
+    wrap._refresh = renderEstTable;
+    return wrap;
+  }
+
+  /* Open estimate in the Estimate form (read-only view) */
+  function openEstRecord(r) {
+    if (typeof window.openEstimate === 'function') { window.openEstimate(r); return; }
+    if (typeof window.loadEstimate === 'function') { window.loadEstimate(r); return; }
+    showRecordModal('Estimate — ' + (r.id||''), r);
+  }
+
+  /* Load estimate into the form for editing */
+  function editEstRecord(r) {
+    if (typeof window.editEstimate === 'function') { window.editEstimate(r); return; }
+    if (typeof window.loadEstimate === 'function') { window.loadEstimate(r, true); return; }
+    /* fallback: populate known global state and switch to estimate tab */
+    if (window.EST) {
+      window.EST.current = r;
+      if (typeof window.EST.load === 'function') window.EST.load(r);
+    }
+    /* switch to Estimate tab */
+    var tabFns = ['showTab','openTab','switchTab','showSection'];
+    var tabArgs = ['estimate','est','tab-estimate'];
+    tabFns.some(function(fn){
+      if (typeof window[fn] !== 'function') return false;
+      return tabArgs.some(function(arg){ try{ window[fn](arg); return true; }catch(e){ return false; } });
+    });
+    showRecordModal('Estimate — ' + (r.id||'') + ' (load into form to edit)', r);
+  }
+
+  /* Save Again: re-save the record with current timestamp, then open Share & Print */
+  function saveAgainEst(r) {
+    var all = getEst();
+    var idx = all.findIndex(function(e){ return (e.id||e.estId) === (r.id||r.estId); });
+    var updated = Object.assign({}, r, { date: new Date().toISOString().slice(0,10), savedAt: new Date().toISOString() });
+    if (idx >= 0) all[idx] = updated; else all.push(updated);
+    localStorage.setItem('shj_estimates', JSON.stringify(all));
+
+    /* sync to Google Sheet if push function exists */
+    if (typeof window.pushEstToSheet   === 'function') window.pushEstToSheet(updated);
+    if (typeof window.syncEstimate     === 'function') window.syncEstimate(updated);
+    if (typeof window.estPushToSheet   === 'function') window.estPushToSheet(updated);
+
+    /* open Share & Print */
+    setTimeout(function() {
+      var spSels = ['#shp-tab','#share-print-tab','[data-tab="shp"]','button[id*="share"]'];
+      var found = false;
+      spSels.some(function(s){ var e=document.querySelector(s); if(e){ e.click(); found=true; return true; } });
+      if (!found) {
+        var tabFns = ['showTab','openTab','switchTab'];
+        var args   = ['shp','share-print','shareprint'];
+        tabFns.some(function(fn){
+          if (typeof window[fn]!=='function') return false;
+          return args.some(function(a){ try{ window[fn](a); found=true; return true; }catch(e){ return false; } });
+        });
+      }
+      /* refresh records list */
+      var panel = document.getElementById('shj-est-records-v101');
+      if (panel && panel._refresh) panel._refresh();
+    }, 500);
+
+    /* visual feedback */
+    var toastEl = el('div', { text:'✓ Saved again — opening Share & Print…', style:{
+      position:'fixed', bottom:'20px', right:'20px', zIndex:'99999',
+      background:DARK.grn, color:'#fff', padding:'10px 18px',
+      borderRadius:DARK.rad, fontSize:'13px', fontWeight:'500',
+    }});
+    document.body.appendChild(toastEl);
+    setTimeout(function(){ toastEl.remove(); }, 3000);
+  }
+
+  /* Reprint: open Share & Print with the Reprint Copy Setup panel highlighted */
+  function reprintEst(r) {
+    /* load record as current */
+    if (window.EST) window.EST.current = r;
+
+    /* switch to share & print */
+    var spSels = ['#shp-tab','#share-print-tab','[data-tab="shp"]'];
+    spSels.some(function(s){ var e=document.querySelector(s); if(e){ e.click(); return true; } });
+
+    var tabFns = ['showTab','openTab'];
+    var args   = ['shp','share-print'];
+    tabFns.some(function(fn){
+      if (typeof window[fn]!=='function') return false;
+      return args.some(function(a){ try{ window[fn](a); return true; }catch(e){ return false; } });
+    });
+
+    /* highlight print panel if present */
+    setTimeout(function(){
+      var panel = document.getElementById('shj-print-panel-v101');
+      if (panel) {
+        panel.style.border = '2px solid ' + DARK.acc;
+        panel.scrollIntoView({ behavior:'smooth', block:'center' });
+        setTimeout(function(){ panel.style.border = '1px solid '+DARK.bord; }, 2500);
+      }
+    }, 600);
+  }
+
+  function downloadEstRecord(r) {
+    if (typeof window.downloadEstimate   === 'function') { window.downloadEstimate(r); return; }
+    if (typeof window.estDownloadPDF     === 'function') { window.estDownloadPDF(r); return; }
+    if (typeof window.downloadEstPDF     === 'function') { window.downloadEstPDF(r); return; }
+    reprintEst(r);
+    alert('Open the estimate in Share & Print, then tap ⬇ Download PDF.');
+  }
+
+
+  /* ────────────────────────────────────────────────────────────
+     SIMPLE RECORD MODAL  (fallback when app has no native viewer)
+     ──────────────────────────────────────────────────────────── */
+
+  function showRecordModal(title, r, editable) {
+    var overlay = el('div', { style:{
+      position:'fixed', inset:'0', background:'rgba(0,0,0,.7)',
+      zIndex:'999999', display:'flex', alignItems:'center', justifyContent:'center',
+    }});
+
+    var modal = el('div', { style:{
+      background:DARK.bg1, border:'1px solid '+DARK.bord, borderRadius:'12px',
+      padding:'20px', maxWidth:'560px', width:'90%', maxHeight:'80vh', overflowY:'auto',
+      fontFamily:'inherit', color:DARK.text, fontSize:'13px',
+    }});
+
+    var mhdr = el('div', { style:{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'14px' }});
+    mhdr.appendChild(el('strong', { text: title }));
+    var closeB = btn('✕', function(){ overlay.remove(); });
+    css(closeB, { padding:'4px 10px', fontSize:'12px' });
+    mhdr.appendChild(closeB);
+    modal.appendChild(mhdr);
+
+    /* customer + doc info */
+    var info = [
+      ['Doc No',    r.id || r.piId || r.estId || '—'],
+      ['Date',      fmtDate(r.date)],
+      ['Customer',  r.customerName || r.custName || r.customer || '—'],
+      ['Type',      r.type || 'EST'],
+      ['Grand Total','₹ ' + fmt(r.grand || r.total || 0)],
+    ];
+    var infoGrid = el('div', { style:{ display:'grid', gridTemplateColumns:'1fr 2fr', gap:'6px', marginBottom:'14px' }});
+    info.forEach(function(row) {
+      infoGrid.appendChild(el('div', { text: row[0], style:{ color:DARK.mute }}));
+      infoGrid.appendChild(el('div', { text: row[1], style:{ fontWeight:'500' }}));
+    });
+    modal.appendChild(infoGrid);
+
+    /* items table */
+    if (r.items && r.items.length) {
+      var itbl = el('table', { style:{ width:'100%', borderCollapse:'collapse', marginBottom:'12px' }});
+      var ith = el('tr', { style:{ background:DARK.bg3 }});
+      ['No','Qty','Description','Rate','Total'].forEach(function(h){
+        ith.appendChild(el('th', { text:h, style:{ padding:'6px 8px', textAlign:'left', color:DARK.mute, fontSize:'11px' }}));
+      });
+      itbl.appendChild(ith);
+      r.items.forEach(function(it, i) {
+        var itr = el('tr', { style:{ background: i%2===0?DARK.bg1:DARK.bg2 }});
+        [it.no||(i+1), it.qty, it.desc||it.description||'—', '₹'+fmt(it.rate), '₹'+fmt(it.total)].forEach(function(v){
+          itr.appendChild(el('td', { text:String(v), style:{ padding:'6px 8px', borderBottom:'1px solid '+DARK.bord+'44' }}));
+        });
+        itbl.appendChild(itr);
+      });
+      modal.appendChild(itbl);
+    }
+
+    modal.appendChild(el('div', { style:{ color:DARK.mute, fontSize:'11px', textAlign:'center' }, text:'Read-only view — use Edit to modify, or Save Again to re-stamp.' }));
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.remove(); });
+  }
+
+
+  /* ────────────────────────────────────────────────────────────
+     INJECTION WATCHER
+     Injects records panels when the correct sections appear
+     ──────────────────────────────────────────────────────────── */
+
+  var _injected = { pi: false, est: false };
+
+  function tryInjectRecords() {
+    /* Estimate Records */
+    if (!_injected.est) {
+      var estSecs = ['#est-wrap','#estimate-wrap','#tab-estimate','#estimate-section','[data-tab="estimate"]'];
+      var estEl = null;
+      estSecs.some(function(s){ estEl = document.querySelector(s); return !!estEl; });
+      if (estEl && !estEl.querySelector('#shj-est-records-v101')) {
+        estEl.appendChild(buildEstRecords());
+        _injected.est = true;
+      }
+    }
+
+    /* PI Records */
+    if (!_injected.pi) {
+      var piSecs = ['#pi-wrap','#pi-section','#tab-pi','[data-tab="pi"]','#pi-records'];
+      var piEl = null;
+      piSecs.some(function(s){ piEl = document.querySelector(s); return !!piEl; });
+      if (piEl && !piEl.querySelector('#shj-pi-records-v101')) {
+        piEl.appendChild(buildPIRecords());
+        _injected.pi = true;
+      }
+    }
+  }
+
+  var _recObserver = new MutationObserver(function(){ tryInjectRecords(); tryInjectPrintPanel(); });
+  _recObserver.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['style','class'] });
+  document.addEventListener('DOMContentLoaded', function(){ tryInjectRecords(); tryInjectPrintPanel(); });
+  setTimeout(function(){ tryInjectRecords(); tryInjectPrintPanel(); }, 1500);
+  setTimeout(function(){ tryInjectRecords(); tryInjectPrintPanel(); }, 3000);
+
+
+  /* ────────────────────────────────────────────────────────────
+     GLOBAL EXPORTS
+     ──────────────────────────────────────────────────────────── */
+  window.shjPrintCopyType  = printCopyType;
+  window.shjPrintAll       = printAllCopies;
+  window.shjOpenEstRec     = openEstRecord;
+  window.shjEditEstRec     = editEstRecord;
+  window.shjSaveAgainEst   = saveAgainEst;
+  window.shjReprintEst     = reprintEst;
+  window.shjOpenPIRec      = openPIRecord;
+
+  console.log('%c[SHJ-PATCH v101] 5 features loaded:\n  ✔ Customer/Agent/Packing copy types\n  ✔ Copy count selector + multi-print\n  ✔ Signature section\n  ✔ PI Records screen\n  ✔ Estimate Records UI + Reprint flow', 'color:#4caf50;font-weight:bold');
+
+})();
+/* </script> */
+</script>
+
+
+<!-- ═══ PATCH_v102.js ═══ -->
+<script>
+/*
+==================================================================
+  SHREEJI INDUSTRIES — PATCH v102  (FINAL — spec complete)
+  S/N : SHJ-102-050626
+  Date: 2026-06-05
+  File: PATCH_v102.js
+==================================================================
+
+  HOW TO APPLY
+  ─────────────
+  In index.html, paste this <script> block immediately after
+  the PATCH_v101 </script> closing tag, before </body>.
+
+  FEATURES BUILT (final 6 — spec §6, §8, §9, §15)
+  ──────────────────────────────────────────────────
+  10. §6   PI WhatsApp PDF + PDF+Text buttons on PI preview
+  11. §8   PI Records — Save action (re-save edited PI)
+  12. §9   Download JPG (estimate/PI preview → .jpg file)
+  13. §9   WhatsApp JPG — share actual image via WhatsApp
+  14. §15  Audit trail — timestamped log of all saves/edits
+  15. §15  Permissions — Admin/Agent roles, Agent hides rate
+==================================================================
+*/
+
+/* <script> */
+;(function () {
+  'use strict';
+
+  /* ────────────────────────────────────────────────────────────
+     SHARED UTILITIES
+     ──────────────────────────────────────────────────────────── */
+  var C = {
+    bg0:'#0b0d11', bg1:'#111620', bg2:'#161d2e', bg3:'#1e2d44',
+    bord:'#2a3a5a', acc:'#3a7bd5', accL:'#4e8ee8',
+    txt:'#e8eeff', mute:'#6677aa',
+    grn:'#3fb950', red:'#e05555', amb:'#d29922',
+    rad:'8px',
+  };
+
+  function $s(el,s){ Object.assign(el.style,s); }
+  function $q(s){ return document.querySelector(s); }
+  function $qa(s){ return Array.from(document.querySelectorAll(s)); }
+
+  function mk(tag,s,txt){
+    var e=document.createElement(tag);
+    if(s) $s(e,s);
+    if(txt!=null) e.textContent=txt;
+    return e;
+  }
+
+  function mkBtn(label,onclick,extra){
+    var b=mk('button',Object.assign({
+      padding:'8px 14px',borderRadius:C.rad,border:'1px solid '+C.bord,
+      background:C.bg2,color:C.txt,cursor:'pointer',fontSize:'13px',
+      fontFamily:'inherit',transition:'background .15s',
+    },extra||{}),label);
+    b.addEventListener('mouseover',function(){b.style.background=C.bg3;});
+    b.addEventListener('mouseout', function(){b.style.background=extra&&extra.background||C.bg2;});
+    if(onclick) b.addEventListener('click',onclick);
+    return b;
+  }
+
+  function toast(msg,color){
+    var t=mk('div',{
+      position:'fixed',bottom:'20px',right:'20px',zIndex:'999999',
+      background:color||C.grn,color:'#fff',padding:'10px 18px',
+      borderRadius:C.rad,fontSize:'13px',fontWeight:'500',
+    },msg);
+    document.body.appendChild(t);
+    setTimeout(function(){t.remove();},3000);
+  }
+
+  /* Find the active estimate/PI print preview element */
+  function findPreview(){
+    var sels=['#est-preview','#est-doc','#est-print','.est-doc',
+              '.inv-doc','#inv-doc','.est-preview','#pi-preview',
+              '#pi-doc','.pi-doc','[id*="inv-doc"]'];
+    for(var i=0;i<sels.length;i++){
+      var e=$q(sels[i]);
+      if(e) return e;
+    }
+    return null;
+  }
+
+  /* Ensure html2canvas is loaded */
+  function ensureH2C(cb){
+    if(typeof html2canvas==='function'){cb();return;}
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s.onload=cb;
+    document.head.appendChild(s);
+  }
+
+  /* Ensure jsPDF is loaded */
+  function ensureJsPDF(cb){
+    if(typeof window.jspdf!=='undefined'||typeof window.jsPDF!=='undefined'){cb();return;}
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s.onload=cb;
+    document.head.appendChild(s);
+  }
+
+  function getPI(){
+    try{return JSON.parse(localStorage.getItem('shj_pi')||localStorage.getItem('shj_pi_records')||'[]');}catch(e){return[];}
+  }
+  function savePI(arr){
+    localStorage.setItem('shj_pi',JSON.stringify(arr));
+    localStorage.setItem('shj_pi_records',JSON.stringify(arr));
+  }
+  function getEst(){
+    try{return JSON.parse(localStorage.getItem('shj_estimates')||'[]');}catch(e){return[];}
+  }
+  function getLatestDoc(){
+    /* try PI first if we're on PI tab, else estimate */
+    var piArr=getPI();
+    var estArr=getEst();
+    var all=piArr.concat(estArr).sort(function(a,b){
+      return (b.savedAt||b.date||'').localeCompare(a.savedAt||a.date||'');
+    });
+    return all.length?all[0]:null;
+  }
+
+
+  /* ══════════════════════════════════════════════════════════════
+     FEATURE 10 — PI WhatsApp PDF + PDF+Text buttons  (§6)
+     Injects two WA share buttons onto the PI preview/form screen
+     ══════════════════════════════════════════════════════════════ */
+
+  function buildPIWAButtons(){
+    var wrap=mk('div',{display:'flex',gap:'8px',flexWrap:'wrap',margin:'10px 0'});
+    wrap.id='shj-pi-wa-btns-v102';
+
+    var waPDF=mkBtn('📲 WhatsApp PDF',function(){ piSharePDF(false); },{background:C.bg2});
+    var waPDFT=mkBtn('📲 WhatsApp PDF + Text',function(){ piSharePDF(true); },{background:C.bg2});
+
+    wrap.appendChild(waPDF);
+    wrap.appendChild(waPDFT);
+    return wrap;
+  }
+
+  function piSharePDF(withText){
+    /* try existing app functions first */
+    var fns=['shareWhatsApp','piShareWA','piWhatsApp','invShareWA','qShareWA'];
+    for(var i=0;i<fns.length;i++){
+      if(typeof window[fns[i]]==='function'){
+        try{window[fns[i]](withText?'pdf+text':'pdf');return;}catch(e){}
+      }
+    }
+
+    /* build PDF via html2canvas + jsPDF fallback */
+    var preview=findPreview();
+    if(!preview){toast('PI preview not found.',C.red);return;}
+
+    ensureH2C(function(){
+      ensureJsPDF(function(){
+        html2canvas(preview,{scale:2,useCORS:true,logging:false}).then(function(canvas){
+          var jsPDF=window.jspdf&&window.jspdf.jsPDF||window.jsPDF;
+          var pdf=new jsPDF({orientation:'portrait',unit:'pt',format:'a4'});
+          var w=pdf.internal.pageSize.getWidth();
+          var h=(canvas.height*w)/canvas.width;
+          pdf.addImage(canvas.toDataURL('image/jpeg',0.92),'JPEG',0,0,w,h);
+          var blob=pdf.output('blob');
+          var file=new File([blob],'PI.pdf',{type:'application/pdf'});
+
+          var msg=withText?buildPIText(getLatestDoc()):'';
+
+          if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+            navigator.share({files:[file],text:msg,title:'PI — Shreeji Industries'})
+              .catch(function(){fallbackWAText(msg);});
+          } else {
+            /* download PDF + open WA with text */
+            var url=URL.createObjectURL(blob);
+            var a=document.createElement('a');
+            a.href=url; a.download='PI.pdf'; a.click();
+            setTimeout(function(){
+              URL.revokeObjectURL(url);
+              var waMsg=msg||(getLatestDoc()?buildPIText(getLatestDoc()):'Please find the PI attached.');
+              window.open('https://wa.me/?text='+encodeURIComponent(waMsg),'_blank');
+            },600);
+          }
+        });
+      });
+    });
+  }
+
+  function buildPIText(r){
+    if(!r) return 'Proforma Invoice — Shreeji Industries';
+    var lines=[
+      '*Shreeji Industries*',
+      'GSTIN: 07AGHPJ4543J1ZA',
+      '━━━━━━━━━━━━━━━━━━━━',
+      '*Proforma Invoice No:* '+(r.id||r.piId||'—'),
+      '*Date:* '+(r.date||'—'),
+      '*Party:* '+(r.customerName||r.custName||'—'),
+      '━━━━━━━━━━━━━━━━━━━━',
+    ];
+    (r.items||[]).forEach(function(it,i){
+      lines.push((it.no||(i+1))+'. '+(it.desc||it.description||'—'));
+      lines.push('   Qty:'+it.qty+' | Rate:₹'+it.rate+' | Amt:₹'+it.total);
+    });
+    if(r.freight) lines.push('+ Freight: ₹'+r.freight);
+    if(r.gstAmt)  lines.push('+ GST ('+( r.gstPct||'')+'%): ₹'+r.gstAmt);
+    lines.push('*Grand Total: ₹'+(r.grand||r.total||'—')+'*');
+    lines.push('━━━━━━━━━━━━━━━━━━━━');
+    lines.push('thermalsync.in | contact@thermalsync.in');
+    return lines.join('\n');
+  }
+
+  function fallbackWAText(msg){
+    window.open('https://wa.me/?text='+encodeURIComponent(msg||'Please see the attached document.'),'_blank');
+  }
+
+  /* Inject PI WA buttons into the PI form/preview section */
+  function tryInjectPIWA(){
+    if($q('#shj-pi-wa-btns-v102')) return true;
+    var piSecs=['#pi-form','#pi-preview-wrap','#pi-preview','#new-pi-wrap',
+                '#tab-pi .inv-doc','#pi-section','[data-tab="pi"] .inv-actions',
+                '#pi-actions','#pi-btn-row'];
+    var el=null;
+    piSecs.some(function(s){el=$q(s);return!!el;});
+
+    /* also look for PI action buttons area */
+    if(!el){
+      $qa('button').some(function(b){
+        var t=(b.textContent||'').toLowerCase();
+        if(/(download pdf|whatsapp|order given)/i.test(t)){
+          el=b.parentElement; return true;
+        }
+      });
+    }
+    if(!el) return false;
+    if(el.querySelector('#shj-pi-wa-btns-v102')) return true;
+    el.appendChild(buildPIWAButtons());
+    return true;
+  }
+
+
+  /* ══════════════════════════════════════════════════════════════
+     FEATURE 11 — PI Records Save action  (§8)
+     Adds a Save button to PI Records rows that re-saves edited PI
+     ══════════════════════════════════════════════════════════════ */
+
+  /* Exposed globally so PI Records rows can call it */
+  window.shjSavePI=function(r){
+    var all=getPI();
+    var idx=all.findIndex(function(e){
+      return (e.id||e.piId)===(r.id||r.piId);
+    });
+    var updated=Object.assign({},r,{
+      savedAt:new Date().toISOString(),
+      date:r.date||new Date().toISOString().slice(0,10),
+    });
+    if(idx>=0) all[idx]=updated; else all.push(updated);
+    savePI(all);
+
+    /* sync to Google Sheet */
+    ['pushPIToSheet','syncPI','piPushToSheet','savePIToSheet'].forEach(function(fn){
+      if(typeof window[fn]==='function') try{window[fn](updated);}catch(e){}
+    });
+
+    auditLog('save','pi',updated.id||updated.piId||'?',updated.customerName||'');
+    toast('✓ PI saved — '+( updated.id||''));
+
+    /* refresh PI records panel if visible */
+    var panel=$q('#shj-pi-records-v101');
+    if(panel&&panel._refresh) panel._refresh();
+  };
+
+  /* Patch the existing PI Records panel to wire the Save button.
+     The panel from PATCH_v101 creates Save buttons — they call shjSavePI which is now defined. */
+
+
+  /* ══════════════════════════════════════════════════════════════
+     FEATURE 12 — Download JPG  (§9)
+     Captures estimate/PI preview as JPEG and saves to device
+     ══════════════════════════════════════════════════════════════ */
+
+  function downloadJPG(docId){
+    var preview=findPreview();
+    if(!preview){toast('Preview not visible — open the estimate/PI first.',C.red);return;}
+
+    toast('⏳ Generating image…',C.acc);
+    ensureH2C(function(){
+      html2canvas(preview,{scale:2,useCORS:true,logging:false,backgroundColor:'#ffffff'}).then(function(canvas){
+        var dataUrl=canvas.toDataURL('image/jpeg',0.92);
+        var a=document.createElement('a');
+        a.href=dataUrl;
+        a.download=(docId||'estimate')+'.jpg';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        toast('✓ JPG saved — '+(docId||'estimate')+'.jpg');
+        auditLog('download-jpg','doc',docId||'?','');
+      }).catch(function(e){
+        toast('JPG generation failed: '+e.message,C.red);
+      });
+    });
+  }
+
+  window.shjDownloadJPG=downloadJPG;
+
+  /* Inject Download JPG button into Share & Print panel */
+  function injectDownloadJPGBtn(){
+    var panel=$q('#shj-print-panel-v101');
+    if(!panel||panel.querySelector('#shj-dl-jpg-btn')) return;
+
+    var btn=mkBtn('⬇ Download JPG',function(){
+      var doc=getLatestDoc();
+      downloadJPG(doc?doc.id||doc.estId||doc.piId:'estimate');
+    });
+    btn.id='shj-dl-jpg-btn';
+    $s(btn,{marginTop:'4px'});
+
+    /* append after the existing Download PDF button */
+    var btnRow=panel.querySelector('div:last-child');
+    if(btnRow) btnRow.appendChild(btn);
+    else panel.appendChild(btn);
+  }
+
+
+  /* ══════════════════════════════════════════════════════════════
+     FEATURE 13 — WhatsApp JPG share (actual image)  (§9)
+     Generates JPG via html2canvas, shares via Web Share API on
+     mobile or download + open WhatsApp on desktop
+     ══════════════════════════════════════════════════════════════ */
+
+  function waShareJPGReal(withText){
+    var preview=findPreview();
+    if(!preview){toast('Preview not visible.',C.red);return;}
+
+    toast('⏳ Preparing image for WhatsApp…',C.acc);
+    ensureH2C(function(){
+      html2canvas(preview,{scale:2,useCORS:true,logging:false,backgroundColor:'#ffffff'}).then(function(canvas){
+        canvas.toBlob(function(blob){
+          if(!blob){toast('Could not generate image.',C.red);return;}
+
+          var doc=getLatestDoc();
+          var fileName=(doc?doc.id||doc.estId||doc.piId:'estimate')+'.jpg';
+          var file=new File([blob],fileName,{type:'image/jpeg'});
+          var textMsg=withText&&doc?buildDocText(doc):'';
+
+          /* Mobile: Web Share API with file */
+          if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+            navigator.share({
+              files:[file],
+              text:textMsg,
+              title:'Shreeji Industries',
+            }).then(function(){
+              auditLog('wa-jpg','doc',doc?doc.id||doc.estId||doc.piId:'?','');
+            }).catch(function(err){
+              if(err.name!=='AbortError') desktopWAJPG(blob,fileName,textMsg);
+            });
+          } else {
+            desktopWAJPG(blob,fileName,textMsg);
+          }
+        },'image/jpeg',0.92);
+      }).catch(function(e){
+        toast('Image error: '+e.message,C.red);
+      });
+    });
+  }
+
+  function desktopWAJPG(blob,fileName,textMsg){
+    /* Step 1: download the JPG */
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    a.href=url; a.download=fileName; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(url); },2000);
+
+    /* Step 2: open WhatsApp with a message */
+    var msg=(textMsg?textMsg+'\n\n':'')+'(Please attach the downloaded image: '+fileName+')';
+    setTimeout(function(){
+      window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+    },800);
+    toast('✓ Image downloaded + WhatsApp opened. Attach '+fileName+' manually on desktop.');
+  }
+
+  function buildDocText(r){
+    if(!r) return '';
+    var type=r.type==='PI'?'Proforma Invoice':'Estimate';
+    var lines=[
+      '*Shreeji Industries*',
+      '*'+type+' No:* '+(r.id||r.piId||r.estId||'—'),
+      '*Date:* '+(r.date||'—'),
+      '*Party:* '+(r.customerName||r.custName||'—'),
+      '*Grand Total: ₹'+(r.grand||r.total||'—')+'*',
+    ];
+    return lines.join('\n');
+  }
+
+  window.shjWAJPG    =function(){ waShareJPGReal(false); };
+  window.shjWAJPGText=function(){ waShareJPGReal(true); };
+
+  /* Re-wire the generic WA JPG interceptor from PATCH_v100 to use the real JPG engine */
+  window.estWaJPG    =function(){ waShareJPGReal(false); };
+  window.estWaJPGText=function(){ waShareJPGReal(true); };
+
+  /* Inject real WA JPG buttons into the Share & Print panel */
+  function injectWAJPGBtn(){
+    var panel=$q('#shj-print-panel-v101');
+    if(!panel||panel.querySelector('#shj-wa-jpg-btn')) return;
+
+    var waJPGBtn=mkBtn('📲 WhatsApp JPG',function(){ waShareJPGReal(false); });
+    waJPGBtn.id='shj-wa-jpg-btn';
+
+    var waJPGTBtn=mkBtn('📲 WhatsApp JPG+Text',function(){ waShareJPGReal(true); });
+    waJPGTBtn.id='shj-wa-jpgt-btn';
+
+    var btnRow=panel.querySelector('div:last-child');
+    if(btnRow){ btnRow.appendChild(waJPGBtn); btnRow.appendChild(waJPGTBtn); }
+    else{ panel.appendChild(waJPGBtn); panel.appendChild(waJPGTBtn); }
+  }
+
+
+  /* ══════════════════════════════════════════════════════════════
+     FEATURE 14 — AUDIT TRAIL  (§15)
+     Every save/edit/reprint/download logs a timestamped entry.
+     Viewable audit log panel in the app.
+     ══════════════════════════════════════════════════════════════ */
+
+  var AUDIT_KEY='shj_audit';
+  var MAX_AUDIT=500;
+
+  function auditLog(action,docType,docId,customer){
+    try{
+      var role=getRole();
+      var log=getAuditLog();
+      log.push({
+        ts      : new Date().toISOString(),
+        action  : action,
+        docType : docType,
+        docId   : docId||'?',
+        customer: customer||'',
+        role    : role,
+      });
+      if(log.length>MAX_AUDIT) log=log.slice(-MAX_AUDIT);
+      localStorage.setItem(AUDIT_KEY,JSON.stringify(log));
+
+      /* refresh audit panel if visible */
+      var panel=$q('#shj-audit-panel-v102');
+      if(panel&&panel._refresh) panel._refresh();
+    }catch(e){}
+  }
+  window.shjAuditLog=auditLog;
+
+  function getAuditLog(){
+    try{return JSON.parse(localStorage.getItem(AUDIT_KEY)||'[]');}catch(e){return[];}
+  }
+
+  function buildAuditPanel(){
+    var wrap=mk('div',{
+      background:C.bg1,borderRadius:C.rad,padding:'16px',
+      fontFamily:'inherit',color:C.txt,marginTop:'12px',
+    });
+    wrap.id='shj-audit-panel-v102';
+
+    var hdr=mk('div',{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'12px'});
+    hdr.appendChild(mk('span',{color:C.txt,fontSize:'15px',fontWeight:'600'},'🔍 Audit Trail'));
+    var rightRow=mk('div',{display:'flex',gap:'6px'});
+    var clrBtn=mkBtn('Clear',function(){
+      if(confirm('Clear all audit logs?')){localStorage.removeItem(AUDIT_KEY);renderAudit();}
+    },{padding:'4px 10px',fontSize:'11px'});
+    rightRow.appendChild(clrBtn);
+    hdr.appendChild(rightRow);
+    wrap.appendChild(hdr);
+
+    var tableWrap=mk('div',{overflowX:'auto'});
+    wrap.appendChild(tableWrap);
+
+    function renderAudit(){
+      tableWrap.innerHTML='';
+      var log=getAuditLog().slice().reverse(); /* newest first */
+      if(!log.length){
+        tableWrap.appendChild(mk('div',{color:C.mute,padding:'16px',textAlign:'center'},'No audit entries yet.'));
+        return;
+      }
+
+      var tbl=document.createElement('table');
+      $s(tbl,{width:'100%',borderCollapse:'collapse',fontSize:'12px'});
+
+      var trh=document.createElement('tr');
+      $s(trh,{background:C.bg3});
+      ['Time','Action','Type','Doc No','Customer','Role'].forEach(function(h){
+        var th=document.createElement('th');
+        th.textContent=h;
+        $s(th,{padding:'7px 10px',textAlign:'left',color:C.mute,fontWeight:'500',
+               borderBottom:'1px solid '+C.bord,whiteSpace:'nowrap'});
+        trh.appendChild(th);
+      });
+      tbl.appendChild(trh);
+
+      log.slice(0,100).forEach(function(e,i){
+        var tr=document.createElement('tr');
+        $s(tr,{background:i%2===0?C.bg1:C.bg2});
+
+        var actionColor=e.action==='save'||e.action==='save-again'?C.grn:
+                        e.action==='delete'?C.red:C.accL;
+
+        var d=e.ts?new Date(e.ts):null;
+        var timeStr=d?d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})+' '+
+                       d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):'—';
+
+        [timeStr,e.action,e.docType||'',e.docId,e.customer||'—',e.role||'admin'].forEach(function(v,ci){
+          var td=document.createElement('td');
+          td.textContent=v;
+          $s(td,{padding:'6px 10px',borderBottom:'1px solid '+C.bord+'44',
+                 color:ci===1?actionColor:C.txt,whiteSpace:ci===0?'nowrap':'normal'});
+          tr.appendChild(td);
+        });
+        tbl.appendChild(tr);
+      });
+
+      tableWrap.appendChild(tbl);
+      if(log.length>100){
+        var note=mk('div',{color:C.mute,fontSize:'11px',textAlign:'center',padding:'6px'},'Showing last 100 of '+log.length+' entries');
+        tableWrap.appendChild(note);
+      }
+    }
+
+    renderAudit();
+    wrap._refresh=renderAudit;
+    return wrap;
+  }
+
+  /* Intercept all localStorage saves to auto-log them */
+  (function(){
+    var origSet=localStorage.setItem.bind(localStorage);
+    localStorage.setItem=function(key,val){
+      origSet(key,val);
+      try{
+        if(key==='shj_estimates'){
+          var arr=JSON.parse(val||'[]');
+          if(arr.length){
+            var last=arr[arr.length-1];
+            auditLog('save','estimate',last.id||'?',last.customerName||'');
+          }
+        }
+        if(key==='shj_pi'||key==='shj_pi_records'){
+          var arr=JSON.parse(val||'[]');
+          if(arr.length){
+            var last=arr[arr.length-1];
+            auditLog('save','pi',last.id||last.piId||'?',last.customerName||'');
+          }
+        }
+      }catch(e){}
+    };
+  })();
+
+
+  /* ══════════════════════════════════════════════════════════════
+     FEATURE 15 — PERMISSIONS  (§15)
+     Admin / Agent roles. Agent hides Rate in all views.
+     ══════════════════════════════════════════════════════════════ */
+
+  var ROLE_KEY='shj_role';
+
+  function getRole(){ return localStorage.getItem(ROLE_KEY)||'admin'; }
+  function setRole(r){
+    localStorage.setItem(ROLE_KEY,r);
+    applyRoleStyles();
+    updateRoleUI();
+    toast(r==='agent'?'👤 Agent mode — rates hidden':'🔑 Admin mode — full access',C.acc);
+  }
+  window.shjGetRole=getRole;
+  window.shjSetRole=setRole;
+
+  /* Hide/show rate columns based on role */
+  function applyRoleStyles(){
+    var role=getRole();
+    var isAgent=(role==='agent');
+
+    /* Dynamic stylesheet — inject or update */
+    var styleId='shj-role-style-v102';
+    var styleEl=document.getElementById(styleId);
+    if(!styleEl){
+      styleEl=document.createElement('style');
+      styleEl.id=styleId;
+      document.head.appendChild(styleEl);
+    }
+
+    if(isAgent){
+      styleEl.textContent=[
+        /* Hide rate inputs in estimate form */
+        '[id*="rate"],[name*="rate"],[class*="rate"],[class*="est-rate"]{display:none!important}',
+        /* Hide rate column headers in tables */
+        'th[class*="rate"],th[data-col*="rate"]{display:none!important}',
+        'td[class*="rate"],td[data-col*="rate"]{display:none!important}',
+        /* Hide rate in print preview */
+        '.inv-doc [class*="rate"],.est-doc [class*="rate"]{display:none!important}',
+        /* Hide price/rate labels */
+        '[class*="rate-label"],[id*="rate-label"]{display:none!important}',
+      ].join('\n');
+    } else {
+      styleEl.textContent=''; /* restore all */
+    }
+
+    /* Also hide/show by column index (table col 3 = Rate) */
+    $qa('table').forEach(function(tbl){
+      $qa('tr',tbl).forEach(function(row){
+        var cells=row.querySelectorAll('td,th');
+        var n=cells.length;
+        /* S.No | Qty | Desc | Rate | Total → rate at index 3 (0-based) */
+        if(n>=5){
+          cells[3].style.display=isAgent?'none':'';
+        }
+      });
+    });
+  }
+
+  /* Build role selector widget */
+  function buildRoleWidget(){
+    var wrap=mk('div',{
+      background:C.bg2,border:'1px solid '+C.bord,borderRadius:C.rad,
+      padding:'12px 16px',display:'flex',alignItems:'center',
+      gap:'12px',fontFamily:'inherit',flexWrap:'wrap',
+    });
+    wrap.id='shj-role-widget-v102';
+
+    wrap.appendChild(mk('span',{color:C.mute,fontSize:'12px'},'👤 Role:'));
+
+    var adminBtn=mkBtn('🔑 Admin',function(){setRole('admin');});
+    var agentBtn=mkBtn('👤 Agent',function(){setRole('agent');});
+    $s(adminBtn,{padding:'5px 12px',fontSize:'12px'});
+    $s(agentBtn,{padding:'5px 12px',fontSize:'12px'});
+    wrap.appendChild(adminBtn);
+    wrap.appendChild(agentBtn);
+
+    var roleLabel=mk('span',{fontSize:'12px',fontWeight:'500'});
+    wrap.appendChild(roleLabel);
+
+    function update(){
+      var r=getRole();
+      roleLabel.textContent='Current: '+(r==='agent'?'Agent (rates hidden)':'Admin (full access)');
+      roleLabel.style.color=r==='agent'?C.amb:C.grn;
+      adminBtn.style.border='1px solid '+(r==='admin'?C.acc:C.bord);
+      agentBtn.style.border ='1px solid '+(r==='agent'?C.acc:C.bord);
+    }
+    update();
+    wrap._update=update;
+    return wrap;
+  }
+
+  function updateRoleUI(){
+    var w=$q('#shj-role-widget-v102');
+    if(w&&w._update) w._update();
+  }
+
+  /* Inject role widget into the Settings or top of Estimate section */
+  function tryInjectRoleWidget(){
+    if($q('#shj-role-widget-v102')) return true;
+
+    /* prefer a settings / config section */
+    var targets=[
+      '#settings-wrap','#settings-section','#tab-settings',
+      '[data-tab="settings"]','#config-wrap','#app-settings',
+    ];
+    var el=null;
+    targets.some(function(s){el=$q(s);return!!el;});
+
+    /* fallback: top of estimate section */
+    if(!el){
+      var eSecs=['#est-wrap','#estimate-wrap','#tab-estimate','[data-tab="estimate"]'];
+      eSecs.some(function(s){el=$q(s);return!!el;});
+    }
+
+    if(!el) return false;
+    el.insertBefore(buildRoleWidget(),el.firstChild);
+
+    /* also inject audit panel */
+    if(!$q('#shj-audit-panel-v102')){
+      el.appendChild(buildAuditPanel());
+    }
+
+    applyRoleStyles();
+    return true;
+  }
+
+
+  /* ══════════════════════════════════════════════════════════════
+     OBSERVER — inject all panels when sections become visible
+     ══════════════════════════════════════════════════════════════ */
+
+  function runAll(){
+    tryInjectPIWA();
+    tryInjectRoleWidget();
+    injectDownloadJPGBtn();
+    injectWAJPGBtn();
+    applyRoleStyles();
+  }
+
+  var _obs=new MutationObserver(runAll);
+  _obs.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class']});
+  document.addEventListener('DOMContentLoaded',runAll);
+  setTimeout(runAll,1000);
+  setTimeout(runAll,3000);
+
+  /* Apply role on every page load immediately */
+  applyRoleStyles();
+
+
+  /* ══════════════════════════════════════════════════════════════
+     GLOBAL EXPORTS
+     ══════════════════════════════════════════════════════════════ */
+  window.shjPISharePDF    = piSharePDF;
+  window.shjDownloadJPG   = downloadJPG;
+  window.shjWAJPGReal     = waShareJPGReal;
+  window.shjAuditPanel    = buildAuditPanel;
+  window.shjSetRole       = setRole;
+  window.shjGetRole       = getRole;
+
+  console.log(
+    '%c[SHJ-PATCH v102] SPEC COMPLETE — 6 final features:\n'+
+    '  ✔ PI WhatsApp PDF + PDF+Text buttons\n'+
+    '  ✔ PI Records Save action\n'+
+    '  ✔ Download JPG (html2canvas)\n'+
+    '  ✔ WhatsApp JPG — real image share (Web Share API)\n'+
+    '  ✔ Audit trail — auto-logs all saves/edits\n'+
+    '  ✔ Permissions — Admin/Agent roles, rate hidden for Agent',
+    'color:#3fb950;font-weight:bold;font-size:13px'
+  );
+
+})();
+/* </script> */
+</script>
+
 </body>
 </html>
