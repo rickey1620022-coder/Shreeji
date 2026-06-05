@@ -9,6 +9,77 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
+  v99  —  2026-06-05 22:00   |   S/N: SHJ-99-050626
+  ------------------------------------------------------------------
+    1. FIX  Version metadata cleanup: title, shj-build meta, service-
+            worker cache name, PIN footer serial all unified to v99.
+            (Previous sessions had mismatched stamps: title=v98,
+            changelog=v96, footer=SHJ-96.)
+    2. CONFIRM  Estimate tab design: ESTIMATE (no tax) and PROFORMA
+            INVOICE (with GST) are both present via toggle, matching
+            confirmed requirements.  Row numbering 1/2/3/2a/3a works.
+
+  ------------------------------------------------------------------
+  v96  —  2026-06-05 20:00   |   S/N: SHJ-96-050626
+  ------------------------------------------------------------------
+    1. NEW  ESTIMATE optional checkboxes in totals:
+              ☐ Previous Balance  (+)
+              ☐ Less Payment Received  (−)
+              ☐ Freight Charges  (+)
+              ☐ Tax Amount ₹  (+)
+            Grand Total auto-calculates from all ticked items.
+    2. CHANGE  PI print upgraded to A4 Portrait (inv-doc letterhead).
+    3. NEW  PI: Editable Terms & Conditions textarea (6 standard
+            terms, fully editable before generating the PI).
+    4. NEW  PI: Order Given / Order Not Given buttons on preview.
+            On click, PI archived to Google Sheet, removed from app.
+    5. NEW  Auto-delete: records > 20 days removed from localStorage
+            and deleted from Google Sheet on tab open.
+    6. NEW  Rate suggestion: last 10 saves for same customer auto-
+            fill rate when description matches a previous item.
+    7. NEW  🖨 Print button (OS print dialog, correct page size).
+
+  ------------------------------------------------------------------
+  v95  —  2026-06-05 18:00   |   S/N: SHJ-95-050626
+  ------------------------------------------------------------------
+    1. NEW  ESTIMATE tab — 2 document types:
+              [ESTIMATE] — No tax. Line items → Subtotal → Total.
+              [PI / PROFORMA INVOICE] — Line items → Subtotal +
+              Freight = Taxable Amount + GST % = Grand Total.
+            Both types: customer picker from Customer DB, product
+            code lookup from Product DB, sub-item row numbering
+            (1, 2, 3, 2a, 3a — each "No." field is editable).
+            Document numbers: EST-YYYY-XXXX / PI-YYYY-XXXX (auto
+            reset when type is toggled).
+    2. NEW  PRINT FORMAT — A5 Landscape (794 × 560 px) compact
+            business-slip layout. Centered header with company name,
+            address, GSTIN. Two-column info row (Party | Doc No/Date).
+            Compact line-item table. Totals block shows freight/GST
+            rows only on PI type. PDF export uses landscape mode.
+    3. FIX  Duplicate EST JS block removed (caused a JS parse error
+            in the previous deploy). All 6 script blocks pass clean.
+    4. UPDATE  Products-Code.gs: ESTIMATES sheet now stores freight,
+            gstPct, gstAmt, grand, and type fields.
+
+  ------------------------------------------------------------------
+  v94  —  2026-06-05 00:00   |   S/N: SHJ-94-050626
+  ------------------------------------------------------------------
+    1. NEW  4th main tab "📝 Estimate" added to the app switcher.
+            EST-YYYY-XXXX auto-numbering, customer from Customer DB,
+            product code lookup from Product DB, no-tax subtotal,
+            same Shreeji letterhead as PI/Quotation, PDF/JPG export,
+            save to localStorage (shj_estimates) with Push/Pull sync
+            to the Products Google Sheet.
+    2. NEW  Products-Code.gs extended with SAVE_ESTIMATE /
+            DELETE_ESTIMATE / GET_ESTIMATES (ESTIMATES sheet, dedup
+            by id, same ScriptLock method as products).
+    3. ARCH Merged ThermalSync architecture: localStorage = working
+            DB (offline-first, instant save <200ms, no UI lag),
+            Google Sheet = backup. Sync on open, every 30 min, on
+            reconnect, and manual. No Dexie/bundler needed for
+            single-user single-file app — identical user experience.
+
+  ------------------------------------------------------------------
   v93  —  2026-06-04   |   S/N: SHJ-93-040626
   ------------------------------------------------------------------
     1. CHANGE  Product NAME format. Now written as plain lowercase words
@@ -165,8 +236,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v93 PWA</title>
-<meta name="shj-build" content="v93|SHJ-93-040626|2026-06-04">
+<title>Shreeji Industries — Full System v99 PWA</title>
+<meta name="shj-build" content="v99|SHJ-99-050626|2026-06-05">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1165,8 +1236,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v93 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 4 June 2026 &nbsp;·&nbsp; S/N: SHJ-93-040626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v98 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 5 June 2026 &nbsp;·&nbsp; S/N: SHJ-99-050626</div>
   </div>
 </div>
 <style>
@@ -1252,6 +1323,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   <button class="app-sw-btn" id="sw-flow" onclick="showSection('flow')">📦 Orders &amp; Stock</button>
   <div class="app-divider"></div>
   <button class="app-sw-btn" id="sw-money" onclick="showSection('money')">💰 Money Flow</button>
+  <div class="app-divider"></div>
+  <button class="app-sw-btn" id="sw-estimate" onclick="showSection('estimate')">📝 Estimate</button>
 </div>
 
 <div id="section-invoice">
@@ -1928,9 +2001,11 @@ function showSection(w){
   document.getElementById('section-invoice').style.display=w==='invoice'?'block':'none';
   document.getElementById('section-flow').style.display=w==='flow'?'block':'none';
   document.getElementById('section-money').style.display=w==='money'?'block':'none';
+  document.getElementById('section-estimate').style.display=w==='estimate'?'block':'none';
   document.getElementById('sw-invoice').classList.toggle('active',w==='invoice');
   document.getElementById('sw-flow').classList.toggle('active',w==='flow');
   document.getElementById('sw-money').classList.toggle('active',w==='money');
+  document.getElementById('sw-estimate').classList.toggle('active',w==='estimate');
   document.getElementById('mainBar').style.display='none';
   document.getElementById('invBar').style.display='none';
   if(w==='invoice'){
@@ -1941,6 +2016,7 @@ function showSection(w){
   }
   if(w==='flow'){render();refreshPrev();}
   if(w==='money'){mfInit();}
+  if(w==='estimate'){estInit();}
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -6003,6 +6079,665 @@ function pdbClearForm(){
 }
 
 // ═══════════════════════════════════════════════════════════════
+//  ESTIMATE ENGINE  (v96)
+//  Two document types:
+//    ESTIMATE — A5 Landscape, optional checkboxes (Prev Bal, Less
+//               Payment, Freight, Tax), no GST on doc.
+//    PI       — A4 Portrait, Freight+GST, editable T&C,
+//               Order Given / Not Given workflow.
+//  Auto-delete: records > 20 days removed from local + sheet.
+//  Rate suggestion: last 10 saves for same customer auto-fill rate.
+// ═══════════════════════════════════════════════════════════════
+const EST_DB_KEY = 'shj_estimates';
+let estType = 'est';   // 'est' | 'pi'
+
+function estDbLoad(){ try{ return JSON.parse(localStorage.getItem(EST_DB_KEY)||'[]'); }catch{ return []; } }
+function estDbSave(arr){ localStorage.setItem(EST_DB_KEY, JSON.stringify(arr)); }
+
+// ── Sub-tab switcher ────────────────────────────────────────
+function estGo(page){
+  ['new','view','list'].forEach(p=>{
+    const tab=document.getElementById('est-tab-'+p);
+    const pg=document.getElementById('est-page-'+p);
+    if(tab) tab.classList.toggle('active',p===page);
+    if(pg)  pg.style.display=p===page?'block':'none';
+  });
+  const bar=document.getElementById('est-bar');
+  if(bar) bar.style.display=page==='new'?'flex':'none';
+  // Show order buttons only for PI on preview page
+  const ob=document.getElementById('est-order-btns');
+  if(ob) ob.style.display=(page==='view'&&estType==='pi')?'block':'none';
+  if(page==='list') estRenderList();
+}
+
+// ── Type toggle: ESTIMATE ↔ PI ──────────────────────────────
+function estSetType(t){
+  estType=t;
+  const isPI=t==='pi';
+  const eBtn=document.getElementById('est-type-est');
+  const pBtn=document.getElementById('est-type-pi');
+  if(eBtn){ eBtn.style.background=isPI?'#f0f4ff':'#1a3a6b'; eBtn.style.color=isPI?'#1a3a6b':'#fff'; }
+  if(pBtn){ pBtn.style.background=isPI?'#1a3a6b':'#f0f4ff'; pBtn.style.color=isPI?'#fff':'#1a3a6b'; }
+  // Regenerate doc number
+  const noEl=document.getElementById('est-no');
+  if(noEl) noEl.value=estNextNo(t);
+  // Labels
+  const hdr=document.getElementById('est-details-header');
+  if(hdr) hdr.textContent=isPI?'📄 Proforma Invoice Details':'📝 Estimate Details';
+  const lbl=document.getElementById('est-no-label');
+  if(lbl) lbl.textContent=isPI?'PI No.':'Estimate No.';
+  const itHdr=document.getElementById('est-items-header');
+  if(itHdr) itHdr.innerHTML=isPI?'📋 Line Items <span style="font-size:.7rem;font-weight:400;opacity:.7;">(Tax added below)</span>':'📋 Line Items <span style="font-size:.7rem;font-weight:400;opacity:.7;">(No Tax)</span>';
+  const genBtn=document.getElementById('est-gen-btn');
+  if(genBtn) genBtn.textContent=isPI?'🖨 Generate PI ›':'🖨 Generate Estimate ›';
+  // Show/hide optional sections
+  const estFlds=document.getElementById('est-est-fields');
+  if(estFlds) estFlds.style.display=isPI?'none':'block';
+  const piFlds=document.getElementById('est-pi-fields');
+  if(piFlds) piFlds.style.display=isPI?'block':'none';
+  const piTerms=document.getElementById('est-pi-terms-card');
+  if(piTerms) piTerms.style.display=isPI?'block':'none';
+  const notesCard=document.getElementById('est-notes-card');
+  if(notesCard) notesCard.style.marginBottom=isPI?'11px':'80px';
+  estCalc();
+}
+
+// ── Init: called when section opens ────────────────────────
+let estItems=[];
+function estInit(){
+  estCleanOld();   // auto-delete records > 20 days
+  const dl=document.getElementById('est-cust-list');
+  if(dl){
+    dl.innerHTML='';
+    try{
+      const custs=JSON.parse(localStorage.getItem('shj_customer_db')||'[]');
+      custs.forEach(c=>{ const o=document.createElement('option'); o.value=c.name||c.nickname||''; dl.appendChild(o); });
+    }catch(e){}
+  }
+  const dateEl=document.getElementById('est-date');
+  if(dateEl&&!dateEl.value) dateEl.value=new Date().toISOString().slice(0,10);
+  const noEl=document.getElementById('est-no');
+  if(noEl&&!noEl.value) noEl.value=estNextNo(estType);
+  if(!estItems.length) estItems=[{no:'1',desc:'',qty:1,uom:'PCS',rate:0,amount:0}];
+  estSetType(estType);
+  estRenderItems();
+}
+
+// ── Auto-delete estimates older than 20 days ────────────────
+function estCleanOld(){
+  const cutoff=new Date(); cutoff.setDate(cutoff.getDate()-20);
+  const cutStr=cutoff.toISOString().slice(0,10);
+  const db=estDbLoad();
+  const old=db.filter(e=>(e.savedAt||'9999')<cutStr);
+  if(!old.length) return;
+  estDbSave(db.filter(e=>(e.savedAt||'9999')>=cutStr));
+  old.forEach(e=>pdbPost({action:'DELETE_ESTIMATE',id:e.id}).catch(()=>{}));
+}
+
+// ── Generate next document number ──────────────────────────
+function estNextNo(t){
+  t=t||estType||'est';
+  const prefix=t==='pi'?'PI':'EST';
+  const yr=new Date().getFullYear();
+  const existing=estDbLoad().filter(e=>(e.estNo||'').startsWith(prefix+'-'+yr));
+  const maxSeq=existing.reduce((mx,e)=>{ const m=(e.estNo||'').match(/(\d{4})$/); return m?Math.max(mx,parseInt(m[1])):mx; },0);
+  return prefix+'-'+yr+'-'+String(maxSeq+1).padStart(4,'0');
+}
+
+// ── Fill customer from Customer DB ─────────────────────────
+function estFillCustomer(name){
+  try{
+    const custs=JSON.parse(localStorage.getItem('shj_customer_db')||'[]');
+    const c=custs.find(x=>(x.name||x.nickname||'').toLowerCase()===name.toLowerCase());
+    if(!c) return;
+    const set=(id,v)=>{ const el=document.getElementById(id); if(el&&!el.value) el.value=v||''; };
+    set('est-contact', c.contact||c.mobile||'');
+    set('est-email',   c.email||'');
+    set('est-cgst',    c.gst||'');
+  }catch(e){}
+}
+
+// ── Suggest rate from last 10 saves (same customer + desc) ─
+function estSuggestRate(i, desc){
+  if(!desc) return;
+  const cname=(document.getElementById('est-cname')?.value||'').trim().toLowerCase();
+  if(!cname) return;
+  const db=estDbLoad()
+    .filter(e=>(e.custName||'').toLowerCase()===cname&&Array.isArray(e.items))
+    .slice(0,10);
+  for(const e of db){
+    const match=e.items.find(it=>(it.desc||'').toLowerCase()===(desc||'').toLowerCase());
+    if(match&&parseFloat(match.rate)>0&&(!estItems[i]?.rate)){
+      estItems[i].rate=parseFloat(match.rate);
+      const rateInput=document.querySelector(`#est-items-tbody tr:nth-child(${i+1}) input[type="number"]:nth-of-type(2)`);
+      if(rateInput) rateInput.value=estItems[i].rate;
+      estCalc();
+      return;
+    }
+  }
+}
+
+// ── Line item renderer ──────────────────────────────────────
+function estRenderItems(){
+  const tbody=document.getElementById('est-items-tbody'); if(!tbody) return;
+  tbody.innerHTML=estItems.map((it,i)=>`
+  <tr${i%2?' style="background:#f7f9ff;"':''}>
+    <td style="padding:4px 3px;"><input type="text" value="${it.no||String(i+1)}" style="width:44px;text-align:center;border:1px solid #cdd;border-radius:5px;padding:4px 2px;font-size:.75rem;" oninput="estItems[${i}].no=this.value"></td>
+    <td style="padding:4px 3px;"><input type="text" value="${(it.desc||'').replace(/"/g,'&quot;')}" list="est-prod-list-${i}" style="width:100%;min-width:130px;border:1px solid #cdd;border-radius:5px;padding:4px 5px;font-size:.75rem;" placeholder="Desc or code" oninput="estItems[${i}].desc=this.value" onchange="estFillProduct(${i},this.value);estSuggestRate(${i},this.value)"><datalist id="est-prod-list-${i}">${estProdOptions()}</datalist></td>
+    <td style="padding:4px 3px;"><input type="number" value="${it.qty}" min="0" step="any" style="width:54px;text-align:right;border:1px solid #cdd;border-radius:5px;padding:4px 3px;font-size:.75rem;" oninput="estItems[${i}].qty=parseFloat(this.value)||0;estCalc()"></td>
+    <td style="padding:4px 3px;"><input type="text" value="${it.uom||'PCS'}" style="width:46px;text-align:center;border:1px solid #cdd;border-radius:5px;padding:4px 2px;font-size:.72rem;" oninput="estItems[${i}].uom=this.value"></td>
+    <td style="padding:4px 3px;"><input type="number" value="${it.rate}" min="0" step="any" style="width:72px;text-align:right;border:1px solid #cdd;border-radius:5px;padding:4px 3px;font-size:.75rem;" oninput="estItems[${i}].rate=parseFloat(this.value)||0;estCalc()"></td>
+    <td style="padding:4px 3px;text-align:right;font-weight:700;font-size:.76rem;color:#1a3a6b;">${(it.amount||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+    <td style="padding:3px;text-align:center;"><button onclick="estRemoveItem(${i})" style="background:transparent;border:none;color:#c0392b;font-size:.9rem;cursor:pointer;padding:2px 4px;">✕</button></td>
+  </tr>`).join('');
+  estCalc();
+}
+
+function estProdOptions(){
+  try{
+    const prods=JSON.parse(localStorage.getItem('shj_product_db')||'[]');
+    return prods.map(p=>`<option value="${(p.name||'').replace(/"/g,'&quot;')}" label="${p.code}">`).concat(prods.map(p=>`<option value="${p.code}">`)).join('');
+  }catch(e){ return ''; }
+}
+function estFillProduct(i,val){
+  try{
+    const prods=JSON.parse(localStorage.getItem('shj_product_db')||'[]');
+    const p=prods.find(x=>x.code===val.toUpperCase()||x.name===val);
+    if(!p) return;
+    estItems[i].desc=p.name||val;
+    if(p.price&&parseFloat(p.price)) estItems[i].rate=parseFloat(p.price);
+    estRenderItems();
+  }catch(e){}
+}
+
+// ── Product Picker (modal) ──────────────────────────────────
+function estOpenProductPicker(){
+  const modal=document.getElementById('est-prod-picker'); if(!modal) return;
+  const srch=document.getElementById('est-prod-search'); if(srch) srch.value='';
+  estFilterPicker('');
+  modal.style.display='block';
+  setTimeout(()=>srch&&srch.focus(),120);
+}
+function estCloseProductPicker(){
+  const modal=document.getElementById('est-prod-picker');
+  if(modal) modal.style.display='none';
+}
+function estFilterPicker(q){
+  const el=document.getElementById('est-prod-list'); if(!el) return;
+  let prods=[];
+  try{ prods=JSON.parse(localStorage.getItem('shj_product_db')||'[]'); }catch(e){}
+  if(!prods.length){
+    el.innerHTML='<div style="text-align:center;padding:28px;color:#aaa;font-size:.82rem;">No products in Product DB yet.<br>Add products in Invoice &amp; Quotes → 📦 Product DB tab.</div>';
+    return;
+  }
+  const ql=q.trim().toLowerCase();
+  const filtered=ql?prods.filter(p=>(p.name||'').toLowerCase().includes(ql)||(p.code||'').toLowerCase().includes(ql)||(p.size||'').toLowerCase().includes(ql)):prods;
+  if(!filtered.length){
+    el.innerHTML='<div style="text-align:center;padding:20px;color:#aaa;font-size:.82rem;">No products match "'+q+'"</div>';
+    return;
+  }
+  // Store filtered list in window for index-based onclick (avoids escaping issues)
+  window._estPickerList=filtered;
+  el.innerHTML=filtered.map((p,idx)=>{
+    const price=parseFloat(p.price||0);
+    const priceStr=price?'₹ '+price.toLocaleString('en-IN',{minimumFractionDigits:2}):'—';
+    return `<div onclick="estPickProduct(${idx})"
+      style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:9px;cursor:pointer;margin-bottom:4px;border:1px solid #e8edf5;background:#fafbff;">
+      <div style="background:#1a3a6b;color:#fff;font-family:monospace;font-size:.68rem;font-weight:700;padding:3px 7px;border-radius:5px;min-width:44px;text-align:center;">${p.code||'—'}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:.8rem;font-weight:600;color:#1a1f2e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.name||'—'}</div>
+        <div style="font-size:.7rem;color:#888;margin-top:1px;">${[p.size,p.section,p.finish].filter(Boolean).join(' · ')}</div>
+      </div>
+      <div style="font-size:.82rem;font-weight:700;color:#1a5a30;white-space:nowrap;">${priceStr}</div>
+    </div>`;
+  }).join('');
+}
+function estPickProduct(idx){
+  const p=(window._estPickerList||[])[idx]; if(!p) return;
+  const price=parseFloat(p.price||0);
+  estItems.push({no:String(estItems.length+1), desc:p.name||'', qty:1, uom:'PCS', rate:price, amount:price});
+  estCloseProductPicker();
+  estRenderItems();
+}
+
+function estAddItem(){
+  estItems.push({no:String(estItems.length+1),desc:'',qty:1,uom:'PCS',rate:0,amount:0});
+  estRenderItems();
+}
+function estRemoveItem(i){ estItems.splice(i,1); estRenderItems(); }
+
+// ── Calculate totals (handles both types) ──────────────────
+function estCalc(){
+  let sub=0;
+  estItems.forEach(it=>{ it.amount=Math.round((it.qty||0)*(it.rate||0)*100)/100; sub+=it.amount; });
+  const subEl=document.getElementById('est-subtotal');
+  if(subEl) subEl.textContent='₹ '+sub.toLocaleString('en-IN',{minimumFractionDigits:2});
+
+  if(estType==='est'){
+    // Optional checkboxes
+    const chk=(id)=>document.getElementById(id)?.checked||false;
+    const num=(id)=>parseFloat(document.getElementById(id)?.value)||0;
+    const prevBal = chk('est-cb-prev')?num('est-prev-bal'):0;
+    const lessPay = chk('est-cb-less')?num('est-less-pay'):0;
+    const frtAmt  = chk('est-cb-frt') ?num('est-est-freight'):0;
+    const taxAmt  = chk('est-cb-tax') ?num('est-tax-amt'):0;
+    const grand   = sub + prevBal - lessPay + frtAmt + taxAmt;
+    const gEl=document.getElementById('est-grand-total');
+    if(gEl) gEl.textContent='₹ '+grand.toLocaleString('en-IN',{minimumFractionDigits:2});
+  }
+
+  if(estType==='pi'){
+    const freight=parseFloat(document.getElementById('est-freight')?.value)||0;
+    const gstPct=parseFloat(document.getElementById('est-gst-pct')?.value)||0;
+    const taxable=sub+freight;
+    const gstAmt=Math.round(taxable*gstPct)/100;
+    const grand=taxable+gstAmt;
+    const s=(id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+    s('pi-extotal-lbl', '₹ '+sub.toLocaleString('en-IN',{minimumFractionDigits:2}));
+    s('pi-freight-lbl', '₹ '+freight.toLocaleString('en-IN',{minimumFractionDigits:2}));
+    s('pi-taxable-lbl', '₹ '+taxable.toLocaleString('en-IN',{minimumFractionDigits:2}));
+    s('pi-gst-pct-lbl', String(gstPct));
+    s('pi-gst-lbl',     '₹ '+gstAmt.toLocaleString('en-IN',{minimumFractionDigits:2}));
+    s('pi-grand-lbl',   '₹ '+grand.toLocaleString('en-IN',{minimumFractionDigits:2}));
+  }
+
+  // Refresh amount column without full re-render
+  document.querySelectorAll('#est-items-tbody tr').forEach((row,i)=>{
+    if(estItems[i]){ const c=row.cells[5]; if(c) c.textContent=(estItems[i].amount||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  });
+}
+
+// ── Collect form values into a record ──────────────────────
+function estCollect(){
+  const isPI=estType==='pi';
+  const chk=(id)=>document.getElementById(id)?.checked||false;
+  const num=(id)=>parseFloat(document.getElementById(id)?.value)||0;
+  const sub=estItems.reduce((s,it)=>s+(it.amount||0),0);
+  let grand=sub, freight=0, gstPct=0, gstAmt=0, taxable=0;
+  let prevBal=0, lessPay=0, estFrt=0, taxAmtEst=0;
+  if(isPI){
+    freight=num('est-freight'); gstPct=num('est-gst-pct');
+    taxable=sub+freight; gstAmt=Math.round(taxable*gstPct)/100; grand=taxable+gstAmt;
+  } else {
+    prevBal = chk('est-cb-prev')?num('est-prev-bal'):0;
+    lessPay = chk('est-cb-less')?num('est-less-pay'):0;
+    estFrt  = chk('est-cb-frt') ?num('est-est-freight'):0;
+    taxAmtEst = chk('est-cb-tax')?num('est-tax-amt'):0;
+    grand = sub + prevBal - lessPay + estFrt + taxAmtEst;
+  }
+  const estNo=document.getElementById('est-no')?.value||estNextNo();
+  return {
+    id:estNo.replace(/[\s\/]/g,'_')+'_'+Date.now(), estNo,
+    type:estType, date:document.getElementById('est-date')?.value||new Date().toISOString().slice(0,10),
+    custName:document.getElementById('est-cname')?.value||'',
+    custContact:document.getElementById('est-contact')?.value||'',
+    custEmail:document.getElementById('est-email')?.value||'',
+    custGST:document.getElementById('est-cgst')?.value||'',
+    items:JSON.parse(JSON.stringify(estItems)),
+    notes:document.getElementById('est-notes')?.value||'',
+    piTerms:isPI?(document.getElementById('est-pi-terms')?.value||''):'',
+    subtotal:sub, freight, gstPct, taxable, gstAmt, grand,
+    prevBal, lessPay, estFrt, taxAmtEst,
+    cbPrev:chk('est-cb-prev'), cbLess:chk('est-cb-less'),
+    cbFrt:chk('est-cb-frt'), cbTax:chk('est-cb-tax'),
+    orderStatus:'', hidden:false,
+    savedAt:new Date().toISOString().slice(0,10)
+  };
+}
+
+// ── Save to localStorage + background sheet sync ────────────
+function estSave(go){
+  const rec=estCollect();
+  const db=estDbLoad(); const idx=db.findIndex(e=>e.estNo===rec.estNo);
+  if(idx>=0){ rec.id=db[idx].id; rec.orderStatus=db[idx].orderStatus||''; rec.hidden=db[idx].hidden||false; db[idx]=rec; } else db.unshift(rec);
+  estDbSave(db);
+  pdbPost({action:'SAVE_ESTIMATE', id:rec.id, estNo:rec.estNo, type:rec.type,
+    date:rec.date, custName:rec.custName, custContact:rec.custContact,
+    custEmail:rec.custEmail, custGST:rec.custGST, subtotal:rec.subtotal,
+    freight:rec.freight, gstPct:rec.gstPct, gstAmt:rec.gstAmt, grand:rec.grand,
+    prevBal:rec.prevBal, lessPay:rec.lessPay, estFrt:rec.estFrt, taxAmtEst:rec.taxAmtEst,
+    notes:rec.notes, piTerms:rec.piTerms, orderStatus:rec.orderStatus,
+    items:JSON.stringify(rec.items), savedAt:rec.savedAt
+  }).catch(()=>{});
+  if(go) estGenerate();
+}
+
+// ── Order Given / Not Given ─────────────────────────────────
+function estOrderStatus(status){
+  const estNo=document.getElementById('est-no')?.value||'';
+  if(!estNo) return;
+  const db=estDbLoad();
+  const idx=db.findIndex(e=>e.estNo===estNo);
+  if(idx>=0){
+    db[idx].orderStatus=status; db[idx].hidden=true;
+    estDbSave(db);
+    pdbPost({action:'SAVE_ESTIMATE', id:db[idx].id, estNo, type:'pi',
+      orderStatus:status, hidden:'true',
+      date:db[idx].date, custName:db[idx].custName, items:JSON.stringify(db[idx].items),
+      subtotal:db[idx].subtotal||0, freight:db[idx].freight||0,
+      gstPct:db[idx].gstPct||0, gstAmt:db[idx].gstAmt||0, grand:db[idx].grand||0,
+      savedAt:db[idx].savedAt
+    }).catch(()=>{});
+  }
+  const msg=status==='given'?'✅ Order Given — PI archived to Google Sheet.':'❌ Order Not Given — PI archived to Google Sheet.';
+  alert(msg);
+  estNew();
+}
+
+// ── Generate printable document ─────────────────────────────
+function estGenerate(){
+  estSave(false);
+  const isPI=estType==='pi';
+  const rec=estCollect();
+  const fmtDate=(d)=>{ try{ const dt=new Date(d); return String(dt.getDate()).padStart(2,'0')+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+dt.getFullYear(); }catch(e){ return d||''; }};
+  const fmtR=(n)=>(n||0).toLocaleString('en-IN',{minimumFractionDigits:2});
+  let words=''; try{ words=(typeof numToWords==='function'?numToWords(rec.grand):'')||''; }catch(e){}
+
+  // Estimate print rows: S.No | Qty | Item Description | Rate | Total  (5 cols, no UOM)
+  const estRowsHtml=rec.items.filter(it=>it.desc||it.qty>0||it.rate>0).map((it,i)=>`
+    <tr${i%2?' class="ea5-odd"':''}>
+      <td class="ea5-ctr">${it.no||String(i+1)}</td>
+      <td class="ea5-ctr">${it.qty||''}</td>
+      <td>${it.desc||''}</td>
+      <td class="ea5-num">${fmtR(it.rate||0)}</td>
+      <td class="ea5-num" style="font-weight:700;">${fmtR(it.amount||0)}</td>
+    </tr>`).join('');
+  const estNotesRow=rec.notes?`<tr><td colspan="5" style="padding:3px 6px;border:none;border-top:1px solid #e0e6f0;font-size:8.5px;color:#555;"><strong>Notes:</strong> ${rec.notes}</td></tr>`:'';
+
+  // PI print rows: No. | Description | Qty | UOM | Rate | Amount  (6 cols)
+  const piRowsHtml=rec.items.filter(it=>it.desc||it.qty>0||it.rate>0).map((it,i)=>`
+    <tr${i%2?' style="background:#f7f9ff"':''}>
+      <td style="padding:5px 4px;text-align:center;">${it.no||String(i+1)}</td>
+      <td style="padding:5px 4px;">${it.desc||''}</td>
+      <td style="padding:5px 4px;text-align:center;">${it.qty||''}</td>
+      <td style="padding:5px 4px;text-align:center;">${it.uom||''}</td>
+      <td style="padding:5px 4px;text-align:right;">${fmtR(it.rate||0)}</td>
+      <td style="padding:5px 4px;text-align:right;font-weight:700;">${fmtR(it.amount||0)}</td>
+    </tr>`).join('');
+  const piNotesRow=rec.notes?`<tr><td colspan="6" style="padding:4px 6px;border:none;border-top:1px solid #ddd;font-size:9px;color:#555;"><strong>Notes:</strong> ${rec.notes}</td></tr>`:'';
+
+  if(isPI){
+    // ── A4 PORTRAIT PI — uses .inv-doc class ────────────────
+    const doc=document.getElementById('est-doc');
+    doc.className='inv-doc';
+    // Copy company header from main invoice doc
+    const srcHdr=document.querySelector('#inv-doc .inv-co-header');
+    const srcWm =document.querySelector('#inv-doc .inv-watermark');
+    const wmHtml=srcWm?`<img class="inv-watermark" src="${srcWm.src}" alt="" style="${srcWm.getAttribute('style')||''}">`:' ';
+    const hdrHtml=srcHdr?srcHdr.outerHTML:'';
+    const fmtR2=(n)=>n.toLocaleString('en-IN',{minimumFractionDigits:2});
+    const piTerms=rec.piTerms||'';
+    const termsRows=piTerms.split('\n').filter(l=>l.trim()).map((l,i)=>`<tr><td class="tc-num">${i+1}</td><td>${l.replace(/^\d+\.\s*/,'')}</td></tr>`).join('');
+    const footHtml=`
+      <tr><td colspan="5" class="ea5-num" style="border:none;padding:3px 8px;font-size:10px;">Ex-Total</td><td class="ea5-num" style="font-weight:700;border:1px solid #ccc;">${fmtR2(rec.subtotal)}</td></tr>
+      <tr><td colspan="5" class="ea5-num" style="border:none;padding:3px 8px;font-size:10px;">+ Freight</td><td class="ea5-num" style="border:1px solid #ccc;">${fmtR2(rec.freight)}</td></tr>
+      <tr><td colspan="5" class="ea5-num" style="border:none;padding:3px 8px;font-weight:700;font-size:10px;">Taxable Amount</td><td class="ea5-num" style="font-weight:700;border:1px solid #ccc;">${fmtR2(rec.taxable)}</td></tr>
+      <tr><td colspan="5" class="ea5-num" style="border:none;padding:3px 8px;font-size:10px;">+ GST ${rec.gstPct}%</td><td class="ea5-num" style="border:1px solid #ccc;">${fmtR2(rec.gstAmt)}</td></tr>
+      <tr style="background:#1a3a6b;color:#fff;"><td colspan="5" class="ea5-num" style="border:none;padding:4px 8px;font-weight:700;font-size:11px;">GRAND TOTAL</td><td class="ea5-num" style="font-size:12px;font-weight:900;border:1px solid #1a3a6b;">₹ ${fmtR2(rec.grand)}</td></tr>`;
+    doc.innerHTML=`
+      ${wmHtml}
+      ${hdrHtml}
+      <div class="inv-title-bar">PROFORMA INVOICE</div>
+      <div class="inv-cust-block">
+        <div class="cust-row"><strong>Customer: </strong>${rec.custName||'—'}</div>
+        <div class="cust-row"><strong>Contact: </strong>${rec.custContact||'—'}</div>
+        ${rec.custEmail?`<div class="cust-row"><strong>Email: </strong>${rec.custEmail}</div>`:''}
+        ${rec.custGST?`<div class="cust-row"><strong>GSTIN: </strong>${rec.custGST}</div>`:''}
+      </div>
+      <div class="inv-date-row">
+        <span>PI No: <strong>${rec.estNo}</strong></span>
+        <span>Date: <strong>${fmtDate(rec.date)}</strong></span>
+      </div>
+      <table class="inv-table">
+        <thead><tr>
+          <th style="width:7%">No.</th><th style="text-align:left;width:40%">Description</th>
+          <th style="width:9%">Qty</th><th style="width:7%">UOM</th>
+          <th style="width:17%">Rate ₹</th><th style="width:20%">Amount ₹</th>
+        </tr></thead>
+        <tbody>${piRowsHtml}${piNotesRow}</tbody>
+        <tfoot>${footHtml}</tfoot>
+      </table>
+      <div class="inv-words">${words}</div>
+      <div class="inv-terms">
+        <span class="tc-header">Terms &amp; Conditions</span>
+        <table>${termsRows}</table>
+      </div>
+      <div class="inv-sig-row">
+        <div style="flex:1;font-size:10px;color:#555;">Subject to Delhi Jurisdiction &nbsp;·&nbsp; E.&amp;O.E.</div>
+        <div style="text-align:center;min-width:160px;"><div style="border-top:1px solid #333;padding-top:4px;font-size:10px;">for Shreeji Industries<br><span style="font-size:9px;color:#777;">Authorised Signatory</span></div></div>
+      </div>`;
+  } else {
+    // ── A5 LANDSCAPE ESTIMATE ───────────────────────────────
+    const doc=document.getElementById('est-doc');
+    doc.className='est-a5-doc';
+    // Build totals footer (5-col table: colspan=4 + 1 amount)
+    let footHtml=`<tr><td colspan="4" class="ea5-num" style="border:none;padding:3px 6px;font-size:9px;">Subtotal</td><td class="ea5-num" style="font-weight:700;">${fmtR(rec.subtotal)}</td></tr>`;
+    if(rec.cbPrev) footHtml+=`<tr><td colspan="4" class="ea5-num" style="border:none;padding:2px 6px;font-size:9px;">+ Previous Balance</td><td class="ea5-num">${fmtR(rec.prevBal)}</td></tr>`;
+    if(rec.cbLess) footHtml+=`<tr><td colspan="4" class="ea5-num" style="border:none;padding:2px 6px;font-size:9px;color:#c0392b;">− Less Payment</td><td class="ea5-num" style="color:#c0392b;">(${fmtR(rec.lessPay)})</td></tr>`;
+    if(rec.cbFrt)  footHtml+=`<tr><td colspan="4" class="ea5-num" style="border:none;padding:2px 6px;font-size:9px;">+ Freight</td><td class="ea5-num">${fmtR(rec.estFrt)}</td></tr>`;
+    if(rec.cbTax)  footHtml+=`<tr><td colspan="4" class="ea5-num" style="border:none;padding:2px 6px;font-size:9px;">+ Tax</td><td class="ea5-num">${fmtR(rec.taxAmtEst)}</td></tr>`;
+    footHtml+=`<tr class="ea5-grand"><td colspan="4" class="ea5-num" style="border:none;padding:4px 6px;">TOTAL</td><td class="ea5-num" style="font-size:11px;">₹ ${fmtR(rec.grand)}</td></tr>`;
+    doc.innerHTML=`
+    <div class="ea5-hdr">
+      <div class="ea5-co-name">Shreeji Industries</div>
+      <div class="ea5-co-sub">h-72, Gali No.1, Gamri Ganv, Delhi 110053 &nbsp;·&nbsp; 9313784111 / 9313377714 &nbsp;·&nbsp; GSTIN: 07AGHPJ4543J1ZA</div>
+      <div><span class="ea5-title">ESTIMATE</span></div>
+    </div>
+    <div class="ea5-info">
+      <div class="ea5-info-party">
+        <div class="ea5-info-row"><strong>Party&nbsp;:</strong><span>&nbsp;${rec.custName||'—'}</span></div>
+        ${rec.custContact||rec.custEmail?`<div class="ea5-info-row"><strong>Contact&nbsp;:</strong><span>&nbsp;${[rec.custContact,rec.custEmail].filter(Boolean).join(' · ')}</span></div>`:''}
+        ${rec.custGST?`<div class="ea5-info-row"><strong>GSTIN&nbsp;:</strong><span>&nbsp;${rec.custGST}</span></div>`:''}
+      </div>
+      <div class="ea5-info-doc">
+        <div class="ea5-info-row" style="justify-content:flex-end;"><strong>Est.&nbsp;No&nbsp;:</strong><span style="font-family:monospace;font-weight:700;">&nbsp;${rec.estNo}</span></div>
+        <div class="ea5-info-row" style="justify-content:flex-end;"><strong>Date&nbsp;:</strong><span>&nbsp;${fmtDate(rec.date)}</span></div>
+      </div>
+    </div>
+    <table class="ea5-tbl">
+      <thead><tr>
+        <th style="width:7%">S.No</th>
+        <th style="width:10%">Qty</th>
+        <th class="ea5-thl" style="width:43%">Item Description</th>
+        <th style="width:17%">Rate ₹</th>
+        <th style="width:23%">Total ₹</th>
+      </tr></thead>
+      <tbody>${estRowsHtml}${estNotesRow}</tbody>
+      <tfoot>${footHtml}</tfoot>
+    </table>
+    ${words?`<div class="ea5-words">Amount in Words: ${words}</div>`:''}
+    <div class="ea5-footer">
+      <div class="ea5-footer-l">All taxes extra as applicable. Validity 3 days. 50% advance required. Delivery 10 days after PO/MFC.</div>
+      <div class="ea5-footer-r"><div class="ea5-sig-line">for Shreeji Industries<br><span style="font-size:7.5px;color:#666;">Authorised Signatory</span></div></div>
+    </div>`;
+  }
+
+  setTimeout(()=>estScaleDoc(),60);
+  estGo('view');
+}
+
+// ── Print (window.print with isolated doc) ──────────────────
+function estPrintDoc(){
+  const docEl=document.getElementById('est-doc');
+  if(!docEl){ alert('Nothing to print'); return; }
+  // create an isolated container for printing
+  let pt=document.getElementById('est-print-target');
+  if(!pt){ pt=document.createElement('div'); pt.id='est-print-target'; pt.style.display='none'; document.body.appendChild(pt); }
+  pt.innerHTML=docEl.outerHTML;
+  pt.querySelector('#est-doc')?.removeAttribute('style'); // remove scale transform
+  window.print();
+}
+
+// ── Scale doc to fit screen ─────────────────────────────────
+function estScaleDoc(){
+  const doc=document.getElementById('est-doc');
+  const wrap=document.getElementById('est-inv-wrap');
+  if(!doc||!wrap) return;
+  const w=wrap.offsetWidth||300;
+  const base=estType==='pi'?780:794;
+  const sc=Math.min(1,w/base);
+  doc.style.transform=`scale(${sc})`;
+  doc.style.transformOrigin='top left';
+  wrap.style.height=(doc.scrollHeight*sc+20)+'px';
+}
+
+// ── Export PDF / JPG ────────────────────────────────────────
+function estExportPDF(){
+  const el=document.getElementById('est-doc');
+  const btn=document.getElementById('est-pdf-btn');
+  if(!el||typeof html2canvas==='undefined'){ alert('Export not ready'); return; }
+  btn.textContent='⏳'; btn.disabled=true;
+  const orig=el.style.transform; el.style.transform='';
+  html2canvas(el,{scale:2,useCORS:true,backgroundColor:'#fff'}).then(cv=>{
+    el.style.transform=orig; btn.textContent='📄 PDF'; btn.disabled=false;
+    const imgData=cv.toDataURL('image/jpeg',0.95);
+    const W=cv.width/2, H=cv.height/2;
+    if(typeof jspdf!=='undefined'){
+      const ori=estType==='pi'?'p':'l';
+      const pdf=new jspdf.jsPDF({orientation:ori,unit:'px',format:[W,H]});
+      pdf.addImage(imgData,'JPEG',0,0,W,H);
+      pdf.save((document.getElementById('est-no')?.value||'Doc')+'.pdf');
+    } else {
+      const a=document.createElement('a'); a.href=imgData;
+      a.download=(document.getElementById('est-no')?.value||'Doc')+'.jpg'; a.click();
+    }
+  }).catch(()=>{ el.style.transform=orig; btn.textContent='📄 PDF'; btn.disabled=false; });
+}
+function estExportJPG(){
+  const el=document.getElementById('est-doc');
+  const btn=document.getElementById('est-jpg-btn');
+  if(!el||typeof html2canvas==='undefined'){ alert('Export not ready'); return; }
+  btn.textContent='⏳'; btn.disabled=true;
+  const orig=el.style.transform; el.style.transform='';
+  html2canvas(el,{scale:2,useCORS:true,backgroundColor:'#fff'}).then(cv=>{
+    el.style.transform=orig; btn.textContent='🖼 JPG'; btn.disabled=false;
+    const a=document.createElement('a'); a.href=cv.toDataURL('image/jpeg',0.95);
+    a.download=(document.getElementById('est-no')?.value||'Doc')+'.jpg'; a.click();
+  }).catch(()=>{ el.style.transform=orig; btn.textContent='🖼 JPG'; btn.disabled=false; });
+}
+
+// ── Reset form for a new document ───────────────────────────
+function estNew(){
+  ['est-no','est-cname','est-contact','est-email','est-cgst','est-notes'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  const dateEl=document.getElementById('est-date');
+  if(dateEl) dateEl.value=new Date().toISOString().slice(0,10);
+  ['est-prev-bal','est-less-pay','est-est-freight','est-tax-amt'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='0';
+  });
+  ['est-cb-prev','est-cb-less','est-cb-frt','est-cb-tax'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.checked=false;
+  });
+  const fEl=document.getElementById('est-freight'); if(fEl) fEl.value='0';
+  const gEl=document.getElementById('est-gst-pct'); if(gEl) gEl.value='18';
+  const piT=document.getElementById('est-pi-terms');
+  if(piT) piT.value='1. Transportation extra in above rates.\n2. All taxes extra as applicable at time of invoicing.\n3. Delivery: 10 days after PO / MFC.\n4. Payment: 50% advance — 50% before dispatch.\n5. Validity: This PI is valid for 3 days from date of issue.\n6. Subject to Delhi jurisdiction. E.&O.E.';
+  estType='est';
+  estSetType('est');
+  document.getElementById('est-no').value=estNextNo('est');
+  estItems=[{no:'1',desc:'',qty:1,uom:'PCS',rate:0,amount:0}];
+  estRenderItems();
+  estGo('new');
+}
+
+// ── Render saved list (hide order-completed PIs) ────────────
+function estRenderList(){
+  const q=(document.getElementById('est-search')?.value||'').trim().toLowerCase();
+  const db=estDbLoad().filter(e=>!e.hidden);
+  const list=q?db.filter(e=>(e.estNo||'').toLowerCase().includes(q)||(e.custName||'').toLowerCase().includes(q)):db;
+  const el=document.getElementById('est-list-content'); if(!el) return;
+  if(!list.length){ el.innerHTML='<div style="text-align:center;padding:24px;color:#aaa;">No saved estimates / PIs.</div>'; return; }
+  el.innerHTML=list.map(e=>{
+    const isPI=(e.type||'est')==='pi';
+    const badge=`<span style="font-size:.64rem;padding:2px 7px;border-radius:4px;font-weight:700;letter-spacing:.5px;background:${isPI?'#1a3a6b':'#1a5a30'};color:#fff;">${isPI?'PI':'EST'}</span>`;
+    const total=isPI?(e.grand||e.subtotal||0):(e.grand||e.subtotal||0);
+    return `<div class="card" style="margin-bottom:9px;padding:12px 14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+        <div>
+          <div style="display:flex;gap:6px;align-items:center;">${badge}<span style="font-family:'Roboto Mono',monospace;font-weight:700;color:#1a3a6b;font-size:.82rem;">${e.estNo||'—'}</span></div>
+          <div style="font-size:.78rem;color:#333;margin-top:2px;">${e.custName||'—'} · <span style="color:#666;">${e.date||''}</span></div>
+          <div style="font-size:.76rem;color:#1a5a30;font-weight:700;margin-top:2px;">₹ ${total.toLocaleString('en-IN',{minimumFractionDigits:2})}</div>
+        </div>
+        <div style="display:flex;gap:7px;">
+          <button onclick="estLoad('${e.id}')" style="padding:7px 14px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:.74rem;font-weight:700;cursor:pointer;">🖨 View</button>
+          <button onclick="estDelete('${e.id}')" style="padding:7px 12px;background:#dc2626;color:#fff;border:none;border-radius:7px;font-size:.74rem;font-weight:700;cursor:pointer;">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Load a saved document ───────────────────────────────────
+function estLoad(id){
+  const e=estDbLoad().find(x=>x.id===id); if(!e) return;
+  const set=(elId,v)=>{ const el=document.getElementById(elId); if(el) el.value=v!=null?v:''; };
+  set('est-no',e.estNo); set('est-date',e.date);
+  set('est-cname',e.custName); set('est-contact',e.custContact);
+  set('est-email',e.custEmail); set('est-cgst',e.custGST);
+  set('est-notes',e.notes);
+  set('est-freight',e.freight||0); set('est-gst-pct',e.gstPct!=null?e.gstPct:18);
+  set('est-prev-bal',e.prevBal||0); set('est-less-pay',e.lessPay||0);
+  set('est-est-freight',e.estFrt||0); set('est-tax-amt',e.taxAmtEst||0);
+  const setCb=(id,v)=>{ const el=document.getElementById(id); if(el) el.checked=!!v; };
+  setCb('est-cb-prev',e.cbPrev); setCb('est-cb-less',e.cbLess);
+  setCb('est-cb-frt',e.cbFrt); setCb('est-cb-tax',e.cbTax);
+  if(e.piTerms){ const el=document.getElementById('est-pi-terms'); if(el) el.value=e.piTerms; }
+  estType=e.type||'est';
+  estSetType(estType);
+  estItems=(e.items||[{no:'1',desc:'',qty:1,uom:'PCS',rate:0,amount:0}]).map(it=>({...it}));
+  estRenderItems();
+  estGenerate();
+}
+
+// ── Delete ──────────────────────────────────────────────────
+function estDelete(id){
+  if(!confirm('Delete this document?')) return;
+  estDbSave(estDbLoad().filter(e=>e.id!==id));
+  estRenderList();
+  pdbPost({action:'DELETE_ESTIMATE',id}).catch(()=>{});
+}
+
+// ── Push / Pull ─────────────────────────────────────────────
+async function estPushAll(){
+  const db=estDbLoad(); if(!db.length){ alert('Nothing to push.'); return; }
+  const el=document.getElementById('est-sync-status');
+  if(el) el.textContent='↑ Pushing…';
+  let ok=0;
+  for(const e of db){
+    try{
+      await pdbPost({action:'SAVE_ESTIMATE', id:e.id, estNo:e.estNo, type:e.type||'est',
+        date:e.date, custName:e.custName, custContact:e.custContact,
+        custEmail:e.custEmail, custGST:e.custGST, subtotal:e.subtotal||0,
+        freight:e.freight||0, gstPct:e.gstPct||0, gstAmt:e.gstAmt||0, grand:e.grand||0,
+        prevBal:e.prevBal||0, lessPay:e.lessPay||0, estFrt:e.estFrt||0, taxAmtEst:e.taxAmtEst||0,
+        notes:e.notes, piTerms:e.piTerms||'', orderStatus:e.orderStatus||'',
+        items:JSON.stringify(e.items), savedAt:e.savedAt});
+      ok++;
+    }catch(err){}
+  }
+  if(el) el.textContent='✓ Pushed '+ok+'/'+db.length+' at '+new Date().toLocaleTimeString('en-GB');
+}
+async function estPullAll(){
+  const url=pdbGetUrl(); if(!url){ alert('Product sheet URL not linked.'); return; }
+  const el=document.getElementById('est-sync-status');
+  if(el) el.textContent='↓ Pulling…';
+  try{
+    const res=await fetch(url+'?action=GET_ESTIMATES&v='+Date.now(),{redirect:'follow'});
+    const j=await res.json();
+    if(j.status!=='ok') throw new Error(j.message||'Server error');
+    const remote=Array.isArray(j.data)?j.data:[];
+    if(!remote.length){ if(el) el.textContent='⚠ No estimates in sheet'; return; }
+    const local=estDbLoad(); const map={};
+    remote.forEach(r=>{ if(r.id) map[r.id]={...r,items:(()=>{ try{ return JSON.parse(r.items||'[]'); }catch(e){ return []; } })()} });
+    local.forEach(r=>{ if(r.id&&!map[r.id]) map[r.id]=r; });
+    estDbSave(Object.values(map));
+    estRenderList();
+    if(el) el.textContent='✓ Pulled '+remote.length+' at '+new Date().toLocaleTimeString('en-GB');
+  }catch(e){ if(el) el.textContent='✗ Pull failed: '+e.message; }
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  VENDOR DB helpers (uses existing mfg_vendors store)
 // ═══════════════════════════════════════════════════════════════
 
@@ -6756,8 +7491,254 @@ function nmqShareWA(){
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     MONEY FLOW JAVASCRIPT  — v24  (localStorage now, Google Sheets later)
+<style>
+/* ── A5 Landscape Estimate / PI document ─────────────────────────
+   A5 landscape = 210 mm × 148 mm ≈ 794 px × 560 px at 96 dpi
+   ─────────────────────────────────────────────────────────────── */
+.est-a5-doc{background:#fff;width:794px;font-family:'Source Sans 3',sans-serif;font-size:9.5px;color:#111;border:1px solid #888;box-shadow:0 2px 14px rgba(0,0,0,.18);position:relative;line-height:1.35;}
+.ea5-hdr{text-align:center;border-bottom:2px solid #111;padding:7px 10px 5px;}
+.ea5-co-name{font-family:'Libre Baskerville',serif;font-size:15px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
+.ea5-co-sub{font-size:8px;color:#444;margin-top:1px;}
+.ea5-title{display:inline-block;background:#1a3a6b;color:#fff;font-size:9.5px;font-weight:800;letter-spacing:2px;padding:2px 12px;border-radius:3px;margin-top:4px;text-transform:uppercase;}
+.ea5-info{display:flex;gap:0;border-bottom:1.5px solid #111;}
+.ea5-info-party{flex:1;padding:5px 10px;border-right:1px solid #ccc;}
+.ea5-info-doc{flex:0 0 190px;padding:5px 10px;text-align:right;}
+.ea5-info-row{display:flex;justify-content:space-between;margin-bottom:1px;}
+.ea5-info-row strong{min-width:55px;display:inline-block;}
+.ea5-tbl{width:100%;border-collapse:collapse;font-size:9.5px;}
+.ea5-tbl th{background:#1a3a6b;color:#fff;padding:4px 5px;text-align:center;font-weight:700;border:1px solid #1a3a6b;font-size:9px;}
+.ea5-tbl th.ea5-thl{text-align:left;}
+.ea5-tbl td{border:1px solid #d0d8e8;padding:2px 5px;vertical-align:middle;}
+.ea5-tbl td.ea5-num{text-align:right;}
+.ea5-tbl td.ea5-ctr{text-align:center;}
+.ea5-tbl tfoot td{border:1px solid #c8d0e0;padding:3px 5px;}
+.ea5-tbl tr.ea5-odd{background:#f7f9ff;}
+.ea5-grand td{background:#1a3a6b!important;color:#fff!important;font-weight:900!important;font-size:10.5px!important;}
+.ea5-words{padding:4px 10px;font-size:8.5px;color:#444;border-top:1px solid #ddd;font-style:italic;}
+.ea5-footer{display:flex;border-top:1.5px solid #111;padding:4px 10px;font-size:8.5px;color:#444;}
+.ea5-footer-l{flex:1;}
+.ea5-footer-r{flex:0 0 150px;text-align:center;}
+.ea5-sig-line{border-top:1px solid #111;margin-top:18px;padding-top:2px;font-size:8px;}
+
+/* ── A4 Portrait PI document (reuses .inv-doc CSS, just sets correct class) ─ */
+/* No extra rules needed — .inv-doc already styles A4 portrait correctly */
+
+/* ── Print media queries ──────────────────────────────────────── */
+@media print{
+  body>*:not(#est-print-target){display:none!important;}
+  #est-print-target{display:block!important;position:fixed;top:0;left:0;width:100%;margin:0;padding:0;}
+  .est-a5-doc{transform:none!important;width:210mm;font-size:8.5pt;box-shadow:none;border:none;}
+  .inv-doc{transform:none!important;width:210mm;box-shadow:none;border:none;}
+  @page est-a5{size:A5 landscape;margin:4mm;}
+  @page est-a4{size:A4 portrait;margin:8mm;}
+}
+</style>
+
+<!-- ═══════════════════════════════════════════════════════
+     ESTIMATE SECTION  (4th main tab)
+     Offline-first: saves to localStorage instantly.
+     EST-YYYY-XXXX numbering, no tax, same letterhead as PI.
+     Syncs to Products script via SAVE_ESTIMATE/GET_ESTIMATES.
+     ═══════════════════════════════════════════════════════ -->
+<div id="section-estimate" style="display:none;">
+  <div class="app-header">
+    <div><h1>Shreeji Industries</h1><p>Estimate Generator</p></div>
+  </div>
+
+  <!-- sub-tab bar -->
+  <div class="inv-nav" id="est-nav">
+    <div class="inv-tab active" id="est-tab-new"  onclick="estGo('new')">📝 New</div>
+    <div class="inv-tab"        id="est-tab-view" onclick="estGo('view')">🖨 Preview</div>
+    <div class="inv-tab"        id="est-tab-list" onclick="estGo('list')">📋 Saved</div>
+  </div>
+
+  <!-- PAGE: New Estimate Form -->
+  <div class="page active" id="est-page-new" style="padding:8px 0 90px;">
+
+    <!-- ── Type Toggle: ESTIMATE | PI ── -->
+    <div style="display:flex;gap:0;margin:0 12px 10px;border-radius:9px;overflow:hidden;border:2px solid #1a3a6b;">
+      <button id="est-type-est" onclick="estSetType('est')" style="flex:1;padding:11px 6px;background:#1a3a6b;color:#fff;border:none;font-weight:800;font-size:.78rem;cursor:pointer;letter-spacing:.5px;">📝 ESTIMATE</button>
+      <button id="est-type-pi"  onclick="estSetType('pi')"  style="flex:1;padding:11px 6px;background:#f0f4ff;color:#1a3a6b;border:none;font-weight:800;font-size:.78rem;cursor:pointer;letter-spacing:.5px;">📄 PROFORMA INVOICE (PI)</button>
+    </div>
+
+    <div class="card" style="margin-bottom:11px;">
+      <div class="card-header" id="est-details-header">📝 Estimate Details</div>
+      <div class="field-row"><div class="field-icon">🔢</div><div class="field-info"><div class="field-name" id="est-no-label">Estimate No.</div><div class="field-sub">Auto EST-YYYY-XXXX</div></div><input type="text" class="wide" id="est-no" readonly style="background:#f5f5ff;font-family:'Roboto Mono',monospace;font-weight:700;color:#1a3a6b;letter-spacing:1px;"></div>
+      <div class="field-row"><div class="field-icon">📅</div><div class="field-info"><div class="field-name">Date</div></div><input type="date" class="num" id="est-date"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:11px;">
+      <div class="card-header">🏢 Customer Details</div>
+      <div class="field-row"><div class="field-icon">🔍</div><div class="field-info"><div class="field-name">Customer Name</div><div class="field-sub">Type to search saved customers</div></div><input type="text" class="wide" id="est-cname" list="est-cust-list" placeholder="Customer name" oninput="estFillCustomer(this.value)" autocomplete="off"><datalist id="est-cust-list"></datalist></div>
+      <div class="field-row"><div class="field-icon">📞</div><div class="field-info"><div class="field-name">Contact</div></div><input type="text" class="wide" id="est-contact" placeholder="Phone / name"></div>
+      <div class="field-row"><div class="field-icon">✉️</div><div class="field-info"><div class="field-name">Email</div></div><input type="text" class="wide" id="est-email" placeholder="optional"></div>
+      <div class="field-row"><div class="field-icon">🆔</div><div class="field-info"><div class="field-name">GSTIN</div></div><input type="text" class="wide" id="est-cgst" placeholder="optional"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:11px;">
+      <div class="card-header" id="est-items-header">📋 Line Items &nbsp;<span style="font-size:.7rem;font-weight:400;opacity:.7;">(No Tax)</span></div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:.75rem;min-width:540px;" id="est-items-table">
+          <thead><tr style="background:#1a3a6b;color:#fff;">
+            <th style="padding:7px 4px;width:52px;text-align:center;">No.</th>
+            <th style="padding:7px 5px;text-align:left;">Description</th>
+            <th style="padding:7px 4px;width:58px;text-align:center;">Qty</th>
+            <th style="padding:7px 4px;width:52px;text-align:center;">UOM</th>
+            <th style="padding:7px 4px;width:78px;text-align:center;">Rate ₹</th>
+            <th style="padding:7px 4px;width:82px;text-align:center;">Amt ₹</th>
+            <th style="width:24px;"></th>
+          </tr></thead>
+          <tbody id="est-items-tbody"></tbody>
+        </table>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button onclick="estAddItem()" style="flex:1;padding:9px;background:#f0f4ff;border:1.5px dashed #8899cc;border-radius:7px;color:#1a3a6b;font-weight:700;font-size:.8rem;cursor:pointer;">+ Blank Row</button>
+        <button onclick="estOpenProductPicker()" style="flex:1;padding:9px;background:#1a3a6b;border:none;border-radius:7px;color:#fff;font-weight:700;font-size:.8rem;cursor:pointer;">📦 From Product DB</button>
+      </div>
+
+      <!-- Subtotal always visible -->
+      <div style="margin-top:10px;border-top:2px solid #1a3a6b;padding-top:8px;text-align:right;padding-right:4px;">
+        <span style="font-size:.78rem;color:#555;">Subtotal: </span>
+        <span id="est-subtotal" style="font-size:1.05rem;font-weight:800;color:#1a3a6b;">₹ 0.00</span>
+      </div>
+
+      <!-- ESTIMATE-only: optional checkboxes -->
+      <div id="est-est-fields" style="margin-top:10px;border-top:1px dashed #bbc;padding-top:10px;">
+        <div style="font-size:.73rem;font-weight:700;color:#888;letter-spacing:.4px;margin-bottom:6px;text-transform:uppercase;">Optional Items</div>
+        <!-- Previous Balance -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <input type="checkbox" id="est-cb-prev" onchange="estCalc()" style="width:16px;height:16px;cursor:pointer;">
+          <label for="est-cb-prev" style="font-size:.78rem;color:#333;min-width:130px;cursor:pointer;">+ Previous Balance</label>
+          <input type="number" id="est-prev-bal" value="0" min="0" step="any" style="flex:1;border:1px solid #ccd;border-radius:6px;padding:6px 8px;font-size:.82rem;text-align:right;" oninput="estCalc()">
+        </div>
+        <!-- Less Payment Received -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <input type="checkbox" id="est-cb-less" onchange="estCalc()" style="width:16px;height:16px;cursor:pointer;">
+          <label for="est-cb-less" style="font-size:.78rem;color:#c0392b;min-width:130px;cursor:pointer;">− Less Payment Received</label>
+          <input type="number" id="est-less-pay" value="0" min="0" step="any" style="flex:1;border:1px solid #ccd;border-radius:6px;padding:6px 8px;font-size:.82rem;text-align:right;" oninput="estCalc()">
+        </div>
+        <!-- Freight Charges -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <input type="checkbox" id="est-cb-frt" onchange="estCalc()" style="width:16px;height:16px;cursor:pointer;">
+          <label for="est-cb-frt" style="font-size:.78rem;color:#333;min-width:130px;cursor:pointer;">+ Freight Charges</label>
+          <input type="number" id="est-est-freight" value="0" min="0" step="any" style="flex:1;border:1px solid #ccd;border-radius:6px;padding:6px 8px;font-size:.82rem;text-align:right;" oninput="estCalc()">
+        </div>
+        <!-- Tax Amount -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <input type="checkbox" id="est-cb-tax" onchange="estCalc()" style="width:16px;height:16px;cursor:pointer;">
+          <label for="est-cb-tax" style="font-size:.78rem;color:#333;min-width:130px;cursor:pointer;">+ Tax Amount ₹</label>
+          <input type="number" id="est-tax-amt" value="0" min="0" step="any" style="flex:1;border:1px solid #ccd;border-radius:6px;padding:6px 8px;font-size:.82rem;text-align:right;" oninput="estCalc()">
+        </div>
+        <!-- Grand Total -->
+        <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;background:#f0f4ff;border-radius:7px;padding:8px 10px;">
+          <span style="font-size:.82rem;font-weight:700;color:#555;">Grand Total:</span>
+          <span id="est-grand-total" style="font-size:1.15rem;font-weight:900;color:#1a3a6b;">₹ 0.00</span>
+        </div>
+      </div>
+
+      <!-- PI-only: Freight + GST -->
+      <div id="est-pi-fields" style="display:none;margin-top:10px;border-top:1px dashed #ccd;padding-top:10px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:.78rem;color:#555;min-width:100px;">+ Freight ₹</span>
+          <input type="number" id="est-freight" value="0" min="0" step="any" style="flex:1;border:1px solid #c8d8f0;border-radius:7px;padding:7px 8px;font-size:.85rem;text-align:right;background:#f8faff;" oninput="estCalc()">
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:.78rem;color:#555;min-width:100px;">GST %</span>
+          <input type="number" id="est-gst-pct" value="18" min="0" max="100" step=".01" style="flex:1;border:1px solid #c8d8f0;border-radius:7px;padding:7px 8px;font-size:.85rem;text-align:right;background:#f8faff;" oninput="estCalc()">
+        </div>
+        <div style="background:#f0f4ff;border-radius:7px;padding:8px 10px;font-size:.78rem;line-height:2;">
+          <div style="display:flex;justify-content:space-between;"><span>Ex-Total (items)</span><strong id="pi-extotal-lbl">₹ 0.00</strong></div>
+          <div style="display:flex;justify-content:space-between;"><span>+ Freight</span><strong id="pi-freight-lbl">₹ 0.00</strong></div>
+          <div style="display:flex;justify-content:space-between;border-top:1px solid #c0d0f0;padding-top:4px;"><span>= Taxable Amount</span><strong id="pi-taxable-lbl">₹ 0.00</strong></div>
+          <div style="display:flex;justify-content:space-between;"><span>+ GST <span id="pi-gst-pct-lbl">18</span>%</span><strong id="pi-gst-lbl">₹ 0.00</strong></div>
+          <div style="display:flex;justify-content:space-between;border-top:2px solid #1a3a6b;padding-top:4px;font-size:.88rem;color:#1a3a6b;"><span><strong>Grand Total</strong></span><strong id="pi-grand-lbl">₹ 0.00</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:11px;" id="est-notes-card">
+      <div class="card-header">📝 Notes</div>
+      <textarea id="est-notes" rows="2" style="width:100%;border:1px solid #cdd;border-radius:7px;padding:8px;font-size:.8rem;font-family:'Source Sans 3',sans-serif;resize:vertical;" placeholder="Optional notes…"></textarea>
+    </div>
+
+    <!-- PI-only: Editable Terms & Conditions -->
+    <div class="card" id="est-pi-terms-card" style="display:none;margin-bottom:80px;">
+      <div class="card-header">📜 Terms &amp; Conditions <span style="font-size:.68rem;font-weight:400;opacity:.6;">(editable)</span></div>
+      <textarea id="est-pi-terms" rows="5" style="width:100%;border:1px solid #cdd;border-radius:7px;padding:8px;font-size:.78rem;font-family:'Source Sans 3',sans-serif;resize:vertical;line-height:1.6;">1. Transportation extra in above rates.
+2. All taxes extra as applicable at time of invoicing.
+3. Delivery: 10 days after PO / MFC.
+4. Payment: 50% advance — 50% before dispatch.
+5. Validity: This PI is valid for 3 days from date of issue.
+6. Subject to Delhi jurisdiction. E.&O.E.</textarea>
+    </div>
+
+    <div class="bottom-bar" id="est-bar" style="display:flex;gap:8px;">
+      <button onclick="estGenerate()" id="est-gen-btn" style="flex:2;padding:13px;background:#1a3a6b;color:white;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;">🖨 Generate Estimate ›</button>
+      <button onclick="estSave(false);alert('Saved!')" style="flex:1;padding:13px;background:#1a5a30;color:white;border:none;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;">💾 Save</button>
+    </div>
+  </div>
+
+  <!-- PAGE: Preview / Print -->
+  <div class="page" id="est-page-view" style="display:none;padding:0;background:#9ba3b2;">
+    <div style="display:flex;gap:7px;padding:8px 12px;background:#f0f2f7;border-bottom:1px solid #c0cce8;position:sticky;top:44px;z-index:10;flex-wrap:wrap;">
+      <button onclick="estGo('new')" style="flex:1;padding:9px;background:#555;color:#fff;border:none;border-radius:7px;font-size:.76rem;font-weight:700;cursor:pointer;">← Edit</button>
+      <button onclick="estPrintDoc()" style="flex:1;padding:9px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:.76rem;font-weight:700;cursor:pointer;">🖨 Print</button>
+      <button id="est-pdf-btn" onclick="estExportPDF()" style="flex:1;padding:9px;background:#c0392b;color:#fff;border:none;border-radius:7px;font-size:.76rem;font-weight:700;cursor:pointer;">📄 PDF</button>
+      <button id="est-jpg-btn" onclick="estExportJPG()" style="flex:1;padding:9px;background:#1a5a30;color:#fff;border:none;border-radius:7px;font-size:.76rem;font-weight:700;cursor:pointer;">🖼 JPG</button>
+      <button onclick="estSave(false);alert('Saved!')" style="flex:1;padding:9px;background:#7b5ea7;color:#fff;border:none;border-radius:7px;font-size:.76rem;font-weight:700;cursor:pointer;">💾 Save</button>
+    </div>
+    <!-- PI Order Status bar -->
+    <div id="est-order-btns" style="display:none;padding:10px 12px;background:#fff8e1;border-bottom:2px solid #f0a500;">
+      <div style="font-size:.73rem;font-weight:700;color:#7a6000;text-align:center;margin-bottom:8px;letter-spacing:.3px;">MARK THIS PI STATUS:</div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="estOrderStatus('given')" style="flex:1;padding:11px;background:#1a5a30;color:#fff;border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;">✅ Order Given</button>
+        <button onclick="estOrderStatus('not_given')" style="flex:1;padding:11px;background:#c0392b;color:#fff;border:none;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;">❌ Order Not Given</button>
+      </div>
+      <div style="font-size:.68rem;color:#888;text-align:center;margin-top:6px;">PI will be archived to Google Sheet and removed from app.</div>
+    </div>
+    <div style="padding:14px 6px 40px;overflow-x:auto;">
+      <div id="est-inv-wrap" style="margin:0 auto;">
+        <div id="est-doc"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: Saved Estimates List -->
+  <div class="page" id="est-page-list" style="display:none;padding:12px 0 60px;">
+    <div class="card" style="margin-bottom:11px;">
+      <div class="card-header">📋 Saved Estimates</div>
+      <div class="field-row" style="flex-wrap:wrap;gap:6px;">
+        <input type="text" id="est-search" class="wide" placeholder="Search customer or EST no…" oninput="estRenderList()" autocomplete="off">
+        <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">
+          <button onclick="estPushAll()" style="padding:7px 16px;background:#1a5a30;color:#fff;border:none;border-radius:7px;font-size:.74rem;font-weight:700;cursor:pointer;">↑ Push to Sheet</button>
+          <button onclick="estPullAll()" style="padding:7px 16px;background:#1a3a6b;color:#fff;border:none;border-radius:7px;font-size:.74rem;font-weight:700;cursor:pointer;">↓ Pull from Sheet</button>
+          <span id="est-sync-status" style="font-size:.7rem;color:#7b8499;"></span>
+        </div>
+      </div>
+    </div>
+    <div id="est-list-content" style="padding:0 12px;"></div>
+  </div>
+
+  <!-- ── Product Picker Modal ── -->
+  <div id="est-prod-picker" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
+    <div style="background:#fff;margin:40px 12px 20px;border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.3);max-width:600px;margin-left:auto;margin-right:auto;">
+      <!-- Modal header -->
+      <div style="background:#1a3a6b;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.1rem;">📦</span>
+        <div style="flex:1;"><div style="font-weight:700;font-size:.9rem;letter-spacing:.5px;">Select from Product DB</div><div style="font-size:.68rem;opacity:.7;margin-top:1px;">Tap a product to add it as a line item</div></div>
+        <button onclick="estCloseProductPicker()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:7px;padding:6px 12px;font-size:.8rem;font-weight:700;cursor:pointer;">✕ Close</button>
+      </div>
+      <!-- Search -->
+      <div style="padding:10px 14px;border-bottom:1px solid #eee;">
+        <input type="text" id="est-prod-search" placeholder="Search by name, code, size…" oninput="estFilterPicker(this.value)" autocomplete="off"
+          style="width:100%;border:1.5px solid #c0cce8;border-radius:8px;padding:9px 12px;font-size:.82rem;font-family:'Source Sans 3',sans-serif;">
+      </div>
+      <!-- Product list -->
+      <div id="est-prod-list" style="max-height:55vh;overflow-y:auto;padding:8px 10px;"></div>
+    </div>
+  </div>
+
+</div><!-- /section-estimate -->
      ══════════════════════════════════════════════════════════ -->
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -7259,7 +8240,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v93';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v99';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)

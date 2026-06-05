@@ -1,0 +1,100 @@
+# Shreeji Industries — Full System Update Log
+
+---
+
+## v99 — 2026-06-05 22:00 | S/N: SHJ-99-050626
+
+**Files changed:** `index.html`
+
+### FIX — Version metadata cleanup
+All version stamps unified to v99:
+- `<title>` updated v98 → v99
+- `shj-build` meta updated v98 → v99 / SHJ-98 → SHJ-99
+- Service-worker `CACHE_NAME` updated `shreeji-v98` → `shreeji-v99`
+- PIN footer serial updated SHJ-96 → SHJ-99
+
+### CONFIRM — Estimate tab
+Estimate tab confirmed working as designed:
+- **ESTIMATE** mode: no tax, subtotal = total
+- **PROFORMA INVOICE** mode: GST + freight shown
+- Editable row numbers: 1, 2, 3, 2a, 3a etc.
+
+---
+
+## v95 — 2026-06-05 18:00 | S/N: SHJ-95-050626
+
+**Files changed:** `index.html`, `Products-Code.gs`
+
+### NEW — Estimate Tab: 2 document types
+| Toggle | Behaviour |
+|--------|-----------|
+| **📝 ESTIMATE** | No tax. Items → Subtotal = Total |
+| **📄 PROFORMA INVOICE (PI)** | Items → Subtotal + Freight = Taxable Amount + GST % = Grand Total |
+
+- Customer auto-fill from Customer DB  
+- Product code lookup from Product DB  
+- Row numbering editable per line: 1, 2, 3, 2a, 3a  
+- Document numbers: `EST-YYYY-XXXX` / `PI-YYYY-XXXX` (auto-switch on type toggle)  
+
+### NEW — A5 Landscape print format
+- Document size: 794 × 560 px (A5 landscape at 96 dpi)
+- Compact slip style: centered header → party/doc row → table → totals → footer
+- PDF export uses landscape orientation
+- Freight + GST rows visible only on PI type
+
+### FIX — Duplicate JS block removed
+- Stale EST engine copy from v94 caused a script parse error
+- All 6 `<script>` blocks now validate clean (0 errors)
+
+### UPDATE — Products-Code.gs ESTIMATES sheet
+- Added columns: `type`, `freight`, `gstPct`, `gstAmt`, `grand`  
+- **Action:** paste new `Products-Code.gs` → Deploy → New Version → same URL
+
+---
+
+## v94 — 2026-06-05 00:00 | S/N: SHJ-94-050626
+
+**Files changed:** `index.html`, `Products-Code.gs`
+
+- NEW 4th main tab `📝 Estimate`
+- EST-YYYY-XXXX auto-numbering, customer from Customer DB, product lookup, PDF/JPG export
+- Products-Code.gs: SAVE_ESTIMATE / DELETE_ESTIMATE / GET_ESTIMATES handlers
+
+---
+
+## v93 — 2026-06-04 | S/N: SHJ-93-040626
+
+- Product name format: plain lowercase space-separated with code appended  
+  e.g. `45mm 18line 4mos white tapping c450`
+
+---
+
+## v92 — 2026-06-04 | S/N: SHJ-92-040626
+
+- Product DB pre-linked to Products sheet URL; 🔌 Test button; auto-connection check on tab open
+
+---
+
+## v91 — 2026-06-04 | S/N: SHJ-91-040626
+
+- Product DB uses its own separate Google Sheet / URL
+
+---
+
+## v90 — 2026-06-04 | S/N: SHJ-90-040626
+
+- NEW Product DB tab (in Invoice & Quotes)
+
+---
+
+## v89 — 2026-06-03 | S/N: SHJ-89-030626
+
+- FIX Desktop window close; `will-prevent-unload` handler in `main.js`
+
+---
+
+## v88 — 2026-06-03 | S/N: SHJ-88-030626
+
+- FIX parseNum comma parsing (`1,000` now correctly = 1000)
+
+---
