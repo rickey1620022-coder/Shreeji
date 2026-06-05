@@ -8326,38 +8326,6 @@ function pwaDismiss(){
 
 <!-- ═══ PATCH_v100.js ═══ -->
 <script>
-/*
-==================================================================
-  SHREEJI INDUSTRIES — PATCH v100
-  S/N : SHJ-100-050626
-  Date: 2026-06-05
-  File: PATCH_v100.js
-==================================================================
-
-  HOW TO APPLY
-  ─────────────
-  Open index.html in a text editor.
-  Find the very last </body> tag (last line of the file).
-  Paste the entire <script> block below IMMEDIATELY BEFORE </body>.
-  Save the file and push to GitHub.
-
-  WHAT THIS FIXES (3 partials from spec)
-  ────────────────────────────────────────
-  1. Rate-history dropdown (spec §2)
-     Selecting a description in the Estimate tab now shows a
-     clickable dropdown of the last 10 rates used for the same
-     customer + item, so the user can pick instead of just auto-fill.
-
-  2. Share & Print auto-opens after Save (spec §4)
-     After the estimate save button is clicked and the data is
-     stored, the app automatically switches to the Share & Print tab.
-
-  3. WhatsApp Text share wired to Estimate (spec §9)
-     WhatsApp Text button generates a properly formatted message
-     from the current estimate/PI data and opens wa.me.
-==================================================================
-*/
-
 /* ── paste everything between the dashes into index.html ── */
 
 /* <script> */
@@ -8886,29 +8854,6 @@ function pwaDismiss(){
 
 <!-- ═══ PATCH_v101.js ═══ -->
 <script>
-/*
-==================================================================
-  SHREEJI INDUSTRIES — PATCH v101
-  S/N : SHJ-101-050626
-  Date: 2026-06-05
-  File: PATCH_v101.js
-==================================================================
-
-  HOW TO APPLY
-  ─────────────
-  In index.html, immediately AFTER the PATCH_v100 <script> block
-  (and still before </body>), paste the <script>…</script> below.
-
-  FEATURES BUILT (5 of remaining 11)
-  ────────────────────────────────────
-  5.  §10  Copy-type print modes: Customer / Agent / Packing
-  6.  §12  Copy count selector + multi-print sequencer
-  7.  §11  Signature section (optional checkbox)
-  8.  §8   PI Records screen — list, filters, Open/Edit/Download
-  9.  §13+14  Estimate Records UI — 20-day list + Reprint flow
-==================================================================
-*/
-
 /* <script> */
 ;(function () {
   'use strict';
@@ -9701,30 +9646,6 @@ function pwaDismiss(){
 
 <!-- ═══ PATCH_v102.js ═══ -->
 <script>
-/*
-==================================================================
-  SHREEJI INDUSTRIES — PATCH v102  (FINAL — spec complete)
-  S/N : SHJ-102-050626
-  Date: 2026-06-05
-  File: PATCH_v102.js
-==================================================================
-
-  HOW TO APPLY
-  ─────────────
-  In index.html, paste this <script> block immediately after
-  the PATCH_v101 </script> closing tag, before </body>.
-
-  FEATURES BUILT (final 6 — spec §6, §8, §9, §15)
-  ──────────────────────────────────────────────────
-  10. §6   PI WhatsApp PDF + PDF+Text buttons on PI preview
-  11. §8   PI Records — Save action (re-save edited PI)
-  12. §9   Download JPG (estimate/PI preview → .jpg file)
-  13. §9   WhatsApp JPG — share actual image via WhatsApp
-  14. §15  Audit trail — timestamped log of all saves/edits
-  15. §15  Permissions — Admin/Agent roles, Agent hides rate
-==================================================================
-*/
-
 /* <script> */
 ;(function () {
   'use strict';
