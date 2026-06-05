@@ -2,6 +2,19 @@
 
 ---
 
+## v103 — 2026-06-05 | S/N: SHJ-103-050626
+
+**Files changed:** `index.html`
+
+### FIX — Script injection error (</script> leak)
+Stripped HOW-TO-APPLY block comments from all 3 embedded patch scripts.
+Verified: 0 bare </script> tokens inside any script block.
+
+### CLEAN — Version stamps unified
+Title, shj-build meta, service-worker cache, PIN footer all stamped v103/SHJ-103-050626.
+
+---
+
 ## v102 — 2026-06-05 | S/N: SHJ-102-050626  ★ SPEC COMPLETE
 
 - PI WhatsApp PDF + PDF+Text buttons

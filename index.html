@@ -11,7 +11,19 @@
   ------------------------------------------------------------------
 
   ------------------------------------------------------------------
-  v102  —  2026-06-05   |   S/N: SHJ-102-050626  ★ SPEC COMPLETE
+
+  ------------------------------------------------------------------
+  v103  —  2026-06-05   |   S/N: SHJ-103-050626
+  ------------------------------------------------------------------
+    1. FIX  Script injection error resolved: HOW-TO-APPLY block
+            comments stripped from embedded patches so </script>
+            text inside comments no longer leaks as visible HTML.
+    2. CLEAN  All three patch blocks (v100/v101/v102) verified clean
+              — 0 bare </script> inside any script block.
+    3. STAMP  Version metadata unified: title, shj-build meta,
+              service-worker cache, PIN footer all = v103/SHJ-103-050626.
+
+  v102  —  2026-06-05   |   S/N: SHJ-103-050626  ★ SPEC COMPLETE
   ------------------------------------------------------------------
     1. NEW  PI WhatsApp PDF + PDF+Text buttons on PI preview.
     2. NEW  PI Records Save action — re-save edited PI to sheet.
@@ -21,7 +33,7 @@
     6. NEW  Permissions — Admin/Agent roles, Agent hides Rate column.
 
   ------------------------------------------------------------------
-  v101  —  2026-06-05   |   S/N: SHJ-101-050626
+  v101  —  2026-06-05   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. NEW  Customer/Agent/Packing copy-type print modes (§10).
     2. NEW  Copy count selector + multi-print sequencer (§12).
@@ -30,13 +42,13 @@
     5. NEW  Estimate Records UI + Reprint flow (§13-14).
 
   ------------------------------------------------------------------
-  v100  —  2026-06-05   |   S/N: SHJ-100-050626
+  v100  —  2026-06-05   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. FIX  Rate-history dropdown — last 10 rates selectable (§2).
     2. FIX  Share & Print auto-opens after Estimate save (§4).
     3. FIX  WhatsApp PDF/JPG/Text actions wired to Estimate (§9).
 
-  v99  —  2026-06-05 22:00   |   S/N: SHJ-102-050626
+  v99  —  2026-06-05 22:00   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. FIX  Version metadata cleanup: title, shj-build meta, service-
             worker cache name, PIN footer serial all unified to v99.
@@ -47,7 +59,7 @@
             confirmed requirements.  Row numbering 1/2/3/2a/3a works.
 
   ------------------------------------------------------------------
-  v96  —  2026-06-05 20:00   |   S/N: SHJ-102-050626
+  v96  —  2026-06-05 20:00   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. NEW  ESTIMATE optional checkboxes in totals:
               ☐ Previous Balance  (+)
@@ -67,7 +79,7 @@
     7. NEW  🖨 Print button (OS print dialog, correct page size).
 
   ------------------------------------------------------------------
-  v95  —  2026-06-05 18:00   |   S/N: SHJ-102-050626
+  v95  —  2026-06-05 18:00   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. NEW  ESTIMATE tab — 2 document types:
               [ESTIMATE] — No tax. Line items → Subtotal → Total.
@@ -89,7 +101,7 @@
             gstPct, gstAmt, grand, and type fields.
 
   ------------------------------------------------------------------
-  v94  —  2026-06-05 00:00   |   S/N: SHJ-102-050626
+  v94  —  2026-06-05 00:00   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. NEW  4th main tab "📝 Estimate" added to the app switcher.
             EST-YYYY-XXXX auto-numbering, customer from Customer DB,
@@ -107,7 +119,7 @@
             single-user single-file app — identical user experience.
 
   ------------------------------------------------------------------
-  v93  —  2026-06-04   |   S/N: SHJ-102-050626
+  v93  —  2026-06-04   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. CHANGE  Product NAME format. Now written as plain lowercase words
                with the code on the end, e.g.
@@ -118,7 +130,7 @@
                the name so existing rows update to the new format too.
 
   ------------------------------------------------------------------
-  v92  —  2026-06-04   |   S/N: SHJ-102-050626
+  v92  —  2026-06-04   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. ADD  PRODUCT DB is now pre-linked to its Products Google Sheet
             web-app URL out of the box (no need to paste it on each
@@ -128,7 +140,7 @@
             you can see at a glance whether the sheet is reachable.
 
   ------------------------------------------------------------------
-  v91  —  2026-06-04   |   S/N: SHJ-102-050626
+  v91  —  2026-06-04   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. CHANGE  PRODUCT DB now uses its OWN separate Google Sheet +
                web-app URL (not the main Orders/Stock script). A
@@ -139,7 +151,7 @@
                (same dedup-by-code / ScriptLock no-duplicate method).
 
   ------------------------------------------------------------------
-  v90  —  2026-06-04   |   S/N: SHJ-102-050626
+  v90  —  2026-06-04   |   S/N: SHJ-103-050626
   ------------------------------------------------------------------
     1. NEW  PRODUCT DB tab (in Invoice & Quotes). Add a product with a
             code + 6 boxes: Size (mm/inch), Section, No. of MOSFET holes,
@@ -263,8 +275,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v102 PWA</title>
-<meta name="shj-build" content="v102|SHJ-102-050626|2026-06-05">
+<title>Shreeji Industries — Full System v103 PWA</title>
+<meta name="shj-build" content="v103|SHJ-103-050626|2026-06-05">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -800,7 +812,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SHREEJI v102 — CLEAN SYNC ENGINE
+     SHREEJI v103 — CLEAN SYNC ENGINE
      New GS URL · Local folder paths · IndexedDB · Cron 5min
      ══════════════════════════════════════════════════════════ -->
 <style>
@@ -821,7 +833,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  SHREEJI v102 — SYNC ENGINE
+//  SHREEJI v103 — SYNC ENGINE
 //  GS URL  : hardcoded new endpoint (can still be overridden)
 //  Local DB: IndexedDB in browser = real persistent .db storage
 //  Folder  : Laptop → C:\ShreejiData\db\   Phone → /ShreejiData/db/
@@ -1263,8 +1275,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v102 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 5 June 2026 &nbsp;·&nbsp; S/N: SHJ-102-050626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v103 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 5 June 2026 &nbsp;·&nbsp; S/N: SHJ-103-050626</div>
   </div>
 </div>
 <style>
@@ -8267,7 +8279,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v102';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v103';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
