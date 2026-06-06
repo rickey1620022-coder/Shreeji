@@ -1,3 +1,19 @@
+## v104 — 2026-06-06 | S/N: SHJ-104-060626
+
+**Files changed:** `index.html`
+
+### FIX — Stray HTML comment close rendering as visible print text
+
+A bare `-->` text node sat outside any HTML comment block between the estimate section
+closing `</div>` and the Money Flow `<script>` tag. Browsers rendered it as visible
+page content — appearing in print preview as a line of `════...════ -->`.
+
+**Fix:** Removed the orphaned line. No content or functionality affected.
+
+**Verified:** 0 stray `-->` nodes · 0 `</script>` leaks · CLEAN ✓
+
+---
+
 # Shreeji Industries — Full System Update Log
 
 ---
