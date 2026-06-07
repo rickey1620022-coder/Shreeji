@@ -1,32 +1,39 @@
-# UPDATE LOG — ver 117 / v119 / SHJ-119
+# UPDATE LOG — ver 118 / v120 / SHJ-120
 
 **Date:** 2026-06-07  
-**Base:** ver 116 (v118 / SHJ-118)  
-**Patch:** PATCH_v115
+**Base:** ver 117 (v119 / SHJ-119)  
+**Patch:** PATCH_v116
 
 ## Changes
 
-### FIX — Print button not working (root cause fix)
+### Print Page UI Redesign
 
-**Root cause:**  
-PATCH_v106 overrode `window.estPrintDoc` to wrap `window.open()` inside  
-a `setTimeout(150ms)`. Browsers treat `window.open()` called from inside  
-a setTimeout as *not user-initiated* and **silently block the popup**.  
-Additionally, PATCH_v106's closure called its own local `shjPrintPopup`  
-(not `window.shjPrintPopup`), so PATCH_v112's corrected print CSS was  
-never reached.
+**New two-panel layout:**
+- LEFT: Full document preview (takes all remaining width), scrollable
+- RIGHT: 300px control panel (dark theme), sticky
 
-**Fix:**  
-PATCH_v115 overrides `window.estPrintDoc` to call `window.shjPrintPopup`  
-(PATCH_v112's version) **synchronously** — no setTimeout, user-gesture  
-chain intact, popup not blocked.  
-This also ensures the correct A4 portrait / 10mm margin print CSS  
-(defined in PATCH_v112) is used every time.
+**Control panel (top to bottom):**
+- ✍ Add signature section checkbox (checked by default)
+- Customer Copies input (default 1)
+- Agent Copies input (default 0)
+- Gate / Packing Copies input (default 0)
+- 🖨 PRINT ALL COPIES (blue, full width)
+- 📄 PDF (red)
+- 🖼 JPG (green)
+- 💾 SAVE (purple)
+- ← Back to Edit (grey outline)
 
-**Fallback:** If `window.shjPrintPopup` is unavailable for any reason,  
-a self-contained inline popup with identical CSS opens instead.
+**Removed:** duplicate ← Edit / Print / PDF / JPG / Save button bar  
+**Removed:** redundant dark PRINT COPIES banner from earlier patches
+
+**PRINT ALL COPIES** now opens ONE popup window containing all copies
+as separate print pages (page-break-after between each), instead of
+multiple sequential popups. This is more reliable and avoids browser
+popup-blocking on the 2nd+ window.
+
+**Mobile (≤680px):** controls panel appears above the preview, stacked.
 
 ## Build info
-- Source: ver 116/files/index.html + PATCH_v115.js
-- Output: ver 117/files/index.html
-- Version stamp: v119 | SHJ-119-070626 | 2026-06-07
+- Source: ver 117/files/index.html + PATCH_v116.js
+- Output: ver 118/files/index.html
+- Version stamp: v120 | SHJ-120-070626 | 2026-06-07
