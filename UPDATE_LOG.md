@@ -1,107 +1,32 @@
-## v107 — 2026-06-07 | S/N: SHJ-107-070626
-
-**Files changed:** `index.html` (add PATCH_v104.js block before `</body>`)
-
-### FIX + REDESIGN — Est sub-nav: 4 clearly visible blue tabs
-
-Old: invisible grey tabs (New / Preview / Saved / Grid Entry)
-New: 4 bold blue tabs with white text + gold active underline:
-
-| Tab | What it shows |
-|-----|---------------|
-| 📝 ESTIMATE | New estimate form (auto-sets type to EST, hides EST/PI toggle) |
-| 📄 PI | New PI form (auto-sets type to PI, hides toggle) |
-| 🖨 PRINT | Preview / Share & Print page |
-| 📋 RECORDS | Combined EST + PI records table (from PATCH_v103) |
-
-**Implementation:** Nav rebuilt with inline styles — immune to CSS cascade conflicts.
-The ESTIMATE/PI toggle inside the form is hidden since tabs now handle type selection.
-
----
-
-## v106 — 2026-06-06 | S/N: SHJ-106-060626
+## v108 — 2026-06-07 | S/N: SHJ-108-070626
 
 **Files changed:** `index.html`
 
-### FIX — JS source code visible as page text ("file freeze")
-All patch script blocks contained `/* </script> */` and `/* <script> */` marker lines.
-The HTML parser terminates a `<script>` element on the first raw `</script>` it sees,
-regardless of surrounding JS comment syntax. This caused the browser to exit the
-script block early and render the remaining JS as visible page text.
+### REBUILD — Clean injection fix (root cause of all "file freeze" bugs)
 
-**Fix:** Removed all four marker lines globally from every patch block (v100 / v101 / v102 / v103).
+All previous versions (ver 103–105) injected patches at the first `</body>` tag,
+which is inside a JavaScript print-template string in PATCH_v100, not the HTML
+closing tag. This placed new patches inside the main `<script>` block, where the
+injected `</script>` terminates it early — causing all subsequent JS to render
+as visible page text.
 
-**Verified:** 0 `/* </script> */` patterns · 0 script leaks · 0 stray `-->` · CLEAN ✓
+**Fix:** Rebuilt from ver 100 (last clean base). Patches v103 and v104 are now
+injected before the real standalone `</body>` at the end of the file.
+Also removed `/* </script> */` / `/* <script> */` markers from all patch blocks,
+and removed the stray `-->` text node.
 
-### FIX — Est sub-tab bar invisible (carried from v105)
-`#est-nav` had no CSS. Injected scoped styles for blue bar + gold active underline.
+**Verified:** 0 script leaks · 0 stray `-->` · CLEAN ✓
 
-### NEW — 📊 All Records 5th sub-tab (carried from v105)
-EST + PI combined table, date-sorted, inline-editable party name, search/filter,
-Open · Reprint · PDF actions per row.
+### FEATURE — 4-tab Estimate nav (from PATCH_v104)
+📝 ESTIMATE | 📄 PI | 🖨 PRINT | 📋 RECORDS
+All tabs built with inline styles — always visible, blue bar, gold active underline.
 
----
-
-## v105 — 2026-06-06 | S/N: SHJ-105-060626
-
-**Files changed:** `index.html` (add PATCH_v103.js block before `</body>`)
-
-### FIX — Est sub-tab bar invisible (white text on white background)
-`#est-nav` used class `inv-nav` which had no CSS definition.
-Injected scoped CSS for `#est-nav .inv-tab`:
-- Blue background (`#1a3a6b`), white text, gold active underline (`#ffd700`)
-- All 4 buttons (New / Preview / Saved / Grid Entry) now clearly visible
-
-### NEW — "All Records" 5th sub-tab (EST + PI combined table)
-A new 📊 **All Records** tab added to the Estimate section sub-nav.
-
-| Column | Notes |
-|--------|-------|
-| Date | Formatted DD/MM/YY, newest first |
-| Type | EST (blue badge) / PI (amber badge) |
-| Number | EST-YYYY-XXXX or PI-2026-XXXX |
-| Party Name | **Inline editable** — click to edit, saves to localStorage |
-| Amount | Grand total in ₹ |
-| Actions | 👁 Open · 🖨 Reprint · ⬇ PDF |
-
-- Search bar filters by party name or document number
-- Type dropdown: All / Estimate / Proforma Invoice
-- Party name edit saves directly back to `shj_estimates` or `shj_pi`
-- Reprint opens the preview + print-setup panel
-- PDF triggers download JPG / piPDF depending on type
+### FEATURE — All Records combined table (from PATCH_v103)
+📊 RECORDS tab: EST + PI combined, date-sorted, inline-editable party name,
+search/type filter, Open · Reprint · PDF per row.
 
 ---
-
-## v104 — 2026-06-06 | S/N: SHJ-104-060626
-
-**Files changed:** `index.html`
-
-### FIX — Stray HTML comment close rendering as visible print text
-
-A bare `-->` text node sat outside any HTML comment block between the estimate section
-closing `</div>` and the Money Flow `<script>` tag. Browsers rendered it as visible
-page content — appearing in print preview as a line of `════...════ -->`.
-
-**Fix:** Removed the orphaned line. No content or functionality affected.
-
-**Verified:** 0 stray `-->` nodes · 0 `</script>` leaks · CLEAN ✓
-
----
-
 # Shreeji Industries — Full System Update Log
-
----
-
-## v103 — 2026-06-05 | S/N: SHJ-103-050626
-
-**Files changed:** `index.html`
-
-### FIX — Script injection error (</script> leak)
-Stripped HOW-TO-APPLY block comments from all 3 embedded patch scripts.
-Verified: 0 bare </script> tokens inside any script block.
-
-### CLEAN — Version stamps unified
-Title, shj-build meta, service-worker cache, PIN footer all stamped v103/SHJ-103-050626.
 
 ---
 
