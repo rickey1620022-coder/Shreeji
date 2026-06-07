@@ -5,6 +5,33 @@
 
 ---
 
+## PATCH_v118 — Estimate Tab: Grid Entry (4th Sub-Tab) — 2026-06-07
+
+### Problem
+Estimate tab had only 3 sub-tabs (New / Preview / Saved).
+Report (Shreeji_System_Report.pdf + UI_Manual_v2.pdf) required a
+high-speed tabular "Data Entry Boy" grid layout for rapid keyboard entry.
+
+### Changes
+- Added **⚡ Grid Entry** as 4th tab button in `#est-nav`
+- Added `#est-page-grid` page with tabular grid:
+  - Columns: S.No | Item Description | Qty | UOM | Rate ₹ | Total ₹
+  - Inline editable inputs, Tab-key workflow
+  - Enter key on any row auto-adds next row
+  - `parseFloat(value || 0)` on all inputs — no NaN
+- Footer totals with checkboxes: Previous Balance, Freight, Tax %, Grand Total
+- **Print** button — opens print-ready popup (borders forced, footer visible)
+- **Send to New Tab** — copies grid rows into main Estimate form
+- `estGo()` updated: pages array → `['new','view','list','grid']`
+- `grdInit()` called on first open; seeds 5 blank rows, syncs date & Est No.
+- All JS: `grdAddRow`, `grdDelRow`, `grdCalcRow`, `grdCalcFooter`,
+  `grdKey`, `grdClear`, `grdCopyToNew`, `grdPrint`
+
+### Files Changed
+- `ver 119/files/index.html`
+
+---
+
 ## PATCH_v117 — Print Page Layout Redesign (Correct)
 
 ### Problem
