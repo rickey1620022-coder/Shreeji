@@ -263,8 +263,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v116 PWA</title>
-<meta name="shj-build" content="v116|SHJ-116-070626|2026-06-07">
+<title>Shreeji Industries — Full System v117 PWA</title>
+<meta name="shj-build" content="v117|SHJ-117-070626|2026-06-07">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -800,7 +800,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SHREEJI v116 — CLEAN SYNC ENGINE
+     SHREEJI v117 — CLEAN SYNC ENGINE
      New GS URL · Local folder paths · IndexedDB · Cron 5min
      ══════════════════════════════════════════════════════════ -->
 <style>
@@ -1263,7 +1263,7 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v116 · PROTECTED</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v117 · PROTECTED</div>
     <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 7 June 2026 &nbsp;·&nbsp; S/N: SHJ-110-050626</div>
   </div>
 </div>
@@ -8266,7 +8266,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v116';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v117';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -12240,6 +12240,122 @@ function pwaDismiss(){
     if (existing) existing.remove();
     document.head.appendChild(style);
   })();
+
+})();
+
+</script>
+
+
+
+<!-- PATCH v113: Definitive 10-row fix via DOM count + estAddItem() -->
+<script>
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH v113  —  2026-06-07
+     DEFINITIVE 10-row fix.
+
+     ROOT CAUSE of all previous failures:
+       Line 6173 of the main script: `let estItems = []`
+       `let` at module/script level does NOT create window.estItems.
+       All previous patches manipulated window.estItems (a DIFFERENT
+       variable). The app's internal functions use the LOCAL closure
+       `estItems` via let — so window.estItems was always ignored.
+
+     CORRECT APPROACH:
+       Count actual <tr> rows in #est-items-tbody.
+       Call window.estAddItem() for each missing row.
+       estAddItem() is a `function` declaration → window.estAddItem
+       correctly pushes to the LOCAL estItems closure AND calls
+       the LOCAL estRenderItems(). This is the ONLY reliable path.
+  ══════════════════════════════════════════════════════════════ */
+
+  var MIN_ROWS = 10;
+
+  /* Count actual rendered rows in the table */
+  function rowCount() {
+    var tbody = document.getElementById('est-items-tbody');
+    return tbody ? tbody.querySelectorAll('tr').length : 0;
+  }
+
+  /* Add blank rows until there are MIN_ROWS */
+  function ensureTenRows() {
+    var current = rowCount();
+    if (current >= MIN_ROWS) return;
+    var needed = MIN_ROWS - current;
+    for (var i = 0; i < needed; i++) {
+      if (typeof window.estAddItem === 'function') {
+        window.estAddItem();
+      }
+    }
+  }
+
+  /* Retry until #est-items-tbody exists (app may init late) */
+  function tryEnsure(retries) {
+    retries = retries || 0;
+    if (document.getElementById('est-items-tbody')) {
+      ensureTenRows();
+    } else if (retries < 20) {
+      setTimeout(function () { tryEnsure(retries + 1); }, 150);
+    }
+  }
+
+  /* ── Hook estNew (called via onclick → window.estNew) ─────── */
+  window.estNew = (function (orig) {
+    return function () {
+      if (orig) orig.apply(this, arguments);
+      setTimeout(ensureTenRows, 30);
+    };
+  })(window.estNew);
+
+  /* ── Hook estLoad (called via onclick → window.estLoad) ──── */
+  window.estLoad = (function (orig) {
+    return function () {
+      if (orig) orig.apply(this, arguments);
+      setTimeout(ensureTenRows, 80);
+    };
+  })(window.estLoad);
+
+  /* ── Hook estRemoveItem — keep ≥10 rows after remove ──────── */
+  window.estRemoveItem = (function (orig) {
+    return function () {
+      if (orig) orig.apply(this, arguments);
+      setTimeout(ensureTenRows, 0);
+    };
+  })(window.estRemoveItem);
+
+  /* ── Rename + Blank Row button label ──────────────────────── */
+  function patchBtn() {
+    document.querySelectorAll('button').forEach(function (b) {
+      if (b.dataset.shjBtnFixed) return;
+      if ((b.textContent || '').trim() === '+ Blank Row') {
+        b.dataset.shjBtnFixed = '1';
+        b.textContent = '+ Add Row';
+      }
+    });
+  }
+
+  /* ── Kill any old observers ───────────────────────────────── */
+  if (window._shjRowObserver) {
+    try { window._shjRowObserver.disconnect(); } catch (_) {}
+    window._shjRowObserver = null;
+  }
+
+  /* ── INIT ─────────────────────────────────────────────────── */
+  function init() {
+    patchBtn();
+    /* Multiple attempts — catches both early and late app init */
+    setTimeout(function () { tryEnsure(); }, 200);
+    setTimeout(function () { ensureTenRows(); }, 600);
+    setTimeout(function () { ensureTenRows(); }, 1500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
 })();
 

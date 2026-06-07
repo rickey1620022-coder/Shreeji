@@ -1,22 +1,19 @@
 # Update Log
 
+## v117 / SHJ-117 — 2026-06-07
+### PATCH v113: Definitive 10-row fix
+- ROOT CAUSE found: `let estItems` (line 6173) does NOT create window.estItems
+  in ES6. All previous patches wrote to window.estItems (a separate, unused
+  variable). The app's closures always used the local `let estItems`.
+- FIX: Count actual <tr> rows in #est-items-tbody, call window.estAddItem()
+  for each missing row. estAddItem() is a function declaration so
+  window.estAddItem === local estAddItem — it pushes to the correct
+  closure variable and calls the correct estRenderItems().
+- Init retries at 200ms, 600ms, 1500ms to handle late app initialization
+- estNew / estLoad / estRemoveItem hooks also use ensureTenRows via DOM count
+
 ## v116 / SHJ-116 — 2026-06-07
-### PATCH v112: Estimate print format — final spec
-- A4 paper, estimate compact at top (~A5 landscape block), blank space below — no stretching
-- Company address: "Delhi, India" only (removed h-72, Gali No.1... full address)
-- Party Name + Contact Person always grouped together
-- Table columns: S.No | Qty | Item Description | Rate ₹ | Amount ₹
-- Footer fully visible — page-break-inside:avoid, break-inside:avoid
-- Margins: 10mm all sides via @page
-- Disabled estScaleDoc() transform in print context (was breaking layout)
-- Identical output: browser print = PDF popup = physical print
-- Print popup carries self-contained PRINT_CSS — no dependency on page stylesheets
+### PATCH v112: Estimate print format (A4, compact, Delhi India, footer fix)
 
 ## v115 / SHJ-115 — 2026-06-07
-### PATCH v111: Unfreeze Generate button + optional items + 10 rows
-
-## v114 / SHJ-114 — 2026-06-07
-### PATCH v110: 10 rows + compact optional items
-
-## v111 / SHJ-111 — 2026-06-07
-### PATCH v107: Google Sheet sync
+### PATCH v111: Unfreeze Generate button + fix optional items
