@@ -1,39 +1,46 @@
-# UPDATE LOG — ver 118 / v120 / SHJ-120
-
+# UPDATE LOG — ver 119
+**Serial:** SHJ-119  
 **Date:** 2026-06-07  
-**Base:** ver 117 (v119 / SHJ-119)  
-**Patch:** PATCH_v116
+**Base:** ver 118 (SHJ-118)
 
-## Changes
+---
 
-### Print Page UI Redesign
+## PATCH_v117 — Print Page Layout Redesign (Correct)
 
-**New two-panel layout:**
-- LEFT: Full document preview (takes all remaining width), scrollable
-- RIGHT: 300px control panel (dark theme), sticky
+### Problem
+PATCH_v116 (ver 118) produced a broken layout:
+- Left side showed 5 huge vertical colored strips (buttons stretched full-height)
+- Preview area was too small
+- Sidebar was wrong direction
 
-**Control panel (top to bottom):**
-- ✍ Add signature section checkbox (checked by default)
-- Customer Copies input (default 1)
-- Agent Copies input (default 0)
-- Gate / Packing Copies input (default 0)
-- 🖨 PRINT ALL COPIES (blue, full width)
-- 📄 PDF (red)
-- 🖼 JPG (green)
-- 💾 SAVE (purple)
-- ← Back to Edit (grey outline)
+### Fix — Single vertical-column layout
 
-**Removed:** duplicate ← Edit / Print / PDF / JPG / Save button bar  
-**Removed:** redundant dark PRINT COPIES banner from earlier patches
+```
+┌─────────────────────────────────────────────┐
+│      DOCUMENT PREVIEW (full width)          │
+│      max-width: 1000px, centered            │
+│      background: #9ba3b2                    │
+└─────────────────────────────────────────────┘
+  ☑  Add Signature Section
+  Customer Copy        [ 1 ]
+  Agent Copy           [ 0 ]
+  Gate Pass Copy       [ 0 ]
+            [ PRINT ]         ← 300px, centred, blue
+  [ JPG ]  [ PDF ]  [ SAVE ]  [ EDIT ]
+```
 
-**PRINT ALL COPIES** now opens ONE popup window containing all copies
-as separate print pages (page-break-after between each), instead of
-multiple sequential popups. This is more reliable and avoids browser
-popup-blocking on the 2nd+ window.
+### Changes
+- `#est-page-view` rebuilt as vertical scroll container (no sidebar)
+- All PATCH_v116 panels hidden/removed
+- Preview band: full-width, max-width 1000px, centred, grey background
+- Signature checkbox row below preview
+- 3 copy count inputs (Customer / Agent / Gate Pass)
+- Single large PRINT button (300px, dark blue)
+- Bottom row: JPG | PDF | SAVE | EDIT equal flex buttons
+- Print opens single popup with all copies as separate pages
+- window.open() called synchronously — no popup blocking
 
-**Mobile (≤680px):** controls panel appears above the preview, stacked.
+---
 
-## Build info
-- Source: ver 117/files/index.html + PATCH_v116.js
-- Output: ver 118/files/index.html
-- Version stamp: v120 | SHJ-120-070626 | 2026-06-07
+## Previously applied patches (ver 118 base)
+PATCH_v106 through PATCH_v116 — see ver 118 UPDATE_LOG.md
