@@ -1,3 +1,24 @@
+## v107 — 2026-06-07 | S/N: SHJ-107-070626
+
+**Files changed:** `index.html` (add PATCH_v104.js block before `</body>`)
+
+### FIX + REDESIGN — Est sub-nav: 4 clearly visible blue tabs
+
+Old: invisible grey tabs (New / Preview / Saved / Grid Entry)
+New: 4 bold blue tabs with white text + gold active underline:
+
+| Tab | What it shows |
+|-----|---------------|
+| 📝 ESTIMATE | New estimate form (auto-sets type to EST, hides EST/PI toggle) |
+| 📄 PI | New PI form (auto-sets type to PI, hides toggle) |
+| 🖨 PRINT | Preview / Share & Print page |
+| 📋 RECORDS | Combined EST + PI records table (from PATCH_v103) |
+
+**Implementation:** Nav rebuilt with inline styles — immune to CSS cascade conflicts.
+The ESTIMATE/PI toggle inside the form is hidden since tabs now handle type selection.
+
+---
+
 ## v106 — 2026-06-06 | S/N: SHJ-106-060626
 
 **Files changed:** `index.html`
