@@ -1,3 +1,56 @@
+## v106 — 2026-06-06 | S/N: SHJ-106-060626
+
+**Files changed:** `index.html`
+
+### FIX — JS source code visible as page text ("file freeze")
+All patch script blocks contained `/* </script> */` and `/* <script> */` marker lines.
+The HTML parser terminates a `<script>` element on the first raw `</script>` it sees,
+regardless of surrounding JS comment syntax. This caused the browser to exit the
+script block early and render the remaining JS as visible page text.
+
+**Fix:** Removed all four marker lines globally from every patch block (v100 / v101 / v102 / v103).
+
+**Verified:** 0 `/* </script> */` patterns · 0 script leaks · 0 stray `-->` · CLEAN ✓
+
+### FIX — Est sub-tab bar invisible (carried from v105)
+`#est-nav` had no CSS. Injected scoped styles for blue bar + gold active underline.
+
+### NEW — 📊 All Records 5th sub-tab (carried from v105)
+EST + PI combined table, date-sorted, inline-editable party name, search/filter,
+Open · Reprint · PDF actions per row.
+
+---
+
+## v105 — 2026-06-06 | S/N: SHJ-105-060626
+
+**Files changed:** `index.html` (add PATCH_v103.js block before `</body>`)
+
+### FIX — Est sub-tab bar invisible (white text on white background)
+`#est-nav` used class `inv-nav` which had no CSS definition.
+Injected scoped CSS for `#est-nav .inv-tab`:
+- Blue background (`#1a3a6b`), white text, gold active underline (`#ffd700`)
+- All 4 buttons (New / Preview / Saved / Grid Entry) now clearly visible
+
+### NEW — "All Records" 5th sub-tab (EST + PI combined table)
+A new 📊 **All Records** tab added to the Estimate section sub-nav.
+
+| Column | Notes |
+|--------|-------|
+| Date | Formatted DD/MM/YY, newest first |
+| Type | EST (blue badge) / PI (amber badge) |
+| Number | EST-YYYY-XXXX or PI-2026-XXXX |
+| Party Name | **Inline editable** — click to edit, saves to localStorage |
+| Amount | Grand total in ₹ |
+| Actions | 👁 Open · 🖨 Reprint · ⬇ PDF |
+
+- Search bar filters by party name or document number
+- Type dropdown: All / Estimate / Proforma Invoice
+- Party name edit saves directly back to `shj_estimates` or `shj_pi`
+- Reprint opens the preview + print-setup panel
+- PDF triggers download JPG / piPDF depending on type
+
+---
+
 ## v104 — 2026-06-06 | S/N: SHJ-104-060626
 
 **Files changed:** `index.html`
