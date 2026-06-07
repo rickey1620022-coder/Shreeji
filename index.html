@@ -11,7 +11,7 @@
   ------------------------------------------------------------------
 
   ------------------------------------------------------------------
-  v109  —  2026-06-07   |   S/N: SHJ-109-050626  ★ SPEC COMPLETE
+  v110  —  2026-06-07   |   S/N: SHJ-110-050626  ★ SPEC COMPLETE
   ------------------------------------------------------------------
     1. NEW  PI WhatsApp PDF + PDF+Text buttons on PI preview.
     2. NEW  PI Records Save action — re-save edited PI to sheet.
@@ -36,7 +36,7 @@
     2. FIX  Share & Print auto-opens after Estimate save (§4).
     3. FIX  WhatsApp PDF/JPG/Text actions wired to Estimate (§9).
 
-  v99  —  2026-06-07 22:00   |   S/N: SHJ-109-050626
+  v99  —  2026-06-07 22:00   |   S/N: SHJ-110-050626
   ------------------------------------------------------------------
     1. FIX  Version metadata cleanup: title, shj-build meta, service-
             worker cache name, PIN footer serial all unified to v99.
@@ -47,7 +47,7 @@
             confirmed requirements.  Row numbering 1/2/3/2a/3a works.
 
   ------------------------------------------------------------------
-  v96  —  2026-06-07 20:00   |   S/N: SHJ-109-050626
+  v96  —  2026-06-07 20:00   |   S/N: SHJ-110-050626
   ------------------------------------------------------------------
     1. NEW  ESTIMATE optional checkboxes in totals:
               ☐ Previous Balance  (+)
@@ -67,7 +67,7 @@
     7. NEW  🖨 Print button (OS print dialog, correct page size).
 
   ------------------------------------------------------------------
-  v95  —  2026-06-07 18:00   |   S/N: SHJ-109-050626
+  v95  —  2026-06-07 18:00   |   S/N: SHJ-110-050626
   ------------------------------------------------------------------
     1. NEW  ESTIMATE tab — 2 document types:
               [ESTIMATE] — No tax. Line items → Subtotal → Total.
@@ -89,7 +89,7 @@
             gstPct, gstAmt, grand, and type fields.
 
   ------------------------------------------------------------------
-  v94  —  2026-06-07 00:00   |   S/N: SHJ-109-050626
+  v94  —  2026-06-07 00:00   |   S/N: SHJ-110-050626
   ------------------------------------------------------------------
     1. NEW  4th main tab "📝 Estimate" added to the app switcher.
             EST-YYYY-XXXX auto-numbering, customer from Customer DB,
@@ -107,7 +107,7 @@
             single-user single-file app — identical user experience.
 
   ------------------------------------------------------------------
-  v93  —  2026-06-04   |   S/N: SHJ-109-050626
+  v93  —  2026-06-04   |   S/N: SHJ-110-050626
   ------------------------------------------------------------------
     1. CHANGE  Product NAME format. Now written as plain lowercase words
                with the code on the end, e.g.
@@ -118,7 +118,7 @@
                the name so existing rows update to the new format too.
 
   ------------------------------------------------------------------
-  v92  —  2026-06-04   |   S/N: SHJ-109-050626
+  v92  —  2026-06-04   |   S/N: SHJ-110-050626
   ------------------------------------------------------------------
     1. ADD  PRODUCT DB is now pre-linked to its Products Google Sheet
             web-app URL out of the box (no need to paste it on each
@@ -128,7 +128,7 @@
             you can see at a glance whether the sheet is reachable.
 
   ------------------------------------------------------------------
-  v91  —  2026-06-04   |   S/N: SHJ-109-050626
+  v91  —  2026-06-04   |   S/N: SHJ-110-050626
   ------------------------------------------------------------------
     1. CHANGE  PRODUCT DB now uses its OWN separate Google Sheet +
                web-app URL (not the main Orders/Stock script). A
@@ -139,7 +139,7 @@
                (same dedup-by-code / ScriptLock no-duplicate method).
 
   ------------------------------------------------------------------
-  v90  —  2026-06-04   |   S/N: SHJ-109-050626
+  v90  —  2026-06-04   |   S/N: SHJ-110-050626
   ------------------------------------------------------------------
     1. NEW  PRODUCT DB tab (in Invoice & Quotes). Add a product with a
             code + 6 boxes: Size (mm/inch), Section, No. of MOSFET holes,
@@ -263,8 +263,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v109 PWA</title>
-<meta name="shj-build" content="v109|SHJ-109-050626|2026-06-07">
+<title>Shreeji Industries — Full System v111 PWA</title>
+<meta name="shj-build" content="v111|SHJ-111-070626|2026-06-07">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -800,7 +800,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SHREEJI v109 — CLEAN SYNC ENGINE
+     SHREEJI v111 — CLEAN SYNC ENGINE
      New GS URL · Local folder paths · IndexedDB · Cron 5min
      ══════════════════════════════════════════════════════════ -->
 <style>
@@ -821,7 +821,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  SHREEJI v109 — SYNC ENGINE
+//  SHREEJI v111 — SYNC ENGINE
 //  GS URL  : hardcoded new endpoint (can still be overridden)
 //  Local DB: IndexedDB in browser = real persistent .db storage
 //  Folder  : Laptop → C:\ShreejiData\db\   Phone → /ShreejiData/db/
@@ -1263,8 +1263,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v109 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 7 June 2026 &nbsp;·&nbsp; S/N: SHJ-109-050626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v111 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 7 June 2026 &nbsp;·&nbsp; S/N: SHJ-110-050626</div>
   </div>
 </div>
 <style>
@@ -8266,7 +8266,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v109';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v111';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -9638,7 +9638,7 @@ function pwaDismiss(){
 </script>
 
 
-<!-- ═══ PATCH_v109.js ═══ -->
+<!-- ═══ PATCH_v110.js ═══ -->
 <script>
 ;(function () {
   'use strict';
@@ -9745,7 +9745,7 @@ function pwaDismiss(){
 
   function buildPIWAButtons(){
     var wrap=mk('div',{display:'flex',gap:'8px',flexWrap:'wrap',margin:'10px 0'});
-    wrap.id='shj-pi-wa-btns-v109';
+    wrap.id='shj-pi-wa-btns-v110';
 
     var waPDF=mkBtn('📲 WhatsApp PDF',function(){ piSharePDF(false); },{background:C.bg2});
     var waPDFT=mkBtn('📲 WhatsApp PDF + Text',function(){ piSharePDF(true); },{background:C.bg2});
@@ -9829,7 +9829,7 @@ function pwaDismiss(){
 
   /* Inject PI WA buttons into the PI form/preview section */
   function tryInjectPIWA(){
-    if($q('#shj-pi-wa-btns-v109')) return true;
+    if($q('#shj-pi-wa-btns-v110')) return true;
     var piSecs=['#pi-form','#pi-preview-wrap','#pi-preview','#new-pi-wrap',
                 '#tab-pi .inv-doc','#pi-section','[data-tab="pi"] .inv-actions',
                 '#pi-actions','#pi-btn-row'];
@@ -9846,7 +9846,7 @@ function pwaDismiss(){
       });
     }
     if(!el) return false;
-    if(el.querySelector('#shj-pi-wa-btns-v109')) return true;
+    if(el.querySelector('#shj-pi-wa-btns-v110')) return true;
     el.appendChild(buildPIWAButtons());
     return true;
   }
@@ -10054,7 +10054,7 @@ function pwaDismiss(){
       localStorage.setItem(AUDIT_KEY,JSON.stringify(log));
 
       /* refresh audit panel if visible */
-      var panel=$q('#shj-audit-panel-v109');
+      var panel=$q('#shj-audit-panel-v110');
       if(panel&&panel._refresh) panel._refresh();
     }catch(e){}
   }
@@ -10069,7 +10069,7 @@ function pwaDismiss(){
       background:C.bg1,borderRadius:C.rad,padding:'16px',
       fontFamily:'inherit',color:C.txt,marginTop:'12px',
     });
-    wrap.id='shj-audit-panel-v109';
+    wrap.id='shj-audit-panel-v110';
 
     var hdr=mk('div',{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'12px'});
     hdr.appendChild(mk('span',{color:C.txt,fontSize:'15px',fontWeight:'600'},'🔍 Audit Trail'));
@@ -10187,7 +10187,7 @@ function pwaDismiss(){
     var isAgent=(role==='agent');
 
     /* Dynamic stylesheet — inject or update */
-    var styleId='shj-role-style-v109';
+    var styleId='shj-role-style-v110';
     var styleEl=document.getElementById(styleId);
     if(!styleEl){
       styleEl=document.createElement('style');
@@ -10231,7 +10231,7 @@ function pwaDismiss(){
       padding:'12px 16px',display:'flex',alignItems:'center',
       gap:'12px',fontFamily:'inherit',flexWrap:'wrap',
     });
-    wrap.id='shj-role-widget-v109';
+    wrap.id='shj-role-widget-v110';
 
     wrap.appendChild(mk('span',{color:C.mute,fontSize:'12px'},'👤 Role:'));
 
@@ -10258,13 +10258,13 @@ function pwaDismiss(){
   }
 
   function updateRoleUI(){
-    var w=$q('#shj-role-widget-v109');
+    var w=$q('#shj-role-widget-v110');
     if(w&&w._update) w._update();
   }
 
   /* Inject role widget into the Settings or top of Estimate section */
   function tryInjectRoleWidget(){
-    if($q('#shj-role-widget-v109')) return true;
+    if($q('#shj-role-widget-v110')) return true;
 
     /* prefer a settings / config section */
     var targets=[
@@ -10284,7 +10284,7 @@ function pwaDismiss(){
     el.insertBefore(buildRoleWidget(),el.firstChild);
 
     /* also inject audit panel */
-    if(!$q('#shj-audit-panel-v109')){
+    if(!$q('#shj-audit-panel-v110')){
       el.appendChild(buildAuditPanel());
     }
 
@@ -10326,7 +10326,7 @@ function pwaDismiss(){
   window.shjGetRole       = getRole;
 
   console.log(
-    '%c[SHJ-PATCH v109] SPEC COMPLETE — 6 final features:\n'+
+    '%c[SHJ-PATCH v110] SPEC COMPLETE — 6 final features:\n'+
     '  ✔ PI WhatsApp PDF + PDF+Text buttons\n'+
     '  ✔ PI Records Save action\n'+
     '  ✔ Download JPG (html2canvas)\n'+
@@ -10990,5 +10990,722 @@ function pwaDismiss(){
 })();
 
 </script>
+
+
+<!-- PATCH v106: Fix print / PDF / copy panel -->
+<script>
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH v106  —  2026-06-07
+     FIX 1: Print — ensure estimate is rendered before printing;
+             open popup window with correct content
+     FIX 2: PDF — use html2pdf.js (already loaded) instead of
+             broken jspdf global check that always falls to JPG
+     FIX 3: Customer / Agent / Packing copy panel — inject
+             directly into #est-page-view (PRINT tab), bypassing
+             the broken selector search for non-existent elements
+     ══════════════════════════════════════════════════════════════ */
+
+  var DARK = {
+    bg0:'#0b0d11', bg1:'#111620', bg2:'#161d2e', bg3:'#1e2d44',
+    bord:'#2a3a5a', acc:'#3a7bd5', txt:'#e8eeff', mute:'#6677aa',
+    grn:'#3fb950', red:'#e05555', amb:'#d29922', rad:'8px'
+  };
+
+  /* ── helpers ── */
+  function q(sel) { return document.querySelector(sel); }
+  function mk(tag, style, text) {
+    var el = document.createElement(tag);
+    if (style) el.setAttribute('style', style);
+    if (text)  el.textContent = text;
+    return el;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     FIX 1 — PRINT : open popup with rendered estimate
+     ══════════════════════════════════════════════════════════════ */
+  function getPageCSS() {
+    var css = '';
+    try {
+      [].forEach.call(document.styleSheets, function (ss) {
+        try {
+          [].forEach.call(ss.cssRules || [], function (r) { css += r.cssText + '\n'; });
+        } catch(_) {}
+      });
+    } catch(_) {}
+    return css;
+  }
+
+  function shjPrintPopup(docEl, title) {
+    if (!docEl || !docEl.innerHTML.trim()) {
+      alert('Please generate an Estimate or PI first, then use Print.');
+      return;
+    }
+    var clone = docEl.cloneNode(true);
+    clone.style.cssText = 'transform:none;width:794px;max-width:100%;margin:0 auto;';
+    var css = getPageCSS();
+    var html = '<!DOCTYPE html><html><head>'
+      + '<meta charset="utf-8"><title>' + (title || 'Shreeji Industries - Print') + '</title>'
+      + '<style>body{margin:0;background:#fff;}' + css
+      + '@media print{body{margin:0;}@page{size:A4;margin:8mm;}}'
+      + '</style></head><body>'
+      + clone.outerHTML
+      + '<scr'+'ipt>window.onload=function(){'
+      +   'setTimeout(function(){window.print();},400);'
+      +   'window.onafterprint=function(){window.close();};'
+      + '};<'+'/scr'+'ipt>'
+      + '</body></html>';
+
+    var w = window.open('', '_blank', 'width=900,height=720,menubar=no,toolbar=yes');
+    if (!w) { alert('Allow popups for this site to enable print preview.'); return; }
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  }
+
+  /* Override estPrintDoc globally */
+  window.estPrintDoc = function () {
+    /* ensure estimate is rendered */
+    if (typeof estRenderPreview === 'function') estRenderPreview();
+    setTimeout(function () {
+      var docEl = q('#est-doc');
+      var isPI  = (typeof estType !== 'undefined') && estType === 'pi';
+      shjPrintPopup(docEl, isPI ? 'Shreeji Industries - PI' : 'Shreeji Industries - Estimate');
+    }, 150);
+  };
+
+  /* ══════════════════════════════════════════════════════════════
+     FIX 2 — PDF : use html2pdf.js (global window.html2pdf)
+     ══════════════════════════════════════════════════════════════ */
+  window.estExportPDF = function () {
+    var el  = q('#est-doc');
+    var btn = q('#est-pdf-btn');
+    if (!el) { alert('Nothing to export — generate estimate first.'); return; }
+
+    if (typeof estRenderPreview === 'function') estRenderPreview();
+
+    setTimeout(function () {
+      el = q('#est-doc');
+      if (!el || !el.innerHTML.trim()) { alert('Generate an estimate first.'); return; }
+
+      if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
+
+      var orig = el.style.transform;
+      el.style.transform = '';
+
+      var noEl = q('#est-no');
+      var filename = (noEl ? noEl.value : '') || 'Estimate';
+
+      function restoreBtn() {
+        el.style.transform = orig;
+        if (btn) { btn.textContent = '📄 PDF'; btn.disabled = false; }
+      }
+
+      /* Try html2pdf.js first (already loaded via CDN) */
+      if (typeof window.html2pdf === 'function') {
+        window.html2pdf()
+          .set({
+            margin: 6,
+            filename: filename + '.pdf',
+            image: { type: 'jpeg', quality: 0.95 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#fff' },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          })
+          .from(el)
+          .save()
+          .then(restoreBtn)
+          .catch(restoreBtn);
+        return;
+      }
+
+      /* Fallback: try jsPDF UMD global (loaded by PATCH_v102 on demand) */
+      var jsPDFCtor = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+      if (typeof html2canvas === 'function' && jsPDFCtor) {
+        html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#fff' }).then(function (cv) {
+          var imgData = cv.toDataURL('image/jpeg', 0.95);
+          var W = cv.width / 2, H = cv.height / 2;
+          var pdf = new jsPDFCtor({ orientation: 'portrait', unit: 'px', format: [W, H] });
+          pdf.addImage(imgData, 'JPEG', 0, 0, W, H);
+          pdf.save(filename + '.pdf');
+          restoreBtn();
+        }).catch(restoreBtn);
+        return;
+      }
+
+      /* Last resort: save JPG */
+      if (typeof html2canvas === 'function') {
+        html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#fff' }).then(function (cv) {
+          var a = document.createElement('a');
+          a.href = cv.toDataURL('image/jpeg', 0.95);
+          a.download = filename + '.jpg';
+          a.click();
+          restoreBtn();
+        }).catch(restoreBtn);
+      } else {
+        alert('PDF library not loaded. Try again in a moment.');
+        restoreBtn();
+      }
+    }, 200);
+  };
+
+  /* ══════════════════════════════════════════════════════════════
+     FIX 3 — Customer / Agent / Packing copy panel
+     Inject directly into #est-page-view (the PRINT tab)
+     ══════════════════════════════════════════════════════════════ */
+  var COPIES = [
+    { id:'customer', label:'👤 Customer', sub:'Rate + Qty + Total', showRate:true,  showTotal:true  },
+    { id:'agent',    label:'🤝 Agent',    sub:'Qty + Total only',   showRate:false, showTotal:true  },
+    { id:'packing',  label:'📦 Packing',  sub:'Qty only',           showRate:false, showTotal:false },
+  ];
+
+  function buildCopyPanel() {
+    if (q('#shj-copy-panel-v106')) return;
+    var view = q('#est-page-view');
+    if (!view) return;
+
+    /* Wrapper */
+    var wrap = mk('div', 'background:#111620;border-radius:10px;margin:10px 10px 6px;padding:14px;border:1px solid #2a3a5a;');
+    wrap.id = 'shj-copy-panel-v106';
+
+    /* Title */
+    var hdr = mk('div', 'color:#ffd700;font-weight:800;font-size:.82rem;letter-spacing:.6px;margin-bottom:12px;', '🖨 PRINT COPIES');
+    wrap.appendChild(hdr);
+
+    /* Copy-count grid */
+    var grid = mk('div', 'display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;');
+    var counters = {};
+    COPIES.forEach(function (c) {
+      var card = mk('div', 'background:#161d2e;border:1px solid #2a3a5a;border-radius:8px;padding:10px 8px;text-align:center;');
+      card.appendChild(mk('div', 'color:#e8eeff;font-size:.72rem;font-weight:700;margin-bottom:4px;', c.label));
+      card.appendChild(mk('div', 'color:#6677aa;font-size:.6rem;margin-bottom:8px;', c.sub));
+      var inp = mk('input', 'width:100%;background:#1e2d44;border:1px solid #2a3a5a;border-radius:6px;color:#fff;text-align:center;padding:5px 0;font-size:1rem;font-family:inherit;');
+      inp.type = 'number'; inp.min = '0'; inp.max = '9'; inp.value = '1';
+      counters[c.id] = inp;
+      card.appendChild(inp);
+      grid.appendChild(card);
+    });
+    wrap.appendChild(grid);
+
+    /* Signature checkbox */
+    var sigRow = mk('div', 'display:flex;align-items:center;gap:8px;margin-bottom:12px;');
+    var sigCb  = mk('input', 'width:16px;height:16px;cursor:pointer;accent-color:#3a7bd5;');
+    sigCb.type = 'checkbox'; sigCb.id = 'shj-sig-cb-v106';
+    var sigLbl = mk('label', 'color:#e8eeff;font-size:.78rem;cursor:pointer;', '✍ Add signature section (Received By / Signature / Date)');
+    sigLbl.htmlFor = 'shj-sig-cb-v106';
+    sigRow.appendChild(sigCb); sigRow.appendChild(sigLbl);
+    wrap.appendChild(sigRow);
+
+    /* Print All button */
+    var btnRow = mk('div', 'display:flex;gap:8px;');
+
+    var printBtn = mk('button',
+      'flex:1;padding:11px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.82rem;cursor:pointer;letter-spacing:.4px;',
+      '🖨 PRINT ALL COPIES');
+    printBtn.onclick = function () { runAllCopies(counters, sigCb.checked); };
+    btnRow.appendChild(printBtn);
+
+    var pdfBtn = mk('button',
+      'flex:1;padding:11px;background:#c0392b;color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.82rem;cursor:pointer;letter-spacing:.4px;',
+      '📄 PDF');
+    pdfBtn.onclick = function () { window.estExportPDF(); };
+    btnRow.appendChild(pdfBtn);
+
+    var jpgBtn = mk('button',
+      'flex:1;padding:11px;background:#1a5a30;color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.82rem;cursor:pointer;letter-spacing:.4px;',
+      '🖼 JPG');
+    jpgBtn.onclick = function () {
+      var el = q('#est-doc');
+      if (!el || !el.innerHTML.trim()) { alert('Generate estimate first.'); return; }
+      if (typeof html2canvas === 'function') {
+        var orig = el.style.transform; el.style.transform = '';
+        html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#fff' }).then(function (cv) {
+          el.style.transform = orig;
+          var a = document.createElement('a');
+          a.href = cv.toDataURL('image/jpeg', 0.95);
+          a.download = (q('#est-no') ? q('#est-no').value : 'Doc') + '.jpg';
+          a.click();
+        });
+      } else { alert('html2canvas not loaded.'); }
+    };
+    btnRow.appendChild(jpgBtn);
+
+    wrap.appendChild(btnRow);
+
+    /* Insert at top of PRINT page (before the existing button bar) */
+    view.insertBefore(wrap, view.firstChild);
+  }
+
+  /* ── Print one copy type in popup ── */
+  function printOneCopy(copyType, withSig) {
+    if (typeof estRenderPreview === 'function') estRenderPreview();
+    setTimeout(function () {
+      var docEl = q('#est-doc');
+      if (!docEl || !docEl.innerHTML.trim()) { alert('Generate estimate first.'); return; }
+
+      var clone = docEl.cloneNode(true);
+      clone.style.cssText = 'transform:none;width:794px;max-width:100%;margin:0 auto;';
+
+      /* Hide/show columns based on copy type */
+      var cfg = COPIES.find(function (c) { return c.id === copyType; }) || COPIES[0];
+      /* Rate cells: [th/td with "Rate" header or nth-child(4)] */
+      if (!cfg.showRate) {
+        clone.querySelectorAll('.rate-col, .col-rate, [data-col="rate"]').forEach(function (el) { el.style.display = 'none'; });
+        /* Fallback: 4th column (rate) */
+        clone.querySelectorAll('tr').forEach(function (tr) {
+          var cells = tr.querySelectorAll('th,td');
+          if (cells[3]) cells[3].style.display = 'none';
+        });
+      }
+      if (!cfg.showTotal) {
+        clone.querySelectorAll('.total-col, .col-total, [data-col="total"], .col-amount').forEach(function (el) { el.style.display = 'none'; });
+        /* Fallback: last 2 columns */
+        clone.querySelectorAll('tr').forEach(function (tr) {
+          var cells = tr.querySelectorAll('th,td');
+          var n = cells.length;
+          if (cells[n-1]) cells[n-1].style.display = 'none';
+          if (cells[n-2]) cells[n-2].style.display = 'none';
+        });
+        /* Hide totals section */
+        clone.querySelectorAll('.totals-section,.grand-total,.subtotal-row,.tax-row').forEach(function (el) { el.style.display = 'none'; });
+      }
+
+      /* Signature section */
+      var sigHtml = withSig
+        ? '<div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;padding:0 20px;">'
+          + ['Received By','Signature','Date'].map(function (l) {
+              return '<div style="text-align:center;"><div style="border-top:1px solid #333;padding-top:6px;font-size:11px;color:#555;">' + l + '</div></div>';
+            }).join('')
+          + '</div>'
+        : '';
+
+      var css = getPageCSS();
+      var title = cfg.label + ' Copy — Shreeji Industries';
+      var html = '<!DOCTYPE html><html><head>'
+        + '<meta charset="utf-8"><title>' + title + '</title>'
+        + '<style>body{margin:0;background:#fff;}'
+        + css
+        + '@media print{body{margin:0;}@page{size:A4;margin:8mm;}}</style>'
+        + '</head><body>'
+        + clone.outerHTML
+        + sigHtml
+        + '<scr'+'ipt>window.onload=function(){'
+        +   'setTimeout(function(){window.print();},400);'
+        +   'window.onafterprint=function(){window.close();};'
+        + '};<'+'/scr'+'ipt>'
+        + '</body></html>';
+
+      var w = window.open('', '_blank', 'width=900,height=720,menubar=no,toolbar=yes');
+      if (!w) { alert('Allow popups to enable print.'); return; }
+      w.document.open(); w.document.write(html); w.document.close();
+    }, 150);
+  }
+
+  /* ── Print all copies sequentially ── */
+  function runAllCopies(counters, withSig) {
+    var queue = [];
+    COPIES.forEach(function (c) {
+      var n = parseInt((counters[c.id] && counters[c.id].value) || '0', 10) || 0;
+      for (var i = 0; i < n; i++) queue.push(c.id);
+    });
+    if (!queue.length) { alert('Set at least 1 copy count.'); return; }
+    var idx = 0;
+    function next() {
+      if (idx >= queue.length) return;
+      var type = queue[idx++];
+      printOneCopy(type, withSig);
+      if (idx < queue.length) setTimeout(next, 1200);
+    }
+    next();
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     INIT
+     ══════════════════════════════════════════════════════════════ */
+  function init() {
+    buildCopyPanel();
+    /* Re-build if PRINT tab is opened (PATCH_v104 shows est-page-view) */
+    var _origShjTab = window.shjTab;
+    window.shjTab = function (id) {
+      if (_origShjTab) _origShjTab(id);
+      if (id === 'print') {
+        setTimeout(buildCopyPanel, 100);
+      }
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+
+</script>
+
+
+
+<!-- PATCH v107: Google Sheet Sync for Estimate tab -->
+<script>
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH v107  —  2026-06-07
+     Google Sheet sync for the Estimate tab.
+
+     LIVE URL (hardcoded default — user can override in settings):
+       https://script.google.com/macros/s/AKfycbwej5rJOPvAAN3DDzKE9uhpggY5Wfa4CUlkGWuAtknCr8HmNn4dMvqBDZdGKPKPZ14M/exec
+
+     PUSH FLOW:
+       Estimate saved → localStorage → POST PUSH_ESTIMATE → sheet
+
+     PULL FLOW (every 30 min + on app load):
+       GET PULL_DATA → products merged into localStorage
+                     → estimates merged (dedup by estNo — no doubling)
+                     → purgeKeys applied (20-day rule)
+                     → soft update with no alert / no page reload
+
+     BACKWARD COMPATIBLE:
+       Works with old Products-Code.gs ({"status":"ok","data":[...]})
+       AND with new product.gs   ({"status":"ok","products":[],"estimates":[],"purgeKeys":[]})
+
+     SILENT: never alert(), never reload page, never block UI.
+     A small ☁ dot in the estimate nav shows sync status only.
+  ══════════════════════════════════════════════════════════════ */
+
+  /* ── Constants ─────────────────────────────────────────────── */
+  var GS_URL_KEY       = 'shj_gs_url';
+  var LAST_SYNC_KEY    = 'shj_gs_lastSync';
+  var SYNC_MS          = 30 * 60 * 1000;    // 30 minutes
+  var KEEP_DAYS        = 20;
+  var PRODUCTS_LS_KEY  = 'shj_products';
+  var ESTIMATES_LS_KEY = 'shj_estimates';
+  var PI_LS_KEY        = 'shj_pi';
+
+  var DEFAULT_URL = 'https://script.google.com/macros/s/AKfycbwej5rJOPvAAN3DDzKE9uhpggY5Wfa4CUlkGWuAtknCr8HmNn4dMvqBDZdGKPKPZ14M/exec';
+
+  /* ── Helpers ──────────────────────────────────────────────── */
+  function gsUrl() {
+    return (localStorage.getItem(GS_URL_KEY) || DEFAULT_URL).trim();
+  }
+
+  function isoToday() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function cutoffISO(days) {
+    var d = new Date();
+    d.setDate(d.getDate() - days);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function addDaysISO(isoStr, days) {
+    var d = new Date(isoStr);
+    d.setDate(d.getDate() + days);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function safeJSON(str, fallback) {
+    try { return JSON.parse(str); } catch (_) { return fallback; }
+  }
+
+  function lsGet(key, fallback) {
+    return safeJSON(localStorage.getItem(key), fallback);
+  }
+
+  function lsSet(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch (_) {}
+  }
+
+  /* ── Status dot in estimate nav ──────────────────────────── */
+  var _statusDot = null;
+
+  function setStatus(state) {
+    /* state: 'idle' | 'syncing' | 'ok' | 'err' */
+    if (!_statusDot) {
+      _statusDot = document.createElement('span');
+      _statusDot.id = 'shj-gs-dot';
+      _statusDot.title = 'Google Sheet sync status';
+      _statusDot.style.cssText = 'position:fixed;bottom:58px;right:10px;z-index:9999;'
+        + 'width:9px;height:9px;border-radius:50%;opacity:.85;cursor:pointer;';
+      _statusDot.onclick = function () { shjSyncNow(true); };
+      document.body.appendChild(_statusDot);
+    }
+    var colors = { idle:'#555', syncing:'#f0a500', ok:'#3fb950', err:'#e05555' };
+    _statusDot.style.background = colors[state] || '#555';
+    _statusDot.title = {
+      idle    : '☁ Sheet: waiting',
+      syncing : '☁ Sheet: syncing…',
+      ok      : '☁ Sheet: synced ✓ (tap to sync now)',
+      err     : '☁ Sheet: error (tap to retry)'
+    }[state] || '';
+  }
+
+  /* ── 20-day local purge ────────────────────────────────────── */
+  function purgeLocalOld() {
+    var cutoff = cutoffISO(KEEP_DAYS);
+
+    /* purge estimates */
+    var ests = lsGet(ESTIMATES_LS_KEY, []);
+    var before = ests.length;
+    ests = ests.filter(function (e) {
+      var d = (e.date || e.savedAt || '').slice(0, 10);
+      return !d || d >= cutoff;
+    });
+    if (ests.length !== before) lsSet(ESTIMATES_LS_KEY, ests);
+
+    /* purge PI */
+    var pis = lsGet(PI_LS_KEY, []);
+    pis = pis.filter(function (e) {
+      var d = (e.date || e.savedAt || '').slice(0, 10);
+      return !d || d >= cutoff;
+    });
+    lsSet(PI_LS_KEY, pis);
+  }
+
+  /* ── PULL from sheet ────────────────────────────────────────── */
+  function pullFromSheet(silent) {
+    var url = gsUrl();
+    if (!url) { setStatus('idle'); return; }
+
+    setStatus('syncing');
+
+    /* Try new product.gs PULL_DATA first, fallback to old GET_PRODUCTS */
+    fetch(url + '?action=PULL_DATA', { method: 'GET' })
+      .then(function (r) { return r.json(); })
+      .then(function (resp) {
+        if (resp.status !== 'ok') { setStatus('err'); return; }
+
+        /* ── Detect format ─────────────────────────────── */
+        var isNewFormat = Array.isArray(resp.products);
+        var products    = isNewFormat ? resp.products : (resp.data || []);
+        var estimates   = isNewFormat ? (resp.estimates || [])  : [];
+        var purgeKeys   = isNewFormat ? (resp.purgeKeys || [])  : [];
+
+        /* ── Merge products (no doubling by 'code') ─────── */
+        var localProds = lsGet(PRODUCTS_LS_KEY, []);
+        var prodMap    = {};
+        localProds.forEach(function (p) { if (p.code) prodMap[p.code.toUpperCase()] = p; });
+        var changed = false;
+        products.forEach(function (p) {
+          if (!p.code) return;
+          var k = String(p.code).toUpperCase();
+          /* always update with sheet version (sheet is authoritative for products) */
+          if (!prodMap[k] || JSON.stringify(prodMap[k]) !== JSON.stringify(p)) {
+            prodMap[k] = p;
+            changed = true;
+          }
+        });
+        if (changed) {
+          lsSet(PRODUCTS_LS_KEY, Object.values(prodMap));
+        }
+
+        /* ── Purge expired keys from local storage ──────── */
+        if (purgeKeys.length) {
+          var ests = lsGet(ESTIMATES_LS_KEY, []);
+          var pis  = lsGet(PI_LS_KEY, []);
+          ests = ests.filter(function (e) { return purgeKeys.indexOf(e.estNo || e.id) === -1; });
+          pis  = pis.filter(function (e) { return purgeKeys.indexOf(e.piNo  || e.id) === -1; });
+          lsSet(ESTIMATES_LS_KEY, ests);
+          lsSet(PI_LS_KEY, pis);
+        }
+
+        /* ── Merge estimates (add missing, no doubling) ─── */
+        if (estimates.length) {
+          var localEsts = lsGet(ESTIMATES_LS_KEY, []);
+          var localPIs  = lsGet(PI_LS_KEY, []);
+          var localKeys = {};
+          localEsts.forEach(function (e) { localKeys[e.estNo || e.id] = true; });
+          localPIs.forEach(function (e)  { localKeys[e.piNo  || e.id] = true; });
+
+          var newEst = [], newPI = [];
+          estimates.forEach(function (r) {
+            if (localKeys[r.estNo]) return;           /* already local → skip */
+            var obj = {};
+            try { obj = typeof r.data === 'string' ? JSON.parse(r.data) : (r.data || {}); } catch (_) {}
+            if (!obj.estNo && !obj.piNo) obj.estNo = r.estNo;
+            if ((r.type || 'EST').toUpperCase() === 'PI') newPI.push(obj);
+            else newEst.push(obj);
+          });
+          if (newEst.length) lsSet(ESTIMATES_LS_KEY, localEsts.concat(newEst));
+          if (newPI.length)  lsSet(PI_LS_KEY,        localPIs.concat(newPI));
+        }
+
+        /* ── Local 20-day purge ─────────────────────────── */
+        purgeLocalOld();
+
+        localStorage.setItem(LAST_SYNC_KEY, String(Date.now()));
+        setStatus('ok');
+      })
+      .catch(function () {
+        setStatus('err');
+      });
+  }
+
+  /* ── PUSH one estimate to sheet ────────────────────────────── */
+  function pushEstimate(estObj) {
+    var url = gsUrl();
+    if (!url || !estObj) return;
+
+    var estNo = estObj.estNo || estObj.id || estObj.piNo || '';
+    if (!estNo) return;
+
+    var payload = {
+      action    : 'PUSH_ESTIMATE',
+      estNo     : estNo,
+      type      : (estObj.type || 'EST').toUpperCase(),
+      customer  : estObj.customer || estObj.customerName || '',
+      amount    : estObj.grandTotal || estObj.total || 0,
+      date      : (estObj.date || isoToday()).slice(0, 10),
+      savedAt   : isoToday(),
+      data      : estObj          /* full object stored in sheet 'data' column */
+    };
+
+    fetch(url, {
+      method  : 'POST',
+      headers : { 'Content-Type': 'application/json' },
+      body    : JSON.stringify(payload)
+    }).catch(function () {});     /* silent — never alert user */
+  }
+
+  /* ── Hook into estSave() ───────────────────────────────────── */
+  function hookEstSave() {
+    var _orig = window.estSave;
+    if (!_orig) return;
+    window.estSave = function (showAlert) {
+      var result = _orig.apply(this, arguments);
+      /* After save, grab the last saved estimate and push it */
+      setTimeout(function () {
+        var ests = lsGet(ESTIMATES_LS_KEY, []);
+        var pis  = lsGet(PI_LS_KEY, []);
+        var last = ests[ests.length - 1] || pis[pis.length - 1];
+        if (last) pushEstimate(last);
+      }, 300);
+      return result;
+    };
+  }
+
+  /* ── Settings UI — small "☁ Sheet" row in Estimate tab ─────── */
+  function buildSettingsUI() {
+    if (document.getElementById('shj-gs-settings-v107')) return;
+
+    var view = document.getElementById('est-page-new');
+    if (!view) return;
+
+    var wrap = document.createElement('div');
+    wrap.id  = 'shj-gs-settings-v107';
+    wrap.style.cssText = 'background:#111620;border:1px solid #2a3a5a;border-radius:8px;'
+      + 'margin:8px 10px 0;padding:10px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
+
+    var lbl = document.createElement('span');
+    lbl.style.cssText = 'color:#ffd700;font-size:.7rem;font-weight:800;white-space:nowrap;letter-spacing:.4px;';
+    lbl.textContent = '☁ SHEET SYNC';
+    wrap.appendChild(lbl);
+
+    var inp = document.createElement('input');
+    inp.id  = 'shj-gs-url-inp';
+    inp.type = 'text';
+    inp.placeholder = 'Google Apps Script URL…';
+    inp.value = gsUrl();
+    inp.style.cssText = 'flex:1;min-width:0;background:#1e2d44;border:1px solid #2a3a5a;'
+      + 'border-radius:6px;color:#e8eeff;padding:5px 8px;font-size:.68rem;font-family:inherit;';
+    wrap.appendChild(inp);
+
+    var saveBtn = document.createElement('button');
+    saveBtn.textContent = 'Save URL';
+    saveBtn.style.cssText = 'background:#1a3a6b;color:#fff;border:none;border-radius:6px;'
+      + 'padding:5px 10px;font-size:.68rem;font-weight:700;cursor:pointer;white-space:nowrap;';
+    saveBtn.onclick = function () {
+      var val = inp.value.trim();
+      if (val) {
+        localStorage.setItem(GS_URL_KEY, val);
+        shjSyncNow(true);
+      }
+    };
+    wrap.appendChild(saveBtn);
+
+    var syncBtn = document.createElement('button');
+    syncBtn.textContent = '↻ Sync Now';
+    syncBtn.style.cssText = 'background:#1a5a30;color:#fff;border:none;border-radius:6px;'
+      + 'padding:5px 10px;font-size:.68rem;font-weight:700;cursor:pointer;white-space:nowrap;';
+    syncBtn.onclick = function () { shjSyncNow(true); };
+    wrap.appendChild(syncBtn);
+
+    /* Insert after the first child (header bar) of est-page-new */
+    view.insertBefore(wrap, view.children[1] || view.firstChild);
+  }
+
+  /* ── Public: force sync (called by button or dot click) ─────── */
+  window.shjSyncNow = function (force) {
+    var now  = Date.now();
+    var last = parseInt(localStorage.getItem(LAST_SYNC_KEY) || '0', 10);
+    if (!force && (now - last) < SYNC_MS) return;   /* throttle */
+    pullFromSheet(true);
+  };
+
+  /* ── Auto-sync every 30 min ─────────────────────────────────── */
+  function startAutoSync() {
+    shjSyncNow(true);                        /* pull on load */
+    setInterval(function () {
+      shjSyncNow(false);                     /* every 30 min (throttled) */
+    }, 60 * 1000);                           /* check every 1 min, sync fires when due */
+  }
+
+  /* ── Product lookup helpers (for Estimate form auto-fill) ────── */
+  /**
+   * shjGetProduct(code) → product object or null
+   * Call this from the estimate item row to auto-fill size/section/price/HSN.
+   */
+  window.shjGetProduct = function (code) {
+    if (!code) return null;
+    var k     = String(code).toUpperCase();
+    var prods = lsGet(PRODUCTS_LS_KEY, []);
+    for (var i = 0; i < prods.length; i++) {
+      if (String(prods[i].code || '').toUpperCase() === k) return prods[i];
+    }
+    return null;
+  };
+
+  /**
+   * shjAllProductCodes() → sorted array of code strings
+   * Useful to populate a datalist / dropdown for code entry.
+   */
+  window.shjAllProductCodes = function () {
+    return lsGet(PRODUCTS_LS_KEY, [])
+      .map(function (p) { return p.code; })
+      .filter(Boolean)
+      .sort();
+  };
+
+  /* ── INIT ────────────────────────────────────────────────────── */
+  function init() {
+    setStatus('idle');
+    hookEstSave();
+    buildSettingsUI();
+    startAutoSync();
+
+    /* Re-build settings UI when user opens ESTIMATE tab */
+    var _origShjTab = window.shjTab;
+    if (_origShjTab) {
+      window.shjTab = function (id) {
+        _origShjTab(id);
+        if (id === 'est') setTimeout(buildSettingsUI, 80);
+      };
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+
+</script>
+
 </body>
 </html>
