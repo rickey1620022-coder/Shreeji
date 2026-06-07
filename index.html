@@ -263,8 +263,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v117 PWA</title>
-<meta name="shj-build" content="v117|SHJ-117-070626|2026-06-07">
+<title>Shreeji Industries — Full System v118 PWA</title>
+<meta name="shj-build" content="v118|SHJ-118-070626|2026-06-07">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -12361,5 +12361,137 @@ function pwaDismiss(){
 
 </script>
 
+
+<script>
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH v114  —  2026-06-07
+
+     FIX 1: Blank rows in print preview / PDF
+       Blank rows (no item description) were showing qty=1 and
+       rate=0.00 / total=0.00.  When description is empty all
+       other cells (S.No, Qty, Rate, Total) must also be blank.
+
+     FIX 2: Party / Contact plain-text display
+       The Party and Contact values were not showing (or appeared
+       as a box-like element) in the generated estimate.
+       Fix: explicitly re-write the values from the live form
+       inputs and strip any box-like CSS from the spans.
+  ══════════════════════════════════════════════════════════════ */
+
+  /* ── FIX 1: clear cells for blank-description rows ──────────── */
+  function clearBlankRows(doc) {
+    var tbody = doc.querySelector('.ea5-tbl tbody');
+    if (!tbody) return;
+    var rows = tbody.querySelectorAll('tr');
+    rows.forEach(function (row) {
+      var cells = row.querySelectorAll('td');
+      /* 5 cols: S.No | Qty | Description | Rate | Total */
+      if (cells.length < 5) return;
+      var desc = cells[2].textContent.trim();
+      if (desc) return;                          /* has description → leave alone */
+      cells[0].textContent = '';                 /* S.No   */
+      cells[1].textContent = '';                 /* Qty    */
+      cells[3].textContent = '';                 /* Rate   */
+      cells[4].textContent = '';                 /* Total  */
+      /* Keep row borders but visually quiet */
+      row.style.background = 'transparent';
+    });
+  }
+
+  /* ── FIX 2: party / contact as plain text ────────────────────── */
+  function fixPartyDisplay(doc) {
+    /* Style all spans in the party header so they look like plain text */
+    doc.querySelectorAll('.ea5-info-row span').forEach(function (span) {
+      span.style.cssText = [
+        'border:none',
+        'outline:none',
+        'background:none',
+        'box-shadow:none',
+        '-webkit-appearance:none',
+        'padding:0',
+        'margin:0',
+        'font:inherit',
+        'color:inherit',
+        'flex:1',
+        'word-break:break-word',
+        'white-space:pre-wrap'
+      ].join(';');
+    });
+
+    /* Re-read party name from live form in case rec.custName was empty */
+    var partyRows = doc.querySelectorAll('.ea5-info-party .ea5-info-row');
+
+    /* Row 0 = Party */
+    var partyRow = partyRows[0];
+    if (partyRow) {
+      var partySpan = partyRow.querySelector('span');
+      if (partySpan) {
+        var cur = partySpan.textContent.trim();
+        /* If blank or only a dash, try reading from the form */
+        if (!cur || cur === '—' || cur === '-' || cur === ' ') {
+          var nameVal = (
+            (document.getElementById('est-cname') && document.getElementById('est-cname').value) || ''
+          ).trim();
+          if (nameVal) partySpan.textContent = ' ' + nameVal;
+        }
+      }
+    }
+
+    /* Row 1 = Contact (may not exist if contact was empty at generate time) */
+    if (partyRows.length < 2) {
+      /* Contact row was not rendered because custContact was empty.
+         Try to inject it now from the form. */
+      var contactVal = (
+        (document.getElementById('est-contact') && document.getElementById('est-contact').value) || ''
+      ).trim();
+      if (contactVal && partyRow && partyRow.parentNode) {
+        var newRow = document.createElement('div');
+        newRow.className = 'ea5-info-row';
+        newRow.innerHTML =
+          '<strong>Contact :</strong>' +
+          '<span style="flex:1;word-break:break-word;"> ' + contactVal + '</span>';
+        partyRow.parentNode.insertBefore(newRow, partyRow.nextSibling);
+      }
+    } else {
+      /* Contact row exists — check if span is empty */
+      var contactRow = partyRows[1];
+      if (contactRow) {
+        var contactSpan = contactRow.querySelector('span');
+        if (contactSpan) {
+          var cur2 = contactSpan.textContent.trim();
+          if (!cur2 || cur2 === '—' || cur2 === '-' || cur2 === ' ') {
+            var contactVal2 = (
+              (document.getElementById('est-contact') && document.getElementById('est-contact').value) || ''
+            ).trim();
+            if (contactVal2) contactSpan.textContent = ' ' + contactVal2;
+          }
+        }
+      }
+    }
+  }
+
+  /* ── Post-process the generated estimate doc ─────────────────── */
+  function postProcess() {
+    var doc = document.getElementById('est-doc');
+    if (!doc || !doc.innerHTML.trim()) return;
+    clearBlankRows(doc);
+    fixPartyDisplay(doc);
+  }
+
+  /* ── Wrap window.estGenerate ─────────────────────────────────── */
+  window.estGenerate = (function (orig) {
+    return function () {
+      orig.apply(this, arguments);
+      /* Short delay so the DOM is fully settled after innerHTML assignment */
+      setTimeout(postProcess, 15);
+    };
+  })(window.estGenerate);
+
+})();
+
+</script>
 </body>
 </html>
