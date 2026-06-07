@@ -264,7 +264,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
 <title>Shreeji Industries — Full System v118 PWA</title>
-<meta name="shj-build" content="v118|SHJ-118-070626|2026-06-07">
+<meta name="shj-build" content="v119|SHJ-119-070626|2026-06-07">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -12489,6 +12489,121 @@ function pwaDismiss(){
       setTimeout(postProcess, 15);
     };
   })(window.estGenerate);
+
+})();
+
+</script>
+
+<script>
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH v115  —  2026-06-07
+     ROOT CAUSE of print not working:
+
+       PATCH_v106 overrode window.estPrintDoc to call shjPrintPopup
+       inside a setTimeout(150ms).  window.open() called from inside
+       a setTimeout breaks the browser's user-gesture chain →
+       the popup is silently blocked.
+
+       Additionally, PATCH_v106's closure captured its own LOCAL
+       shjPrintPopup (not window.shjPrintPopup), so PATCH_v112's
+       correct print CSS popup was never reached.
+
+     FIX:
+       Override window.estPrintDoc to call window.shjPrintPopup
+       SYNCHRONOUSLY — no setTimeout, user gesture intact,
+       popup not blocked.  This routes through PATCH_v112's
+       popup which has the correct A4 / 10mm-margin CSS.
+  ══════════════════════════════════════════════════════════════ */
+
+  window.estPrintDoc = function () {
+    var docEl = document.getElementById('est-doc');
+    var isPI  = (typeof estType !== 'undefined') && estType === 'pi';
+    var title = isPI
+      ? 'Shreeji Industries - Proforma Invoice'
+      : 'Shreeji Industries - Estimate';
+
+    /* Guard: nothing generated yet */
+    if (!docEl || !docEl.innerHTML.trim()) {
+      alert('Generate the estimate first, then print.');
+      return;
+    }
+
+    /* ── Call window.shjPrintPopup SYNCHRONOUSLY ─────────────────
+       PATCH_v112's window.shjPrintPopup opens the popup window
+       synchronously (no inner setTimeout for window.open), so
+       the browser sees this as a direct user-gesture response
+       and does NOT block it.
+    ─────────────────────────────────────────────────────────── */
+    if (typeof window.shjPrintPopup === 'function') {
+      window.shjPrintPopup(docEl, title);
+      return;
+    }
+
+    /* ── Fallback: popup with inline PRINT_CSS (in case PATCH_v112
+       did not load for some reason) ───────────────────────────── */
+    var FALLBACK_CSS = [
+      '@page { size: A4 portrait; margin: 10mm; }',
+      'html, body { margin:0; padding:0; background:#fff; }',
+      '.est-a5-doc { width:190mm; max-width:100%; font-family:Arial,sans-serif;',
+      '  font-size:9.5px; color:#111; border:1px solid #888; background:#fff; }',
+      '.ea5-hdr { text-align:center; border-bottom:2px solid #111; padding:6px 10px 5px; }',
+      '.ea5-co-name { font-size:15px; font-weight:800; letter-spacing:1px; text-transform:uppercase; }',
+      '.ea5-co-sub  { font-size:8px; color:#555; margin-top:1px; }',
+      '.ea5-title   { display:inline-block; background:#1a3a6b; color:#fff; font-size:9px;',
+      '               font-weight:800; letter-spacing:2px; padding:2px 14px; border-radius:2px; margin-top:4px; }',
+      '.ea5-info    { display:flex; border-bottom:1.5px solid #111; }',
+      '.ea5-info-party { flex:1; padding:5px 10px; border-right:1px solid #ccc; }',
+      '.ea5-info-doc   { flex:0 0 160px; padding:5px 10px; text-align:right; }',
+      '.ea5-info-row   { display:flex; margin-bottom:2px; font-size:9px; }',
+      '.ea5-info-row strong { min-width:60px; font-weight:700; }',
+      '.ea5-tbl { width:100%; border-collapse:collapse; font-size:9px; }',
+      '.ea5-tbl th { background:#1a3a6b; color:#fff; padding:4px 5px; text-align:center;',
+      '              font-weight:700; font-size:8.5px; border:1px solid #1a3a6b; }',
+      '.ea5-tbl th.ea5-thl { text-align:left; }',
+      '.ea5-tbl td { border:1px solid #d0d8e8; padding:3px 5px; vertical-align:middle; }',
+      '.ea5-tbl td.ea5-num { text-align:right; }',
+      '.ea5-tbl td.ea5-ctr { text-align:center; }',
+      '.ea5-grand td { background:#1a3a6b !important; color:#fff !important;',
+      '                font-weight:900 !important; font-size:10px !important; }',
+      '.ea5-footer { display:flex; border-top:1.5px solid #111; padding:5px 10px;',
+      '              font-size:8px; color:#555; page-break-inside:avoid; break-inside:avoid; }',
+      '.ea5-footer-l { flex:1; }',
+      '.ea5-footer-r { flex:0 0 140px; text-align:center; }',
+      '.ea5-sig-line { border-top:1px solid #111; margin-top:16px; padding-top:2px; font-size:8px; }',
+    ].join('\n');
+
+    var clone = docEl.cloneNode(true);
+    clone.style.cssText = 'transform:none;width:190mm;max-width:100%;margin:0;padding:0;';
+
+    var html = [
+      '<!DOCTYPE html><html><head>',
+      '<meta charset="utf-8">',
+      '<title>' + title + '</title>',
+      '<style>' + FALLBACK_CSS + '</style>',
+      '</head><body>',
+      clone.outerHTML,
+      '<scr' + 'ipt>',
+      'window.onload = function () {',
+      '  setTimeout(function () { window.print(); }, 300);',
+      '  window.onafterprint = function () { window.close(); };',
+      '};',
+      '</' + 'script>',
+      '</body></html>',
+    ].join('\n');
+
+    /* Synchronous window.open — user gesture preserved */
+    var w = window.open('', '_blank', 'width=820,height=720,menubar=no,toolbar=yes');
+    if (!w) {
+      alert('Please allow popups for this site to enable printing.');
+      return;
+    }
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  };
 
 })();
 

@@ -1,25 +1,32 @@
-# UPDATE LOG — ver 116 / v118 / SHJ-118
+# UPDATE LOG — ver 117 / v119 / SHJ-119
 
 **Date:** 2026-06-07  
-**Base:** ver 115 (v117 / SHJ-117)  
-**Patch:** PATCH_v114
+**Base:** ver 116 (v118 / SHJ-118)  
+**Patch:** PATCH_v115
 
 ## Changes
 
-### FIX 1 — Blank rows: no qty / rate / total shown
-When an item row has no description, the S.No, Qty, Rate ₹, and Total ₹ cells
-are now cleared (blank). Previously they showed default values: qty=1, rate=0.00,
-total=0.00, making blank filler rows visually noisy.
+### FIX — Print button not working (root cause fix)
 
-### FIX 2 — Party / Contact name in print
-Party name and Contact were appearing as empty or box-like elements in the
-generated estimate print/preview. Now:
-- Spans are explicitly styled as plain text (no border, no background).
-- If the span was empty (rec.custName not collected at generation time), the
-  patch re-reads the value from the live form inputs and writes it in.
-- If the Contact row was missing entirely, the patch injects it from the form.
+**Root cause:**  
+PATCH_v106 overrode `window.estPrintDoc` to wrap `window.open()` inside  
+a `setTimeout(150ms)`. Browsers treat `window.open()` called from inside  
+a setTimeout as *not user-initiated* and **silently block the popup**.  
+Additionally, PATCH_v106's closure called its own local `shjPrintPopup`  
+(not `window.shjPrintPopup`), so PATCH_v112's corrected print CSS was  
+never reached.
+
+**Fix:**  
+PATCH_v115 overrides `window.estPrintDoc` to call `window.shjPrintPopup`  
+(PATCH_v112's version) **synchronously** — no setTimeout, user-gesture  
+chain intact, popup not blocked.  
+This also ensures the correct A4 portrait / 10mm margin print CSS  
+(defined in PATCH_v112) is used every time.
+
+**Fallback:** If `window.shjPrintPopup` is unavailable for any reason,  
+a self-contained inline popup with identical CSS opens instead.
 
 ## Build info
-- Source: ver 115/files/index.html + PATCH_v114.js
-- Output: ver 116/files/index.html
-- Version stamp: v118 | SHJ-118-070626 | 2026-06-07
+- Source: ver 116/files/index.html + PATCH_v115.js
+- Output: ver 117/files/index.html
+- Version stamp: v119 | SHJ-119-070626 | 2026-06-07
