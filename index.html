@@ -11,7 +11,7 @@
   ------------------------------------------------------------------
 
   ------------------------------------------------------------------
-  v108  —  2026-06-07   |   S/N: SHJ-108-050626  ★ SPEC COMPLETE
+  v109  —  2026-06-07   |   S/N: SHJ-109-050626  ★ SPEC COMPLETE
   ------------------------------------------------------------------
     1. NEW  PI WhatsApp PDF + PDF+Text buttons on PI preview.
     2. NEW  PI Records Save action — re-save edited PI to sheet.
@@ -36,7 +36,7 @@
     2. FIX  Share & Print auto-opens after Estimate save (§4).
     3. FIX  WhatsApp PDF/JPG/Text actions wired to Estimate (§9).
 
-  v99  —  2026-06-07 22:00   |   S/N: SHJ-108-050626
+  v99  —  2026-06-07 22:00   |   S/N: SHJ-109-050626
   ------------------------------------------------------------------
     1. FIX  Version metadata cleanup: title, shj-build meta, service-
             worker cache name, PIN footer serial all unified to v99.
@@ -47,7 +47,7 @@
             confirmed requirements.  Row numbering 1/2/3/2a/3a works.
 
   ------------------------------------------------------------------
-  v96  —  2026-06-07 20:00   |   S/N: SHJ-108-050626
+  v96  —  2026-06-07 20:00   |   S/N: SHJ-109-050626
   ------------------------------------------------------------------
     1. NEW  ESTIMATE optional checkboxes in totals:
               ☐ Previous Balance  (+)
@@ -67,7 +67,7 @@
     7. NEW  🖨 Print button (OS print dialog, correct page size).
 
   ------------------------------------------------------------------
-  v95  —  2026-06-07 18:00   |   S/N: SHJ-108-050626
+  v95  —  2026-06-07 18:00   |   S/N: SHJ-109-050626
   ------------------------------------------------------------------
     1. NEW  ESTIMATE tab — 2 document types:
               [ESTIMATE] — No tax. Line items → Subtotal → Total.
@@ -89,7 +89,7 @@
             gstPct, gstAmt, grand, and type fields.
 
   ------------------------------------------------------------------
-  v94  —  2026-06-07 00:00   |   S/N: SHJ-108-050626
+  v94  —  2026-06-07 00:00   |   S/N: SHJ-109-050626
   ------------------------------------------------------------------
     1. NEW  4th main tab "📝 Estimate" added to the app switcher.
             EST-YYYY-XXXX auto-numbering, customer from Customer DB,
@@ -107,7 +107,7 @@
             single-user single-file app — identical user experience.
 
   ------------------------------------------------------------------
-  v93  —  2026-06-04   |   S/N: SHJ-108-050626
+  v93  —  2026-06-04   |   S/N: SHJ-109-050626
   ------------------------------------------------------------------
     1. CHANGE  Product NAME format. Now written as plain lowercase words
                with the code on the end, e.g.
@@ -118,7 +118,7 @@
                the name so existing rows update to the new format too.
 
   ------------------------------------------------------------------
-  v92  —  2026-06-04   |   S/N: SHJ-108-050626
+  v92  —  2026-06-04   |   S/N: SHJ-109-050626
   ------------------------------------------------------------------
     1. ADD  PRODUCT DB is now pre-linked to its Products Google Sheet
             web-app URL out of the box (no need to paste it on each
@@ -128,7 +128,7 @@
             you can see at a glance whether the sheet is reachable.
 
   ------------------------------------------------------------------
-  v91  —  2026-06-04   |   S/N: SHJ-108-050626
+  v91  —  2026-06-04   |   S/N: SHJ-109-050626
   ------------------------------------------------------------------
     1. CHANGE  PRODUCT DB now uses its OWN separate Google Sheet +
                web-app URL (not the main Orders/Stock script). A
@@ -139,7 +139,7 @@
                (same dedup-by-code / ScriptLock no-duplicate method).
 
   ------------------------------------------------------------------
-  v90  —  2026-06-04   |   S/N: SHJ-108-050626
+  v90  —  2026-06-04   |   S/N: SHJ-109-050626
   ------------------------------------------------------------------
     1. NEW  PRODUCT DB tab (in Invoice & Quotes). Add a product with a
             code + 6 boxes: Size (mm/inch), Section, No. of MOSFET holes,
@@ -263,8 +263,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v108 PWA</title>
-<meta name="shj-build" content="v108|SHJ-108-050626|2026-06-07">
+<title>Shreeji Industries — Full System v109 PWA</title>
+<meta name="shj-build" content="v109|SHJ-109-050626|2026-06-07">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -800,7 +800,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SHREEJI v108 — CLEAN SYNC ENGINE
+     SHREEJI v109 — CLEAN SYNC ENGINE
      New GS URL · Local folder paths · IndexedDB · Cron 5min
      ══════════════════════════════════════════════════════════ -->
 <style>
@@ -821,7 +821,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  SHREEJI v108 — SYNC ENGINE
+//  SHREEJI v109 — SYNC ENGINE
 //  GS URL  : hardcoded new endpoint (can still be overridden)
 //  Local DB: IndexedDB in browser = real persistent .db storage
 //  Folder  : Laptop → C:\ShreejiData\db\   Phone → /ShreejiData/db/
@@ -1263,8 +1263,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v108 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 7 June 2026 &nbsp;·&nbsp; S/N: SHJ-108-050626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v109 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 7 June 2026 &nbsp;·&nbsp; S/N: SHJ-109-050626</div>
   </div>
 </div>
 <style>
@@ -8266,7 +8266,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v108';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v109';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -9638,7 +9638,7 @@ function pwaDismiss(){
 </script>
 
 
-<!-- ═══ PATCH_v108.js ═══ -->
+<!-- ═══ PATCH_v109.js ═══ -->
 <script>
 ;(function () {
   'use strict';
@@ -9745,7 +9745,7 @@ function pwaDismiss(){
 
   function buildPIWAButtons(){
     var wrap=mk('div',{display:'flex',gap:'8px',flexWrap:'wrap',margin:'10px 0'});
-    wrap.id='shj-pi-wa-btns-v108';
+    wrap.id='shj-pi-wa-btns-v109';
 
     var waPDF=mkBtn('📲 WhatsApp PDF',function(){ piSharePDF(false); },{background:C.bg2});
     var waPDFT=mkBtn('📲 WhatsApp PDF + Text',function(){ piSharePDF(true); },{background:C.bg2});
@@ -9829,7 +9829,7 @@ function pwaDismiss(){
 
   /* Inject PI WA buttons into the PI form/preview section */
   function tryInjectPIWA(){
-    if($q('#shj-pi-wa-btns-v108')) return true;
+    if($q('#shj-pi-wa-btns-v109')) return true;
     var piSecs=['#pi-form','#pi-preview-wrap','#pi-preview','#new-pi-wrap',
                 '#tab-pi .inv-doc','#pi-section','[data-tab="pi"] .inv-actions',
                 '#pi-actions','#pi-btn-row'];
@@ -9846,7 +9846,7 @@ function pwaDismiss(){
       });
     }
     if(!el) return false;
-    if(el.querySelector('#shj-pi-wa-btns-v108')) return true;
+    if(el.querySelector('#shj-pi-wa-btns-v109')) return true;
     el.appendChild(buildPIWAButtons());
     return true;
   }
@@ -10054,7 +10054,7 @@ function pwaDismiss(){
       localStorage.setItem(AUDIT_KEY,JSON.stringify(log));
 
       /* refresh audit panel if visible */
-      var panel=$q('#shj-audit-panel-v108');
+      var panel=$q('#shj-audit-panel-v109');
       if(panel&&panel._refresh) panel._refresh();
     }catch(e){}
   }
@@ -10069,7 +10069,7 @@ function pwaDismiss(){
       background:C.bg1,borderRadius:C.rad,padding:'16px',
       fontFamily:'inherit',color:C.txt,marginTop:'12px',
     });
-    wrap.id='shj-audit-panel-v108';
+    wrap.id='shj-audit-panel-v109';
 
     var hdr=mk('div',{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'12px'});
     hdr.appendChild(mk('span',{color:C.txt,fontSize:'15px',fontWeight:'600'},'🔍 Audit Trail'));
@@ -10187,7 +10187,7 @@ function pwaDismiss(){
     var isAgent=(role==='agent');
 
     /* Dynamic stylesheet — inject or update */
-    var styleId='shj-role-style-v108';
+    var styleId='shj-role-style-v109';
     var styleEl=document.getElementById(styleId);
     if(!styleEl){
       styleEl=document.createElement('style');
@@ -10231,7 +10231,7 @@ function pwaDismiss(){
       padding:'12px 16px',display:'flex',alignItems:'center',
       gap:'12px',fontFamily:'inherit',flexWrap:'wrap',
     });
-    wrap.id='shj-role-widget-v108';
+    wrap.id='shj-role-widget-v109';
 
     wrap.appendChild(mk('span',{color:C.mute,fontSize:'12px'},'👤 Role:'));
 
@@ -10258,13 +10258,13 @@ function pwaDismiss(){
   }
 
   function updateRoleUI(){
-    var w=$q('#shj-role-widget-v108');
+    var w=$q('#shj-role-widget-v109');
     if(w&&w._update) w._update();
   }
 
   /* Inject role widget into the Settings or top of Estimate section */
   function tryInjectRoleWidget(){
-    if($q('#shj-role-widget-v108')) return true;
+    if($q('#shj-role-widget-v109')) return true;
 
     /* prefer a settings / config section */
     var targets=[
@@ -10284,7 +10284,7 @@ function pwaDismiss(){
     el.insertBefore(buildRoleWidget(),el.firstChild);
 
     /* also inject audit panel */
-    if(!$q('#shj-audit-panel-v108')){
+    if(!$q('#shj-audit-panel-v109')){
       el.appendChild(buildAuditPanel());
     }
 
@@ -10326,7 +10326,7 @@ function pwaDismiss(){
   window.shjGetRole       = getRole;
 
   console.log(
-    '%c[SHJ-PATCH v108] SPEC COMPLETE — 6 final features:\n'+
+    '%c[SHJ-PATCH v109] SPEC COMPLETE — 6 final features:\n'+
     '  ✔ PI WhatsApp PDF + PDF+Text buttons\n'+
     '  ✔ PI Records Save action\n'+
     '  ✔ Download JPG (html2canvas)\n'+
@@ -10840,6 +10840,145 @@ function pwaDismiss(){
       }
       if (_orig) _orig(page);
     };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+
+</script>
+
+
+<!-- ═══ PATCH_v105.js ═══ -->
+<script>
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH v105  —  2026-06-07
+     FIX: PWA print "This app doesn't support print preview"
+     Override window.print() calls in the Estimate/PI context to
+     open content in a new browser window and print from there.
+     New window gets full browser print preview — no PWA limitation.
+     ══════════════════════════════════════════════════════════════ */
+
+  /* ── Collect page styles ── */
+  function getPageStyles() {
+    var css = '';
+    try {
+      Array.from(document.styleSheets).forEach(function (ss) {
+        try {
+          Array.from(ss.cssRules || []).forEach(function (r) {
+            css += r.cssText + '\n';
+          });
+        } catch (_) {}
+      });
+    } catch (_) {}
+    return css;
+  }
+
+  /* ── Open a new window, write the doc, trigger print ── */
+  function printInNewWindow(docEl, title) {
+    if (!docEl) { alert('Nothing to print — please generate an estimate or PI first.'); return; }
+
+    var clone = docEl.cloneNode(true);
+    /* Remove transform scaling */
+    clone.style.transform = '';
+    clone.style.transformOrigin = '';
+    clone.style.width = '';
+    clone.style.maxWidth = '';
+
+    var styles = getPageStyles();
+
+    var html = '<!DOCTYPE html><html><head>'
+      + '<meta charset="utf-8">'
+      + '<title>' + (title || 'Shreeji Industries - Print') + '</title>'
+      + '<style>'
+      + 'body{margin:0;padding:0;background:#fff;font-family:"Source Sans 3",sans-serif;}'
+      + '@media print{body{margin:0;}@page{margin:6mm;}}'
+      + styles
+      + '</style>'
+      + '</head><body>'
+      + clone.outerHTML
+      + '<script>window.onload=function(){window.focus();window.print();window.onafterprint=function(){window.close();};};<'
+      + '/script>'
+      + '</body></html>';
+
+    var w = window.open('', '_blank', 'width=900,height=700');
+    if (!w) {
+      /* Popup blocked — fallback to direct print */
+      window.print();
+      return;
+    }
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  }
+
+  /* ── Patch estPrintDoc ── */
+  window._origEstPrintDoc = window.estPrintDoc;
+  window.estPrintDoc = function () {
+    var docEl = document.getElementById('est-doc');
+    var isPI  = (typeof estType !== 'undefined') ? estType === 'pi' : false;
+    printInNewWindow(docEl, isPI ? 'Shreeji Industries - Proforma Invoice' : 'Shreeji Industries - Estimate');
+  };
+
+  /* ── Patch window.print() globally when called from est context ── */
+  /* (PATCH_v101 printAllCopies also calls window.print directly) */
+  var _origPrint = window.print.bind(window);
+  window.shjPrintNewWindow = function () {
+    var docEl = document.getElementById('est-doc')
+             || document.getElementById('pi-print-doc')
+             || document.getElementById('est-print-target');
+    if (docEl) {
+      printInNewWindow(docEl, 'Shreeji Industries - Print');
+    } else {
+      _origPrint();
+    }
+  };
+
+  /* ── Also patch the Print Setup panel's "Print" button if PATCH_v101 added it ── */
+  function patchPrintButtons() {
+    /* Look for any button that calls window.print() via onclick */
+    document.querySelectorAll('button').forEach(function (btn) {
+      var oc = btn.getAttribute('onclick') || '';
+      if (oc.indexOf('window.print') !== -1 || oc.indexOf('printAllCopies') !== -1) {
+        return; /* leave multi-copy sequencer alone */
+      }
+      var txt = (btn.textContent || '').toLowerCase();
+      if ((txt.indexOf('print') !== -1 || txt.indexOf('🖨') !== -1)
+          && txt.indexOf('copy') === -1 && txt.indexOf('copies') === -1) {
+        if (!btn.dataset.shjPwaPatch) {
+          btn.dataset.shjPwaPatch = '1';
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            window.estPrintDoc();
+          }, true);
+        }
+      }
+    });
+  }
+
+  /* ── Also override printCopyType from PATCH_v101 to use popup ── */
+  if (typeof window.printCopyType === 'function') {
+    var _origPCT = window.printCopyType;
+    window.printCopyType = function (copyType, sig, asPDF) {
+      var docEl = document.getElementById('est-doc');
+      printInNewWindow(docEl, 'Shreeji Industries - ' + (copyType || 'Print'));
+    };
+  }
+
+  /* ── Init ── */
+  function init() {
+    patchPrintButtons();
+    /* Re-patch on DOM changes (PATCH_v101 injects print panel lazily) */
+    var obs = new MutationObserver(function () { patchPrintButtons(); });
+    obs.observe(document.body, { childList: true, subtree: true });
   }
 
   if (document.readyState === 'loading') {

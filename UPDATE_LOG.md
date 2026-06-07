@@ -1,3 +1,19 @@
+## v109 — 2026-06-07 | S/N: SHJ-109-070626
+
+**Files changed:** `index.html` (add PATCH_v105.js before `</body>`)
+
+### FIX — PWA print: "This app doesn't support print preview"
+
+Windows PWA apps cannot show browser print preview inline.
+PATCH_v105 overrides `estPrintDoc()` and all print buttons to open the
+estimate / PI document in a **new browser window** and call `window.print()`
+from there. The new window is a normal browser tab — full print preview works.
+
+- If popup is blocked, falls back to `window.print()` in the PWA
+- Also patches PATCH_v101's copy-type print buttons
+- MutationObserver re-patches any print buttons injected lazily
+
+---
 ## v108 — 2026-06-07 | S/N: SHJ-108-070626
 
 **Files changed:** `index.html`
