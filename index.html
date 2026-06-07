@@ -263,8 +263,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v111 PWA</title>
-<meta name="shj-build" content="v111|SHJ-111-070626|2026-06-07">
+<title>Shreeji Industries — Full System v113 PWA</title>
+<meta name="shj-build" content="v113|SHJ-113-070626|2026-06-07">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -800,7 +800,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SHREEJI v111 — CLEAN SYNC ENGINE
+     SHREEJI v113 — CLEAN SYNC ENGINE
      New GS URL · Local folder paths · IndexedDB · Cron 5min
      ══════════════════════════════════════════════════════════ -->
 <style>
@@ -821,7 +821,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  SHREEJI v111 — SYNC ENGINE
+//  SHREEJI v113 — SYNC ENGINE
 //  GS URL  : hardcoded new endpoint (can still be overridden)
 //  Local DB: IndexedDB in browser = real persistent .db storage
 //  Folder  : Laptop → C:\ShreejiData\db\   Phone → /ShreejiData/db/
@@ -1263,7 +1263,7 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v111 · PROTECTED</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v113 · PROTECTED</div>
     <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 7 June 2026 &nbsp;·&nbsp; S/N: SHJ-110-050626</div>
   </div>
 </div>
@@ -8266,7 +8266,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v111';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v113';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -11695,6 +11695,258 @@ function pwaDismiss(){
         if (id === 'est') setTimeout(buildSettingsUI, 80);
       };
     }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+
+</script>
+
+
+
+<!-- PATCH v108: Always 10 rows in estimate form -->
+<script>
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH v108  —  2026-06-07
+     Always 10 blank rows in Estimate / PI form.
+     • New estimate → 10 blank rows
+     • Loaded estimate → items padded to 10 rows (blank rows appended)
+     • "+" button label changed to "+ Add Row"
+     • Minimum 10 rows always maintained after any remove
+  ══════════════════════════════════════════════════════════════ */
+
+  var MIN_ROWS = 10;
+
+  /* ── Blank item factory ─────────────────────────────────────── */
+  function blankItem(no) {
+    return { no: String(no), desc: '', qty: 1, uom: 'PCS', rate: 0, amount: 0 };
+  }
+
+  /* ── Pad estItems to MIN_ROWS ──────────────────────────────── */
+  function padItems() {
+    if (typeof window.estItems === 'undefined') return;
+    while (window.estItems.length < MIN_ROWS) {
+      window.estItems.push(blankItem(window.estItems.length + 1));
+    }
+  }
+
+  /* ── Override estNew (new blank estimate) ──────────────────── */
+  var _origEstNew = window.estNew;
+  window.estNew = function () {
+    if (_origEstNew) _origEstNew.apply(this, arguments);
+    /* After original estNew sets 1 row, pad to 10 */
+    padItems();
+    if (typeof window.estRenderItems === 'function') window.estRenderItems();
+  };
+
+  /* ── Override estLoad (load saved estimate) ─────────────────── */
+  var _origEstLoad = window.estLoad;
+  window.estLoad = function (id) {
+    if (_origEstLoad) _origEstLoad.apply(this, arguments);
+    /* Pad to 10 after loading (saved items may be < 10) */
+    setTimeout(function () {
+      padItems();
+      if (typeof window.estRenderItems === 'function') window.estRenderItems();
+    }, 50);
+  };
+
+  /* ── Override estRemoveItem (keep ≥10 rows after remove) ─────── */
+  var _origRemove = window.estRemoveItem;
+  window.estRemoveItem = function (i) {
+    if (_origRemove) _origRemove.apply(this, arguments);
+    setTimeout(function () {
+      padItems();
+      if (typeof window.estRenderItems === 'function') window.estRenderItems();
+    }, 0);
+  };
+
+  /* ── Override estRenderItems to always pad before rendering ─── */
+  var _origRender = window.estRenderItems;
+  window.estRenderItems = function () {
+    padItems();
+    if (_origRender) _origRender.apply(this, arguments);
+  };
+
+  /* ── Change "+ Blank Row" button label ──────────────────────── */
+  function patchButton() {
+    document.querySelectorAll('button').forEach(function (btn) {
+      if ((btn.textContent || '').trim() === '+ Blank Row') {
+        btn.textContent = '+ Add Row';
+      }
+    });
+  }
+
+  /* ── Init ────────────────────────────────────────────────────── */
+  function init() {
+    /* Pad existing items right away (handles first load) */
+    padItems();
+    if (typeof window.estRenderItems === 'function') window.estRenderItems();
+    patchButton();
+
+    /* Re-patch button if PATCH_v104 rebuilds the nav/tab UI */
+    var obs = new MutationObserver(function () { patchButton(); });
+  window._shjRowObserver = obs;
+    obs.observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+
+</script>
+
+
+
+<!-- PATCH v109: Unfreeze + 10 rows + compact optional items -->
+<script>
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH v109  —  2026-06-07
+     FIX 1: Unfreeze — kill the MutationObserver loop from PATCH_v108
+             that was triggering on its own textContent changes
+     FIX 2: Re-init 10 blank rows correctly (MutationObserver was
+             also re-triggering estRenderItems in a loop)
+     FIX 3: Optional items (Previous Balance / Less Payment /
+             Freight / Tax) — compact boxes, right-aligned
+  ══════════════════════════════════════════════════════════════ */
+
+  /* ── FIX 1: Kill any existing runaway MutationObserver ──────── */
+  /* PATCH_v108 stored its observer on window — disconnect it */
+  if (window._shjRowObserver) {
+    try { window._shjRowObserver.disconnect(); } catch (_) {}
+    window._shjRowObserver = null;
+  }
+
+  /* ── FIX 2: 10 blank rows — safe, no observer needed ────────── */
+  var MIN_ROWS = 10;
+
+  function blankItem(no) {
+    return { no: String(no), desc: '', qty: 1, uom: 'PCS', rate: 0, amount: 0 };
+  }
+
+  function padItems() {
+    if (!Array.isArray(window.estItems)) return;
+    var added = false;
+    while (window.estItems.length < MIN_ROWS) {
+      window.estItems.push(blankItem(window.estItems.length + 1));
+      added = true;
+    }
+    return added;
+  }
+
+  /* Override estNew — no observer, just pad on call */
+  var _origEstNew = window.estNew;
+  window.estNew = function () {
+    if (_origEstNew) _origEstNew.apply(this, arguments);
+    padItems();
+    if (typeof window.estRenderItems === 'function') {
+      /* Un-hook our estRenderItems override temporarily to avoid recursion */
+      var ri = window.estRenderItems;
+      window.estRenderItems = window._origEstRender || ri;
+      window._origEstRender.call(this);
+      window.estRenderItems = ri;
+    }
+  };
+
+  /* Override estRenderItems — pad first, then render once */
+  if (!window._origEstRender) {
+    window._origEstRender = window.estRenderItems;
+    window.estRenderItems = function () {
+      padItems();
+      if (window._origEstRender) window._origEstRender.apply(this, arguments);
+    };
+  }
+
+  /* Override estLoad — pad after loading saved record */
+  var _origEstLoad = window.estLoad;
+  window.estLoad = function () {
+    if (_origEstLoad) _origEstLoad.apply(this, arguments);
+    setTimeout(function () {
+      if (padItems() && window._origEstRender) window._origEstRender();
+    }, 60);
+  };
+
+  /* Override estRemoveItem — keep ≥10 rows silently */
+  var _origRemove = window.estRemoveItem;
+  window.estRemoveItem = function (i) {
+    if (_origRemove) _origRemove.apply(this, arguments);
+    setTimeout(function () {
+      if (padItems() && window._origEstRender) window._origEstRender();
+    }, 0);
+  };
+
+  /* Rename + Blank Row button — one-time, no observer */
+  function patchBtn() {
+    document.querySelectorAll('button').forEach(function (b) {
+      if (b.dataset.shjBtnFixed) return;              /* skip already-fixed */
+      if ((b.textContent || '').trim() === '+ Blank Row') {
+        b.dataset.shjBtnFixed = '1';
+        b.textContent = '+ Add Row';
+      }
+    });
+  }
+
+  /* ── FIX 3: Optional items — compact + right-aligned ────────── */
+  function styleOptionalItems() {
+    var ids = ['est-prev-bal', 'est-less-pay', 'est-est-freight', 'est-tax-amt'];
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      /* Compact: fixed width, right-aligned text, smaller padding */
+      el.style.cssText = [
+        'width:90px',
+        'max-width:90px',
+        'flex:none',
+        'border:1px solid #ccd',
+        'border-radius:6px',
+        'padding:4px 6px',
+        'font-size:.78rem',
+        'text-align:right',
+        'font-family:inherit',
+        'background:#fff',
+        'color:#1a3a6b',
+        'font-weight:700'
+      ].join(';');
+
+      /* Push the row to right: label grows, input stays small */
+      var row = el.parentNode;
+      if (row) {
+        row.style.cssText = (row.style.cssText || '')
+          + ';justify-content:flex-end;gap:8px;';
+        /* Make the label take remaining space */
+        var lbl = row.querySelector('label');
+        if (lbl) { lbl.style.flex = '1'; lbl.style.minWidth = '0'; }
+      }
+    });
+
+    /* Make the OPTIONAL ITEMS section header smaller */
+    var optSection = document.getElementById('est-est-fields');
+    if (optSection) {
+      optSection.style.marginTop = '6px';
+      optSection.style.paddingTop = '6px';
+    }
+  }
+
+  /* ── INIT ─────────────────────────────────────────────────────── */
+  function init() {
+    padItems();
+    if (window._origEstRender) window._origEstRender();
+    patchBtn();
+    styleOptionalItems();
   }
 
   if (document.readyState === 'loading') {
