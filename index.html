@@ -6123,7 +6123,7 @@ function estDbSave(arr){ localStorage.setItem(EST_DB_KEY, JSON.stringify(arr)); 
 
 // ── Sub-tab switcher ────────────────────────────────────────
 function estGo(page){
-  ['new','view','list'].forEach(p=>{
+  ['new','view','list','grid'].forEach(p=>{
     const tab=document.getElementById('est-tab-'+p);
     const pg=document.getElementById('est-page-'+p);
     if(tab) tab.classList.toggle('active',p===page);
@@ -6135,6 +6135,183 @@ function estGo(page){
   const ob=document.getElementById('est-order-btns');
   if(ob) ob.style.display=(page==='view'&&estType==='pi')?'block':'none';
   if(page==='list') estRenderList();
+  if(page==='grid') grdInit();
+}
+
+// ── Grid Entry Tab ───────────────────────────────────────────
+var GRD_UOM=['kg','pcs','ltr','mtr','box','bag','doz','set','nos','ton'];
+var grdRowCount=0;
+var grdInited=false;
+
+function grdInit(){
+  if(!document.getElementById('grd-date')) return;
+  document.getElementById('grd-date').value=new Date().toISOString().split('T')[0];
+  var mn=document.getElementById('est-no');
+  if(mn&&mn.value) document.getElementById('grd-est-no').value=mn.value;
+  if(!grdInited){
+    grdInited=true;
+    for(var i=0;i<5;i++) grdAddRow();
+  }
+}
+
+function grdFillParty(val){
+  try{
+    var cs=JSON.parse(localStorage.getItem('shj_customers')||'[]');
+    var f=cs.find(function(c){return c.name&&c.name.toLowerCase()===val.toLowerCase();});
+    if(f&&f.gst) document.getElementById('grd-gstin').value=f.gst;
+  }catch(e){}
+}
+
+function grdMakeRow(num){
+  var opts=GRD_UOM.map(function(u){return '<option>'+u+'</option>';}).join('');
+  var bg=num%2===0?'#f8fafc':'#fff';
+  var tr=document.createElement('tr');
+  tr.id='grd-row-'+num;
+  tr.style.background=bg;
+  tr.innerHTML=
+    '<td style="text-align:center;color:#94a3b8;font-size:.72rem;border:1px solid #e2e8f0;padding:3px 2px;">'+num+'</td>'+
+    '<td style="border:1px solid #e2e8f0;padding:2px 3px;">'+
+      '<input type="text" placeholder="Item description…" style="width:100%;border:1px solid transparent;border-radius:4px;padding:6px 5px;font-size:.78rem;background:transparent;outline:none;" '+
+        'onfocus="this.style.cssText+=\'border-color:#2e5fa3;background:#fff;\'" onblur="this.style.borderColor=\'transparent\';">'+
+    '</td>'+
+    '<td style="border:1px solid #e2e8f0;padding:2px 3px;">'+
+      '<input type="number" min="0" step="0.001" placeholder="0" style="width:100%;border:1px solid transparent;border-radius:4px;padding:6px 4px;font-size:.78rem;text-align:right;background:transparent;outline:none;" '+
+        'onfocus="this.style.cssText+=\'border-color:#2e5fa3;background:#fff;\'" onblur="this.style.borderColor=\'transparent\';" '+
+        'oninput="grdCalcRow('+num+')" onkeydown="grdKey(event,'+num+')">'+
+    '</td>'+
+    '<td style="border:1px solid #e2e8f0;padding:2px 3px;text-align:center;">'+
+      '<select style="width:100%;border:none;border-radius:4px;padding:5px 2px;font-size:.76rem;background:transparent;">'+opts+'</select>'+
+    '</td>'+
+    '<td style="border:1px solid #e2e8f0;padding:2px 3px;">'+
+      '<input type="number" min="0" step="0.01" placeholder="0.00" style="width:100%;border:1px solid transparent;border-radius:4px;padding:6px 4px;font-size:.78rem;text-align:right;background:transparent;outline:none;" '+
+        'onfocus="this.style.cssText+=\'border-color:#2e5fa3;background:#fff;\'" onblur="this.style.borderColor=\'transparent\';" '+
+        'oninput="grdCalcRow('+num+')" onkeydown="grdKey(event,'+num+')">'+
+    '</td>'+
+    '<td id="grd-tot-'+num+'" style="border:1px solid #e2e8f0;padding:6px 8px 6px 4px;text-align:right;font-weight:700;color:#1a3a6b;font-size:.78rem;">0.00</td>'+
+    '<td style="border:1px solid #e2e8f0;text-align:center;padding:2px;">'+
+      '<button onclick="grdDelRow('+num+')" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.8rem;padding:2px 5px;">✕</button>'+
+    '</td>';
+  return tr;
+}
+
+function grdAddRow(){
+  grdRowCount++;
+  document.getElementById('grd-tbody').appendChild(grdMakeRow(grdRowCount));
+  var rows=document.getElementById('grd-tbody').querySelectorAll('tr');
+  rows[rows.length-1].querySelector('input[type="text"]').focus();
+}
+
+function grdDelRow(num){
+  var r=document.getElementById('grd-row-'+num);
+  if(r) r.remove();
+  grdCalcFooter();
+}
+
+function grdCalcRow(num){
+  var row=document.getElementById('grd-row-'+num);
+  if(!row) return;
+  var ns=row.querySelectorAll('input[type="number"]');
+  var qty=parseFloat(ns[0]?ns[0].value||0:0);
+  var rate=parseFloat(ns[1]?ns[1].value||0:0);
+  document.getElementById('grd-tot-'+num).textContent=(qty*rate).toFixed(2);
+  grdCalcFooter();
+}
+
+function grdCalcFooter(){
+  var sub=0;
+  document.querySelectorAll('#grd-tbody tr').forEach(function(tr){
+    var c=tr.querySelectorAll('td');
+    if(c.length>=6) sub+=parseFloat(c[5].textContent||0);
+  });
+  var prevBal=document.getElementById('grd-cb-prev').checked?parseFloat(document.getElementById('grd-prev-bal').value||0):0;
+  var freight=document.getElementById('grd-cb-frt').checked?parseFloat(document.getElementById('grd-freight').value||0):0;
+  var taxPct=document.getElementById('grd-cb-tax').checked?parseFloat(document.getElementById('grd-tax-pct').value||0):0;
+  var taxable=sub+prevBal+freight;
+  var taxAmt=taxable*taxPct/100;
+  var grand=taxable+taxAmt;
+  document.getElementById('grd-subtotal').textContent=sub.toFixed(2);
+  document.getElementById('grd-taxable').textContent=taxable.toFixed(2);
+  document.getElementById('grd-taxamt').textContent=taxAmt.toFixed(2);
+  document.getElementById('grd-grand').textContent=grand.toFixed(2);
+}
+
+function grdKey(event,num){
+  if(event.key==='Enter'){grdAddRow();event.preventDefault();}
+}
+
+function grdClear(){
+  if(!confirm('Clear all grid rows?')) return;
+  document.getElementById('grd-tbody').innerHTML='';
+  grdRowCount=0;grdInited=false;
+  document.getElementById('grd-prev-bal').value='0';
+  document.getElementById('grd-freight').value='0';
+  document.getElementById('grd-tax-pct').value='18';
+  ['grd-cb-prev','grd-cb-frt','grd-cb-tax'].forEach(function(id){document.getElementById(id).checked=false;});
+  grdCalcFooter();
+  grdInit();
+}
+
+function grdCopyToNew(){
+  var tbody=document.getElementById('est-items-tbody');
+  if(!tbody){alert('Main estimate table not found.');return;}
+  tbody.innerHTML='';
+  document.querySelectorAll('#grd-tbody tr').forEach(function(tr){
+    var ns=tr.querySelectorAll('input[type="number"]');
+    var desc=tr.querySelector('input[type="text"]')?tr.querySelector('input[type="text"]').value:'';
+    var qty=ns[0]?ns[0].value:'';
+    var sel=tr.querySelector('select');
+    var uom=sel?sel.value:'pcs';
+    var rate=ns[1]?ns[1].value:'';
+    if(!desc&&!parseFloat(qty||0)&&!parseFloat(rate||0)) return;
+    if(typeof estAddItem==='function') estAddItem(desc,qty,uom,rate);
+  });
+  var gp=document.getElementById('grd-party');
+  if(gp&&gp.value){var ec=document.getElementById('est-cname');if(ec){ec.value=gp.value;if(typeof estFillCustomer==='function')estFillCustomer(gp.value);}}
+  estGo('new');
+  alert('✅ Items copied to New Estimate tab!');
+}
+
+function grdPrint(){
+  var party=document.getElementById('grd-party').value||'—';
+  var estNo=document.getElementById('grd-est-no').value||'';
+  var date=document.getElementById('grd-date').value||'';
+  var rHtml='';
+  document.querySelectorAll('#grd-tbody tr').forEach(function(tr,i){
+    var cs=tr.querySelectorAll('td');
+    if(cs.length<6) return;
+    var desc=tr.querySelector('input[type="text"]')?tr.querySelector('input[type="text"]').value:'';
+    var ns=tr.querySelectorAll('input[type="number"]');
+    var qty=ns[0]?ns[0].value||'0':'0';
+    var sel=tr.querySelector('select');
+    var uom=sel?sel.value:'';
+    var rate=ns[1]?ns[1].value||'0':'0';
+    var tot=cs[5].textContent;
+    if(!desc&&parseFloat(qty||0)===0&&parseFloat(rate||0)===0) return;
+    rHtml+='<tr style="background:'+(i%2===0?'#f8fafc':'#fff')+';">'+
+      '<td style="text-align:center;border:1px solid #ccc;padding:6px 4px;">'+(i+1)+'</td>'+
+      '<td style="border:1px solid #ccc;padding:6px;">'+desc+'</td>'+
+      '<td style="text-align:right;border:1px solid #ccc;padding:6px 4px;">'+qty+'</td>'+
+      '<td style="text-align:center;border:1px solid #ccc;padding:6px 4px;">'+uom+'</td>'+
+      '<td style="text-align:right;border:1px solid #ccc;padding:6px 4px;">'+rate+'</td>'+
+      '<td style="text-align:right;border:1px solid #ccc;padding:6px;font-weight:700;">'+tot+'</td></tr>';
+  });
+  var sub=document.getElementById('grd-subtotal').textContent;
+  var grand=document.getElementById('grd-grand').textContent;
+  var w=window.open('','_blank','width=800,height=700');
+  w.document.write('<!DOCTYPE html><html><head><title>Estimate '+estNo+'</title>'+
+    '<style>body{font-family:Segoe UI,Arial,sans-serif;font-size:13px;margin:20px;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #333;padding:7px 6px;}'+
+    'thead th{background:#1a3a6b;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}@media print{.no-print{display:none!important;}}</style></head><body>'+
+    '<div style="text-align:center;margin-bottom:12px;"><h2 style="color:#1a3a6b;margin:0;">Shreeji Industries</h2>'+
+    '<div style="font-size:12px;color:#555;">Estimate No: <strong>'+estNo+'</strong> &nbsp;|&nbsp; Date: '+date+'</div>'+
+    '<div style="font-size:12px;color:#555;">Party: <strong>'+party+'</strong></div></div>'+
+    '<table><thead><tr><th>S.No</th><th>Description</th><th>Qty</th><th>UOM</th><th>Rate ₹</th><th>Total ₹</th></tr></thead>'+
+    '<tbody>'+rHtml+'</tbody>'+
+    '<tfoot><tr><td colspan="5" style="text-align:right;font-weight:700;background:#f0f4ff;">Sub Total</td><td style="text-align:right;font-weight:700;background:#f0f4ff;">'+sub+'</td></tr>'+
+    '<tr><td colspan="5" style="text-align:right;font-weight:900;color:#1a3a6b;background:#e0eaf8;">Grand Total ₹</td>'+
+    '<td style="text-align:right;font-weight:900;color:#fff;background:#1a3a6b;-webkit-print-color-adjust:exact;print-color-adjust:exact;">'+grand+'</td></tr></tfoot></table>'+
+    '<div class="no-print" style="margin-top:16px;text-align:center;"><button onclick="window.print()" style="padding:10px 28px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;">🖨 Print</button></div>'+
+    '</body></html>');
+  w.document.close();
 }
 
 // ── Type toggle: ESTIMATE ↔ PI ──────────────────────────────
@@ -7577,6 +7754,7 @@ function nmqShareWA(){
     <div class="inv-tab active" id="est-tab-new"  onclick="estGo('new')">📝 New</div>
     <div class="inv-tab"        id="est-tab-view" onclick="estGo('view')">🖨 Preview</div>
     <div class="inv-tab"        id="est-tab-list" onclick="estGo('list')">📋 Saved</div>
+    <div class="inv-tab"        id="est-tab-grid" onclick="estGo('grid')">⚡ Grid Entry</div>
   </div>
 
   <!-- PAGE: New Estimate Form -->
@@ -7744,6 +7922,96 @@ function nmqShareWA(){
       </div>
     </div>
     <div id="est-list-content" style="padding:0 12px;"></div>
+  </div>
+
+  <!-- PAGE: Grid Entry (High-Speed Tabular Entry) -->
+  <div class="page" id="est-page-grid" style="display:none;padding:8px 12px 90px;">
+
+    <!-- Header info row -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+      <div style="flex:1;min-width:130px;">
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:3px;">Estimate No.</div>
+        <input type="text" id="grd-est-no" placeholder="EST-001" style="width:100%;border:1px solid #cbd5e1;border-radius:5px;padding:7px 8px;font-size:.82rem;background:#f5f5ff;font-weight:700;color:#1a3a6b;letter-spacing:1px;">
+      </div>
+      <div style="flex:1;min-width:110px;">
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:3px;">Date</div>
+        <input type="date" id="grd-date" style="width:100%;border:1px solid #cbd5e1;border-radius:5px;padding:7px 8px;font-size:.82rem;">
+      </div>
+      <div style="flex:2;min-width:150px;">
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:3px;">Party Name</div>
+        <input type="text" id="grd-party" list="est-cust-list" placeholder="Customer name…" oninput="grdFillParty(this.value)" autocomplete="off" style="width:100%;border:1px solid #cbd5e1;border-radius:5px;padding:7px 8px;font-size:.82rem;">
+      </div>
+      <div style="flex:1;min-width:120px;">
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:3px;">GSTIN</div>
+        <input type="text" id="grd-gstin" placeholder="optional" style="width:100%;border:1px solid #cbd5e1;border-radius:5px;padding:7px 8px;font-size:.82rem;">
+      </div>
+    </div>
+
+    <!-- Grid Table -->
+    <div style="overflow-x:auto;border-radius:8px;border:1px solid #e2e8f0;">
+      <table id="grd-table" style="width:100%;border-collapse:collapse;font-size:.78rem;min-width:520px;">
+        <thead>
+          <tr style="background:#1a3a6b;color:#fff;">
+            <th style="padding:9px 6px;width:40px;text-align:center;border:1px solid #2e5fa3;font-size:.68rem;letter-spacing:.4px;">S.No</th>
+            <th style="padding:9px 6px;text-align:left;border:1px solid #2e5fa3;font-size:.68rem;letter-spacing:.4px;">Item Description</th>
+            <th style="padding:9px 6px;width:72px;text-align:center;border:1px solid #2e5fa3;font-size:.68rem;letter-spacing:.4px;">Qty</th>
+            <th style="padding:9px 6px;width:58px;text-align:center;border:1px solid #2e5fa3;font-size:.68rem;letter-spacing:.4px;">UOM</th>
+            <th style="padding:9px 6px;width:84px;text-align:center;border:1px solid #2e5fa3;font-size:.68rem;letter-spacing:.4px;">Rate ₹</th>
+            <th style="padding:9px 8px;width:84px;text-align:right;border:1px solid #2e5fa3;font-size:.68rem;letter-spacing:.4px;">Total ₹</th>
+            <th style="width:28px;border:1px solid #2e5fa3;"></th>
+          </tr>
+        </thead>
+        <tbody id="grd-tbody"></tbody>
+      </table>
+    </div>
+
+    <button onclick="grdAddRow()" style="display:flex;align-items:center;gap:6px;margin:8px 0;background:#f0f4ff;color:#1a3a6b;border:1.5px dashed #2e5fa3;border-radius:6px;padding:7px 14px;font-size:.76rem;font-weight:700;cursor:pointer;">＋ Add Row &nbsp;<span style="font-weight:400;opacity:.6;">(or press Enter)</span></button>
+
+    <!-- Footer Totals -->
+    <div style="border-top:2px solid #1a3a6b;margin-top:8px;padding-top:10px;">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;max-width:300px;margin-left:auto;">
+        <div style="display:flex;align-items:center;gap:10px;width:100%;">
+          <label style="font-size:.76rem;color:#555;text-align:right;flex:1;">Sub Total</label>
+          <span id="grd-subtotal" style="width:96px;text-align:right;font-weight:700;color:#1a3a6b;background:#e8f0fb;border-radius:4px;padding:5px 8px;font-size:.82rem;">0.00</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;width:100%;">
+          <input type="checkbox" id="grd-cb-prev" onchange="grdCalcFooter()" style="width:15px;height:15px;cursor:pointer;flex-shrink:0;">
+          <label for="grd-cb-prev" style="font-size:.76rem;color:#333;flex:1;text-align:right;cursor:pointer;">+ Previous Balance ₹</label>
+          <input type="number" id="grd-prev-bal" value="0" min="0" step="any" oninput="grdCalcFooter()" style="width:96px;border:1px solid #cbd5e1;border-radius:4px;padding:5px 7px;font-size:.78rem;text-align:right;">
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;width:100%;">
+          <input type="checkbox" id="grd-cb-frt" onchange="grdCalcFooter()" style="width:15px;height:15px;cursor:pointer;flex-shrink:0;">
+          <label for="grd-cb-frt" style="font-size:.76rem;color:#333;flex:1;text-align:right;cursor:pointer;">+ Freight ₹</label>
+          <input type="number" id="grd-freight" value="0" min="0" step="any" oninput="grdCalcFooter()" style="width:96px;border:1px solid #cbd5e1;border-radius:4px;padding:5px 7px;font-size:.78rem;text-align:right;">
+        </div>
+        <div style="height:1px;width:100%;background:#e2e8f0;"></div>
+        <div style="display:flex;align-items:center;gap:10px;width:100%;">
+          <label style="font-size:.76rem;color:#555;flex:1;text-align:right;">Taxable Amount</label>
+          <span id="grd-taxable" style="width:96px;text-align:right;font-weight:600;color:#1a3a6b;background:#e8f0fb;border-radius:4px;padding:5px 8px;font-size:.78rem;">0.00</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;width:100%;">
+          <input type="checkbox" id="grd-cb-tax" onchange="grdCalcFooter()" style="width:15px;height:15px;cursor:pointer;flex-shrink:0;">
+          <label for="grd-cb-tax" style="font-size:.76rem;color:#333;flex:1;text-align:right;cursor:pointer;">+ Tax %</label>
+          <input type="number" id="grd-tax-pct" value="18" min="0" max="100" step="any" oninput="grdCalcFooter()" style="width:96px;border:1px solid #cbd5e1;border-radius:4px;padding:5px 7px;font-size:.78rem;text-align:right;">
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;width:100%;">
+          <label style="font-size:.76rem;color:#555;flex:1;text-align:right;">Tax Amount ₹</label>
+          <span id="grd-taxamt" style="width:96px;text-align:right;font-weight:600;color:#555;background:#f8f8f8;border-radius:4px;padding:5px 8px;font-size:.78rem;">0.00</span>
+        </div>
+        <div style="height:1px;width:100%;background:#e2e8f0;"></div>
+        <div style="display:flex;align-items:center;gap:10px;width:100%;">
+          <label style="font-size:.85rem;font-weight:800;color:#1a3a6b;flex:1;text-align:right;">Grand Total ₹</label>
+          <span id="grd-grand" style="width:96px;text-align:right;font-weight:900;color:#fff;background:#1a3a6b;border-radius:5px;padding:7px 8px;font-size:.9rem;">0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action bar -->
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <button onclick="grdClear()" style="flex:1;padding:11px;background:#f1f5f9;color:#1a3a6b;border:1px solid #1a3a6b;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;">🗑 Clear</button>
+      <button onclick="grdCopyToNew()" style="flex:2;padding:11px;background:#1a5a30;color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;">↗ Send to New Tab</button>
+      <button onclick="grdPrint()" style="flex:1;padding:11px;background:#f0b429;color:#1a1a2e;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;">🖨 Print</button>
+    </div>
   </div>
 
   <!-- ── Product Picker Modal ── -->
