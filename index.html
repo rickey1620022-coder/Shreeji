@@ -263,8 +263,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v115 PWA</title>
-<meta name="shj-build" content="v115|SHJ-115-070626|2026-06-07">
+<title>Shreeji Industries — Full System v116 PWA</title>
+<meta name="shj-build" content="v116|SHJ-116-070626|2026-06-07">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -800,7 +800,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SHREEJI v115 — CLEAN SYNC ENGINE
+     SHREEJI v116 — CLEAN SYNC ENGINE
      New GS URL · Local folder paths · IndexedDB · Cron 5min
      ══════════════════════════════════════════════════════════ -->
 <style>
@@ -821,7 +821,7 @@ tbody tr:hover td{background:rgba(240,165,0,.05)!important;}
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  SHREEJI v114 — SYNC ENGINE
+//  SHREEJI v116 — SYNC ENGINE
 //  GS URL  : hardcoded new endpoint (can still be overridden)
 //  Local DB: IndexedDB in browser = real persistent .db storage
 //  Folder  : Laptop → C:\ShreejiData\db\   Phone → /ShreejiData/db/
@@ -1263,7 +1263,7 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v115 · PROTECTED</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v116 · PROTECTED</div>
     <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 7 June 2026 &nbsp;·&nbsp; S/N: SHJ-110-050626</div>
   </div>
 </div>
@@ -8266,7 +8266,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v115';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v116';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -12008,6 +12008,238 @@ function pwaDismiss(){
   } else {
     init();
   }
+
+})();
+
+</script>
+
+
+
+<!-- PATCH v112: Estimate print format - A4 compact top, Delhi India, footer fix -->
+<script>
+;(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════════
+     PATCH v112  —  2026-06-07
+     Estimate Print / PDF format — final spec:
+
+     ✓ A4 paper, estimate compact at TOP, blank space below
+     ✓ Estimate block ≈ A5 landscape in size (not stretched)
+     ✓ Address: "Delhi, India" only (no street/building)
+     ✓ Party Name + Contact Person always grouped together
+     ✓ Columns: S.No | Qty | Item Description | Rate ₹ | Amount ₹
+     ✓ Footer fully visible, never cut off
+     ✓ Margins: 10mm all sides
+     ✓ No transform scaling in print popup
+     ✓ Browser print = PDF = physical print (identical)
+  ══════════════════════════════════════════════════════════════ */
+
+  /* ── Print-specific CSS injected into the popup window ──────── */
+  var PRINT_CSS = [
+    /* A4 page, 10mm margins, no browser headers/footers */
+    '@page { size: A4 portrait; margin: 10mm; }',
+    'html, body { margin:0; padding:0; background:#fff; }',
+
+    /* Estimate block: compact, top-aligned, full printable width */
+    '.est-a5-doc {',
+    '  width: 190mm;',
+    '  max-width: 100%;',
+    '  font-family: Arial, "Helvetica Neue", sans-serif;',
+    '  font-size: 9.5px;',
+    '  color: #111;',
+    '  border: 1px solid #888;',
+    '  border-radius: 0;',
+    '  overflow: visible;',
+    '  page-break-inside: avoid;',
+    '  background: #fff;',
+    '}',
+
+    /* Header */
+    '.ea5-hdr { text-align:center; border-bottom:2px solid #111; padding:6px 10px 5px; }',
+    '.ea5-co-name {',
+    '  font-size: 15px; font-weight: 800;',
+    '  letter-spacing: 1px; text-transform: uppercase;',
+    '}',
+    '.ea5-co-sub { font-size: 8px; color: #555; margin-top: 1px; }',
+    '.ea5-title {',
+    '  display:inline-block; background:#1a3a6b; color:#fff;',
+    '  font-size:9px; font-weight:800; letter-spacing:2px;',
+    '  padding:2px 14px; margin-top:4px; border-radius:2px;',
+    '}',
+
+    /* Party + Doc info row */
+    '.ea5-info {',
+    '  display:flex; gap:0;',
+    '  border-bottom:1.5px solid #111;',
+    '  page-break-inside: avoid;',
+    '}',
+    '.ea5-info-party {',
+    '  flex:1; padding:5px 10px;',
+    '  border-right:1px solid #ccc;',
+    '}',
+    '.ea5-info-doc {',
+    '  flex:0 0 160px; padding:5px 10px; text-align:right;',
+    '}',
+    '.ea5-info-row {',
+    '  display:flex; justify-content:flex-start;',
+    '  margin-bottom:2px; font-size:9px;',
+    '}',
+    '.ea5-info-row strong { min-width:60px; font-weight:700; }',
+
+    /* Table */
+    '.ea5-tbl {',
+    '  width:100%; border-collapse:collapse; font-size:9px;',
+    '}',
+    '.ea5-tbl th {',
+    '  background:#1a3a6b; color:#fff; padding:4px 5px;',
+    '  text-align:center; font-weight:700; font-size:8.5px;',
+    '  border:1px solid #1a3a6b;',
+    '}',
+    '.ea5-tbl th.ea5-thl { text-align:left; }',
+    '.ea5-tbl td {',
+    '  border:1px solid #d0d8e8; padding:3px 5px;',
+    '  vertical-align:middle; word-wrap:break-word;',
+    '}',
+    '.ea5-tbl td.ea5-num { text-align:right; white-space:nowrap; }',
+    '.ea5-tbl td.ea5-ctr { text-align:center; white-space:nowrap; }',
+    '.ea5-tbl tfoot td { border:1px solid #c8d0e0; padding:3px 5px; }',
+    '.ea5-tbl tr.ea5-odd { background:#f7f9ff; }',
+    '.ea5-grand td {',
+    '  background:#1a3a6b !important; color:#fff !important;',
+    '  font-weight:900 !important; font-size:10px !important;',
+    '}',
+
+    /* Amount in words */
+    '.ea5-words {',
+    '  padding:3px 10px; font-size:8px; color:#555;',
+    '  border-top:1px solid #ddd; font-style:italic;',
+    '}',
+
+    /* Footer — always visible, never cut */
+    '.ea5-footer {',
+    '  display:flex; border-top:1.5px solid #111;',
+    '  padding:5px 10px; font-size:8px; color:#555;',
+    '  page-break-inside:avoid; break-inside:avoid;',
+    '}',
+    '.ea5-footer-l { flex:1; line-height:1.5; }',
+    '.ea5-footer-r { flex:0 0 140px; text-align:center; }',
+    '.ea5-sig-line {',
+    '  border-top:1px solid #111; margin-top:16px;',
+    '  padding-top:2px; font-size:8px;',
+    '}',
+  ].join('\n');
+
+  /* ── Override shjPrintPopup with corrected print CSS ─────────── */
+  window.shjPrintPopup = function (docEl, title) {
+    if (!docEl || !docEl.innerHTML.trim()) {
+      alert('Generate an Estimate or PI first, then use Print.');
+      return;
+    }
+
+    /* Remove any transform/scale from the clone */
+    var clone = docEl.cloneNode(true);
+    clone.style.cssText = [
+      'transform:none',
+      'transform-origin:unset',
+      'width:190mm',
+      'max-width:100%',
+      'margin:0',
+      'padding:0',
+    ].join(';');
+
+    var html = [
+      '<!DOCTYPE html><html><head>',
+      '<meta charset="utf-8">',
+      '<title>' + (title || 'Shreeji Industries') + '</title>',
+      '<style>',
+      PRINT_CSS,
+      '</style>',
+      '</head><body>',
+      clone.outerHTML,
+      '<scr' + 'ipt>',
+      'window.onload = function () {',
+      '  setTimeout(function () { window.print(); }, 350);',
+      '  window.onafterprint = function () { window.close(); };',
+      '};',
+      '</' + 'script>',
+      '</body></html>',
+    ].join('\n');
+
+    var w = window.open('', '_blank', 'width=820,height=720,menubar=no,toolbar=yes');
+    if (!w) { alert('Allow popups for this site to enable print preview.'); return; }
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  };
+
+  /* ── Also fix estExportPDF popup (same CSS) ──────────────────── */
+  /* estExportPDF already uses html2pdf — PRINT_CSS only needed for popup */
+
+  /* ── Patch estGenerate() to:
+        1. Replace address with "Delhi, India"
+        2. Ensure party + contact are always grouped
+     ──────────────────────────────────────────────────────────── */
+  window.estGenerate = (function (orig) {
+    return function () {
+      orig.apply(this, arguments);
+      /* Post-process the est-doc content */
+      var doc = document.getElementById('est-doc');
+      if (!doc) return;
+
+      /* Fix 1: Replace full address with "Delhi, India" */
+      var subEl = doc.querySelector('.ea5-co-sub');
+      if (subEl) {
+        subEl.textContent = 'Delhi, India';
+      }
+
+      /* Fix 2: Ensure party + contact are visually grouped (already is — just ensure style) */
+      var partySection = doc.querySelector('.ea5-info-party');
+      if (partySection) {
+        partySection.style.lineHeight = '1.6';
+      }
+    };
+  })(window.estGenerate);
+
+  /* ── Disable estScaleDoc transform (it breaks print layout) ─── */
+  /* The transform: scale() is fine for mobile preview but ruins print */
+  window.estScaleDoc = function () { /* no-op in print context */ };
+
+  /* ── Inject print-safe CSS into the main page for preview ────── */
+  /* This makes the on-screen preview also look correct */
+  (function injectPreviewCSS() {
+    var style = document.createElement('style');
+    style.id = 'shj-print-format-v112';
+    style.textContent = [
+      /* On-screen preview: compact, not full page height */
+      '#est-doc.est-a5-doc {',
+      '  width: 560px;',          /* ~190mm at 96dpi */
+      '  max-width: 100%;',
+      '  margin: 0 auto;',
+      '  background: #fff;',
+      '  border: 1px solid #ccc;',
+      '  box-shadow: 0 2px 8px rgba(0,0,0,.12);',
+      '  font-size: 9.5px;',
+      '  color: #111;',
+      '}',
+      /* Print from main page (fallback if popup blocked) */
+      '@media print {',
+      '  @page { size: A4 portrait; margin: 10mm; }',
+      '  body > *:not(#est-doc) { display: none !important; }',
+      '  #est-doc.est-a5-doc {',
+      '    width: 190mm !important;',
+      '    transform: none !important;',
+      '    margin: 0 !important;',
+      '    border: none !important;',
+      '    box-shadow: none !important;',
+      '  }',
+      '  .ea5-footer { page-break-inside: avoid !important; }',
+      '}',
+    ].join('\n');
+    var existing = document.getElementById('shj-print-format-v112');
+    if (existing) existing.remove();
+    document.head.appendChild(style);
+  })();
 
 })();
 
