@@ -1,39 +1,54 @@
-# UPDATE LOG — ver 118 / v120 / SHJ-120
+# UPDATE LOG — ver 123
+**Serial:** SHJ-123
+**Date:** 2026-06-08
+**Base:** ver 121 (SHJ-121)
 
-**Date:** 2026-06-07  
-**Base:** ver 117 (v119 / SHJ-119)  
-**Patch:** PATCH_v116
+---
 
-## Changes
+## PATCH_v123 — Fix: ⚡ Grid Entry Tab + ↑ Push to Sheet Button
 
-### Print Page UI Redesign
+### Problem
+PATCH_v104 (already in the file) was rebuilding `est-nav` at runtime via JavaScript,
+destroying the Grid Entry tab added in v121. It also mapped `grid → 'est'` (wrong),
+so clicking Grid Entry opened the New Estimate form instead.
 
-**New two-panel layout:**
-- LEFT: Full document preview (takes all remaining width), scrollable
-- RIGHT: 300px control panel (dark theme), sticky
+The "↑ Push to Sheet" button was unreachable because the RECORDS tab shows
+`est-page-all` (PATCH_v103 combined view), not `est-page-list` where the button lived.
 
-**Control panel (top to bottom):**
-- ✍ Add signature section checkbox (checked by default)
-- Customer Copies input (default 1)
-- Agent Copies input (default 0)
-- Gate / Packing Copies input (default 0)
-- 🖨 PRINT ALL COPIES (blue, full width)
-- 📄 PDF (red)
-- 🖼 JPG (green)
-- 💾 SAVE (purple)
-- ← Back to Edit (grey outline)
+### Fixes Applied to PATCH_v104
 
-**Removed:** duplicate ← Edit / Print / PDF / JPG / Save button bar  
-**Removed:** redundant dark PRINT COPIES banner from earlier patches
+| Fix | Detail |
+|-----|--------|
+| Added `⚡ Grid` to `buildNav()` | 5th tab now rendered at runtime |
+| Added `'grid'` to `setActive()` | Tab highlights correctly when active |
+| Added `grid` case in `shjTab()` | Shows `est-page-grid`, calls `grdInit()` |
+| Fixed `estGo` map | `grid:'grid'` (was `grid:'est'`) |
+| Added Push/Pull buttons to `est-page-all` | Visible in Records tab |
 
-**PRINT ALL COPIES** now opens ONE popup window containing all copies
-as separate print pages (page-break-after between each), instead of
-multiple sequential popups. This is more reliable and avoids browser
-popup-blocking on the 2nd+ window.
+### Result
+Estimate sub-tabs now show all 5:
+```
+📝 Estimate | 📄 PI | 🖨 Print | 📋 Records | ⚡ Grid
+```
 
-**Mobile (≤680px):** controls panel appears above the preview, stacked.
+- **⚡ Grid** → opens high-speed tabular data entry form
+- **📋 Records** → shows "↑ Push to Sheet" and "↓ Pull from Sheet" buttons
 
-## Build info
-- Source: ver 117/files/index.html + PATCH_v116.js
-- Output: ver 118/files/index.html
-- Version stamp: v120 | SHJ-120-070626 | 2026-06-07
+### Products-Code.gs Fix (also included)
+Field name mismatch fixed — app sends `custName/custContact/custGST/grand`
+but script expected `customer/contact/gstin/grandTotal`. Both variants now accepted.
+Customer names, contacts, and amounts will appear correctly in Google Sheet
+after clicking ↑ Push to Sheet.
+
+---
+
+## How to Deploy
+1. Upload `ver 123/files/index.html` to GitHub:
+   `rickey1620022-coder/Shreeji` → `main/index.html`
+2. App auto-detects v123 > v121 → downloads → prompts restart
+3. Click "Restart & Update" → app relaunches with all fixes
+
+---
+
+## Previously Applied Patches
+PATCH_v100 through PATCH_v121 — see ver 121 UPDATE_LOG.md
