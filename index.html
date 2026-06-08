@@ -6140,18 +6140,14 @@ function estGo(page){
 
 // ── Grid Entry Tab ───────────────────────────────────────────
 var GRD_UOM=['kg','pcs','ltr','mtr','box','bag','doz','set','nos','ton'];
-var grdRowCount=0;
-var grdInited=false;
+var grdRowCount=0, grdInited=false;
 
 function grdInit(){
   if(!document.getElementById('grd-date')) return;
   document.getElementById('grd-date').value=new Date().toISOString().split('T')[0];
   var mn=document.getElementById('est-no');
   if(mn&&mn.value) document.getElementById('grd-est-no').value=mn.value;
-  if(!grdInited){
-    grdInited=true;
-    for(var i=0;i<5;i++) grdAddRow();
-  }
+  if(!grdInited){ grdInited=true; for(var i=0;i<5;i++) grdAddRow(); }
 }
 
 function grdFillParty(val){
@@ -6166,31 +6162,15 @@ function grdMakeRow(num){
   var opts=GRD_UOM.map(function(u){return '<option>'+u+'</option>';}).join('');
   var bg=num%2===0?'#f8fafc':'#fff';
   var tr=document.createElement('tr');
-  tr.id='grd-row-'+num;
-  tr.style.background=bg;
+  tr.id='grd-row-'+num; tr.style.background=bg;
   tr.innerHTML=
     '<td style="text-align:center;color:#94a3b8;font-size:.72rem;border:1px solid #e2e8f0;padding:3px 2px;">'+num+'</td>'+
-    '<td style="border:1px solid #e2e8f0;padding:2px 3px;">'+
-      '<input type="text" placeholder="Item description…" style="width:100%;border:1px solid transparent;border-radius:4px;padding:6px 5px;font-size:.78rem;background:transparent;outline:none;" '+
-        'onfocus="this.style.cssText+=\'border-color:#2e5fa3;background:#fff;\'" onblur="this.style.borderColor=\'transparent\';">'+
-    '</td>'+
-    '<td style="border:1px solid #e2e8f0;padding:2px 3px;">'+
-      '<input type="number" min="0" step="0.001" placeholder="0" style="width:100%;border:1px solid transparent;border-radius:4px;padding:6px 4px;font-size:.78rem;text-align:right;background:transparent;outline:none;" '+
-        'onfocus="this.style.cssText+=\'border-color:#2e5fa3;background:#fff;\'" onblur="this.style.borderColor=\'transparent\';" '+
-        'oninput="grdCalcRow('+num+')" onkeydown="grdKey(event,'+num+')">'+
-    '</td>'+
-    '<td style="border:1px solid #e2e8f0;padding:2px 3px;text-align:center;">'+
-      '<select style="width:100%;border:none;border-radius:4px;padding:5px 2px;font-size:.76rem;background:transparent;">'+opts+'</select>'+
-    '</td>'+
-    '<td style="border:1px solid #e2e8f0;padding:2px 3px;">'+
-      '<input type="number" min="0" step="0.01" placeholder="0.00" style="width:100%;border:1px solid transparent;border-radius:4px;padding:6px 4px;font-size:.78rem;text-align:right;background:transparent;outline:none;" '+
-        'onfocus="this.style.cssText+=\'border-color:#2e5fa3;background:#fff;\'" onblur="this.style.borderColor=\'transparent\';" '+
-        'oninput="grdCalcRow('+num+')" onkeydown="grdKey(event,'+num+')">'+
-    '</td>'+
+    '<td style="border:1px solid #e2e8f0;padding:2px 3px;"><input type="text" placeholder="Item description…" style="width:100%;border:1px solid transparent;border-radius:4px;padding:6px 5px;font-size:.78rem;background:transparent;outline:none;" onfocus="this.style.borderColor=\'#2e5fa3\';this.style.background=\'#fff\';" onblur="this.style.borderColor=\'transparent\';"></td>'+
+    '<td style="border:1px solid #e2e8f0;padding:2px 3px;"><input type="number" min="0" step="0.001" placeholder="0" style="width:100%;border:1px solid transparent;border-radius:4px;padding:6px 4px;font-size:.78rem;text-align:right;background:transparent;outline:none;" onfocus="this.style.borderColor=\'#2e5fa3\';this.style.background=\'#fff\';" onblur="this.style.borderColor=\'transparent\';" oninput="grdCalcRow('+num+')" onkeydown="grdKey(event,'+num+')"></td>'+
+    '<td style="border:1px solid #e2e8f0;padding:2px 3px;text-align:center;"><select style="width:100%;border:none;border-radius:4px;padding:5px 2px;font-size:.76rem;background:transparent;">'+opts+'</select></td>'+
+    '<td style="border:1px solid #e2e8f0;padding:2px 3px;"><input type="number" min="0" step="0.01" placeholder="0.00" style="width:100%;border:1px solid transparent;border-radius:4px;padding:6px 4px;font-size:.78rem;text-align:right;background:transparent;outline:none;" onfocus="this.style.borderColor=\'#2e5fa3\';this.style.background=\'#fff\';" onblur="this.style.borderColor=\'transparent\';" oninput="grdCalcRow('+num+')" onkeydown="grdKey(event,'+num+')"></td>'+
     '<td id="grd-tot-'+num+'" style="border:1px solid #e2e8f0;padding:6px 8px 6px 4px;text-align:right;font-weight:700;color:#1a3a6b;font-size:.78rem;">0.00</td>'+
-    '<td style="border:1px solid #e2e8f0;text-align:center;padding:2px;">'+
-      '<button onclick="grdDelRow('+num+')" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.8rem;padding:2px 5px;">✕</button>'+
-    '</td>';
+    '<td style="border:1px solid #e2e8f0;text-align:center;padding:2px;"><button onclick="grdDelRow('+num+')" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.8rem;padding:2px 5px;">✕</button></td>';
   return tr;
 }
 
@@ -6202,17 +6182,13 @@ function grdAddRow(){
 }
 
 function grdDelRow(num){
-  var r=document.getElementById('grd-row-'+num);
-  if(r) r.remove();
-  grdCalcFooter();
+  var r=document.getElementById('grd-row-'+num); if(r) r.remove(); grdCalcFooter();
 }
 
 function grdCalcRow(num){
-  var row=document.getElementById('grd-row-'+num);
-  if(!row) return;
+  var row=document.getElementById('grd-row-'+num); if(!row) return;
   var ns=row.querySelectorAll('input[type="number"]');
-  var qty=parseFloat(ns[0]?ns[0].value||0:0);
-  var rate=parseFloat(ns[1]?ns[1].value||0:0);
+  var qty=parseFloat(ns[0]?ns[0].value||0:0), rate=parseFloat(ns[1]?ns[1].value||0:0);
   document.getElementById('grd-tot-'+num).textContent=(qty*rate).toFixed(2);
   grdCalcFooter();
 }
@@ -6220,35 +6196,29 @@ function grdCalcRow(num){
 function grdCalcFooter(){
   var sub=0;
   document.querySelectorAll('#grd-tbody tr').forEach(function(tr){
-    var c=tr.querySelectorAll('td');
-    if(c.length>=6) sub+=parseFloat(c[5].textContent||0);
+    var c=tr.querySelectorAll('td'); if(c.length>=6) sub+=parseFloat(c[5].textContent||0);
   });
   var prevBal=document.getElementById('grd-cb-prev').checked?parseFloat(document.getElementById('grd-prev-bal').value||0):0;
   var freight=document.getElementById('grd-cb-frt').checked?parseFloat(document.getElementById('grd-freight').value||0):0;
   var taxPct=document.getElementById('grd-cb-tax').checked?parseFloat(document.getElementById('grd-tax-pct').value||0):0;
-  var taxable=sub+prevBal+freight;
-  var taxAmt=taxable*taxPct/100;
-  var grand=taxable+taxAmt;
+  var taxable=sub+prevBal+freight, taxAmt=taxable*taxPct/100, grand=taxable+taxAmt;
   document.getElementById('grd-subtotal').textContent=sub.toFixed(2);
   document.getElementById('grd-taxable').textContent=taxable.toFixed(2);
   document.getElementById('grd-taxamt').textContent=taxAmt.toFixed(2);
   document.getElementById('grd-grand').textContent=grand.toFixed(2);
 }
 
-function grdKey(event,num){
-  if(event.key==='Enter'){grdAddRow();event.preventDefault();}
-}
+function grdKey(event,num){ if(event.key==='Enter'){grdAddRow();event.preventDefault();} }
 
 function grdClear(){
   if(!confirm('Clear all grid rows?')) return;
   document.getElementById('grd-tbody').innerHTML='';
-  grdRowCount=0;grdInited=false;
+  grdRowCount=0; grdInited=false;
   document.getElementById('grd-prev-bal').value='0';
   document.getElementById('grd-freight').value='0';
   document.getElementById('grd-tax-pct').value='18';
   ['grd-cb-prev','grd-cb-frt','grd-cb-tax'].forEach(function(id){document.getElementById(id).checked=false;});
-  grdCalcFooter();
-  grdInit();
+  grdCalcFooter(); grdInit();
 }
 
 function grdCopyToNew(){
@@ -6258,17 +6228,13 @@ function grdCopyToNew(){
   document.querySelectorAll('#grd-tbody tr').forEach(function(tr){
     var ns=tr.querySelectorAll('input[type="number"]');
     var desc=tr.querySelector('input[type="text"]')?tr.querySelector('input[type="text"]').value:'';
-    var qty=ns[0]?ns[0].value:'';
-    var sel=tr.querySelector('select');
-    var uom=sel?sel.value:'pcs';
-    var rate=ns[1]?ns[1].value:'';
+    var qty=ns[0]?ns[0].value:'', sel=tr.querySelector('select'), uom=sel?sel.value:'pcs', rate=ns[1]?ns[1].value:'';
     if(!desc&&!parseFloat(qty||0)&&!parseFloat(rate||0)) return;
     if(typeof estAddItem==='function') estAddItem(desc,qty,uom,rate);
   });
   var gp=document.getElementById('grd-party');
   if(gp&&gp.value){var ec=document.getElementById('est-cname');if(ec){ec.value=gp.value;if(typeof estFillCustomer==='function')estFillCustomer(gp.value);}}
-  estGo('new');
-  alert('✅ Items copied to New Estimate tab!');
+  estGo('new'); alert('✅ Items copied to New Estimate tab!');
 }
 
 function grdPrint(){
@@ -6277,15 +6243,11 @@ function grdPrint(){
   var date=document.getElementById('grd-date').value||'';
   var rHtml='';
   document.querySelectorAll('#grd-tbody tr').forEach(function(tr,i){
-    var cs=tr.querySelectorAll('td');
-    if(cs.length<6) return;
+    var cs=tr.querySelectorAll('td'); if(cs.length<6) return;
     var desc=tr.querySelector('input[type="text"]')?tr.querySelector('input[type="text"]').value:'';
     var ns=tr.querySelectorAll('input[type="number"]');
-    var qty=ns[0]?ns[0].value||'0':'0';
-    var sel=tr.querySelector('select');
-    var uom=sel?sel.value:'';
-    var rate=ns[1]?ns[1].value||'0':'0';
-    var tot=cs[5].textContent;
+    var qty=ns[0]?ns[0].value||'0':'0', sel=tr.querySelector('select'), uom=sel?sel.value:'';
+    var rate=ns[1]?ns[1].value||'0':'0', tot=cs[5].textContent;
     if(!desc&&parseFloat(qty||0)===0&&parseFloat(rate||0)===0) return;
     rHtml+='<tr style="background:'+(i%2===0?'#f8fafc':'#fff')+';">'+
       '<td style="text-align:center;border:1px solid #ccc;padding:6px 4px;">'+(i+1)+'</td>'+
@@ -6307,8 +6269,8 @@ function grdPrint(){
     '<table><thead><tr><th>S.No</th><th>Description</th><th>Qty</th><th>UOM</th><th>Rate ₹</th><th>Total ₹</th></tr></thead>'+
     '<tbody>'+rHtml+'</tbody>'+
     '<tfoot><tr><td colspan="5" style="text-align:right;font-weight:700;background:#f0f4ff;">Sub Total</td><td style="text-align:right;font-weight:700;background:#f0f4ff;">'+sub+'</td></tr>'+
-    '<tr><td colspan="5" style="text-align:right;font-weight:900;color:#1a3a6b;background:#e0eaf8;">Grand Total ₹</td>'+
-    '<td style="text-align:right;font-weight:900;color:#fff;background:#1a3a6b;-webkit-print-color-adjust:exact;print-color-adjust:exact;">'+grand+'</td></tr></tfoot></table>'+
+    '<tr><td colspan="5" style="text-align:right;font-weight:900;background:#1a3a6b;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;">Grand Total ₹</td>'+
+    '<td style="text-align:right;font-weight:900;background:#1a3a6b;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;">'+grand+'</td></tr></tfoot></table>'+
     '<div class="no-print" style="margin-top:16px;text-align:center;"><button onclick="window.print()" style="padding:10px 28px;background:#1a3a6b;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;">🖨 Print</button></div>'+
     '</body></html>');
   w.document.close();
@@ -7926,8 +7888,6 @@ function nmqShareWA(){
 
   <!-- PAGE: Grid Entry (High-Speed Tabular Entry) -->
   <div class="page" id="est-page-grid" style="display:none;padding:8px 12px 90px;">
-
-    <!-- Header info row -->
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
       <div style="flex:1;min-width:130px;">
         <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:3px;">Estimate No.</div>
@@ -7946,8 +7906,6 @@ function nmqShareWA(){
         <input type="text" id="grd-gstin" placeholder="optional" style="width:100%;border:1px solid #cbd5e1;border-radius:5px;padding:7px 8px;font-size:.82rem;">
       </div>
     </div>
-
-    <!-- Grid Table -->
     <div style="overflow-x:auto;border-radius:8px;border:1px solid #e2e8f0;">
       <table id="grd-table" style="width:100%;border-collapse:collapse;font-size:.78rem;min-width:520px;">
         <thead>
@@ -7964,10 +7922,7 @@ function nmqShareWA(){
         <tbody id="grd-tbody"></tbody>
       </table>
     </div>
-
     <button onclick="grdAddRow()" style="display:flex;align-items:center;gap:6px;margin:8px 0;background:#f0f4ff;color:#1a3a6b;border:1.5px dashed #2e5fa3;border-radius:6px;padding:7px 14px;font-size:.76rem;font-weight:700;cursor:pointer;">＋ Add Row &nbsp;<span style="font-weight:400;opacity:.6;">(or press Enter)</span></button>
-
-    <!-- Footer Totals -->
     <div style="border-top:2px solid #1a3a6b;margin-top:8px;padding-top:10px;">
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;max-width:300px;margin-left:auto;">
         <div style="display:flex;align-items:center;gap:10px;width:100%;">
@@ -8005,8 +7960,6 @@ function nmqShareWA(){
         </div>
       </div>
     </div>
-
-    <!-- Action bar -->
     <div style="display:flex;gap:8px;margin-top:14px;">
       <button onclick="grdClear()" style="flex:1;padding:11px;background:#f1f5f9;color:#1a3a6b;border:1px solid #1a3a6b;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;">🗑 Clear</button>
       <button onclick="grdCopyToNew()" style="flex:2;padding:11px;background:#1a5a30;color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;">↗ Send to New Tab</button>
@@ -12901,458 +12854,4 @@ function pwaDismiss(){
      Mobile: controls on top, preview below (stacked).
 
      CHANGES
-     • Removes the old sticky top button bar (← Edit / Print / PDF / JPG / Save)
-     • Hides the dark PRINT COPIES banner from PATCH_v106 (redundant)
-     • Single control panel, no duplicate buttons
-     • PRINT ALL COPIES opens ONE popup with all pages (avoids popup-blocking
-       issue that affects sequential multi-popup approaches)
-  ══════════════════════════════════════════════════════════════ */
-
-  var PANEL_ID = 'shj-ctrl-v116';
-  var LEFT_ID  = 'shj-left-v116';
-
-  var COPY_DEFS = [
-    { id:'customer', showRate:true,  showTotal:true,  label:'Customer Copy'      },
-    { id:'agent',    showRate:false, showTotal:true,  label:'Agent Copy'          },
-    { id:'packing',  showRate:false, showTotal:false, label:'Gate / Packing Copy' },
-  ];
-
-  /* ── Inject layout CSS ──────────────────────────────────────── */
-  function injectLayoutCSS() {
-    if (document.getElementById('shj-layout-css-v116')) return;
-    var s = document.createElement('style');
-    s.id = 'shj-layout-css-v116';
-    s.textContent = [
-      /* Two-panel flex layout */
-      '#est-page-view {',
-      '  display:flex !important; flex-direction:row !important;',
-      '  height:calc(100vh - 88px) !important;',
-      '  overflow:hidden !important;',
-      '  background:#9ba3b2 !important; padding:0 !important;',
-      '}',
-      /* Left preview panel */
-      '#' + LEFT_ID + ' {',
-      '  flex:1; overflow-y:auto;',
-      '  padding:14px 6px 40px;',
-      '  display:flex; flex-direction:column; align-items:center;',
-      '}',
-      /* Right control panel */
-      '#' + PANEL_ID + ' {',
-      '  width:300px; min-width:260px;',
-      '  background:#0f1520;',
-      '  border-left:1px solid #2a3a5a;',
-      '  overflow-y:auto;',
-      '  padding:14px;',
-      '  display:flex; flex-direction:column; gap:9px;',
-      '}',
-      /* Hide old button bars / panels from previous patches */
-      '#shj-copy-panel-v106, #shj-print-panel-v101 { display:none !important; }',
-      /* Document preview */
-      '#est-doc { max-width:794px; width:100%; margin:0 auto; }',
-      '#est-inv-wrap { width:100%; max-width:794px; }',
-      /* PI order status bar */
-      '#est-order-btns { width:100%; max-width:794px; }',
-      /* Mobile: stack controls above preview */
-      '@media (max-width:680px) {',
-      '  #est-page-view { flex-direction:column !important; height:auto !important; overflow-y:auto !important; }',
-      '  #' + PANEL_ID + ' { width:100% !important; min-width:unset !important;',
-      '    border-left:none !important; border-bottom:1px solid #2a3a5a !important; order:-1; }',
-      '}',
-    ].join('\n');
-    document.head.appendChild(s);
-  }
-
-  /* ── Build the two-panel layout ─────────────────────────────── */
-  function buildLayout() {
-    var pageView = document.getElementById('est-page-view');
-    if (!pageView) return;
-    if (document.getElementById(PANEL_ID)) return; /* already built */
-
-    /* Save refs to important elements before clearing */
-    var estDoc   = document.getElementById('est-doc');
-    var orderBar = document.getElementById('est-order-btns');
-
-    /* Clear the page view */
-    pageView.innerHTML = '';
-    pageView.removeAttribute('style');
-
-    /* ── LEFT: document preview ──────────────── */
-    var left = document.createElement('div');
-    left.id = LEFT_ID;
-
-    if (orderBar) left.appendChild(orderBar);
-
-    var wrap = document.createElement('div');
-    wrap.id = 'est-inv-wrap';
-    if (estDoc) wrap.appendChild(estDoc);
-    left.appendChild(wrap);
-
-    /* ── RIGHT: control panel ─────────────────── */
-    var right = document.createElement('div');
-    right.id = PANEL_ID;
-    right.innerHTML = buildCtrlHTML();
-
-    /* Left first (so preview is on the left) */
-    pageView.appendChild(left);
-    pageView.appendChild(right);
-
-    injectLayoutCSS();
-    wireButtons();
-  }
-
-  /* ── Control panel markup ───────────────────────────────────── */
-  function buildCtrlHTML() {
-    var inp = [
-      'width:100%',
-      'background:#1e2d44',
-      'border:1px solid #2a3a5a',
-      'border-radius:7px',
-      'color:#e8eeff',
-      'text-align:center',
-      'padding:9px',
-      'font-size:1.05rem',
-      'font-family:inherit',
-      'box-sizing:border-box',
-    ].join(';');
-    var lbl = 'color:#6677aa;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;';
-    var sub = 'color:#444;font-size:.6rem;margin-bottom:6px;';
-    var sep = '<div style="border-top:1px solid #1e2d44;"></div>';
-
-    return [
-      /* Header */
-      '<div style="color:#ffd700;font-weight:800;font-size:.82rem;letter-spacing:.6px;',
-      '  text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid #2a3a5a;">',
-      '  🖨 PRINT COPIES',
-      '</div>',
-
-      /* Signature checkbox */
-      '<label style="display:flex;align-items:center;gap:9px;cursor:pointer;',
-      '  color:#e8eeff;font-size:.8rem;user-select:none;padding:2px 0;">',
-      '  <input type="checkbox" id="shj-sig-cb-v106" checked',
-      '    style="width:16px;height:16px;accent-color:#3a7bd5;cursor:pointer;flex-shrink:0;">',
-      '  ✍ Add signature section',
-      '</label>',
-
-      sep,
-
-      /* Customer */
-      '<div>',
-      '  <div style="' + lbl + '">👤 Customer Copies</div>',
-      '  <div style="' + sub + '">Rate + Qty + Total</div>',
-      '  <input type="number" id="shj-count-customer" min="0" max="9" value="1" style="' + inp + '">',
-      '</div>',
-
-      /* Agent */
-      '<div>',
-      '  <div style="' + lbl + '">🤝 Agent Copies</div>',
-      '  <div style="' + sub + '">Qty + Total only</div>',
-      '  <input type="number" id="shj-count-agent" min="0" max="9" value="0" style="' + inp + '">',
-      '</div>',
-
-      /* Gate/Packing */
-      '<div>',
-      '  <div style="' + lbl + '">📦 Gate / Packing Copies</div>',
-      '  <div style="' + sub + '">Qty only</div>',
-      '  <input type="number" id="shj-count-packing" min="0" max="9" value="0" style="' + inp + '">',
-      '</div>',
-
-      sep,
-
-      /* PRINT ALL COPIES */
-      '<button id="shj-print-all-v116"',
-      '  style="width:100%;padding:14px;background:#1a3a6b;color:#fff;border:none;',
-      '  border-radius:9px;font-weight:800;font-size:.88rem;cursor:pointer;letter-spacing:.4px;">',
-      '  🖨 PRINT ALL COPIES',
-      '</button>',
-
-      /* PDF */
-      '<button id="shj-pdf-v116"',
-      '  style="width:100%;padding:12px;background:#c0392b;color:#fff;border:none;',
-      '  border-radius:8px;font-weight:800;font-size:.83rem;cursor:pointer;">',
-      '  📄 PDF',
-      '</button>',
-
-      /* JPG */
-      '<button id="shj-jpg-v116"',
-      '  style="width:100%;padding:12px;background:#1a5a30;color:#fff;border:none;',
-      '  border-radius:8px;font-weight:800;font-size:.83rem;cursor:pointer;">',
-      '  🖼 JPG',
-      '</button>',
-
-      /* SAVE */
-      '<button id="shj-save-v116"',
-      '  style="width:100%;padding:12px;background:#7b5ea7;color:#fff;border:none;',
-      '  border-radius:8px;font-weight:800;font-size:.83rem;cursor:pointer;">',
-      '  💾 SAVE',
-      '</button>',
-
-      sep,
-
-      /* Back to Edit */
-      '<button id="shj-edit-v116"',
-      '  style="width:100%;padding:10px;background:transparent;color:#6677aa;',
-      '  border:1px solid #2a3a5a;border-radius:7px;font-size:.78rem;cursor:pointer;">',
-      '  ← Back to Edit',
-      '</button>',
-    ].join('');
-  }
-
-  /* ── Wire button click handlers ─────────────────────────────── */
-  function wireButtons() {
-    var b;
-
-    b = document.getElementById('shj-print-all-v116');
-    if (b) b.onclick = doPrintAll;
-
-    b = document.getElementById('shj-pdf-v116');
-    if (b) b.onclick = function () {
-      if (typeof window.estExportPDF === 'function') window.estExportPDF();
-      else alert('Generate the estimate first.');
-    };
-
-    b = document.getElementById('shj-jpg-v116');
-    if (b) b.onclick = doJPG;
-
-    b = document.getElementById('shj-save-v116');
-    if (b) b.onclick = function () {
-      try { estSave(false); } catch (e) {}
-      var btn = this;
-      var orig = btn.innerHTML;
-      btn.innerHTML = '✓ Saved!';
-      setTimeout(function () { btn.innerHTML = orig; }, 1800);
-    };
-
-    b = document.getElementById('shj-edit-v116');
-    if (b) b.onclick = function () {
-      try { estGo('new'); } catch (e) {}
-    };
-  }
-
-  /* ── PRINT ALL COPIES — single popup, all pages ─────────────── */
-  /* Opens ONE window containing all copies with page-break between each.
-     Synchronous window.open → user gesture preserved → not blocked.      */
-  function doPrintAll() {
-    var docEl = document.getElementById('est-doc');
-    if (!docEl || !docEl.innerHTML.trim()) {
-      alert('Generate the estimate first, then print.');
-      return;
-    }
-
-    var custN  = Math.max(0, parseInt((document.getElementById('shj-count-customer')  || {}).value || '0', 10) || 0);
-    var agentN = Math.max(0, parseInt((document.getElementById('shj-count-agent')     || {}).value || '0', 10) || 0);
-    var packN  = Math.max(0, parseInt((document.getElementById('shj-count-packing')   || {}).value || '0', 10) || 0);
-    var withSig = !!(document.getElementById('shj-sig-cb-v106') || {}).checked;
-
-    if (custN + agentN + packN === 0) {
-      alert('Set at least 1 copy count.');
-      return;
-    }
-
-    /* Build the print queue */
-    var queue = [];
-    for (var i = 0; i < custN;  i++) queue.push('customer');
-    for (var i = 0; i < agentN; i++) queue.push('agent');
-    for (var i = 0; i < packN;  i++) queue.push('packing');
-
-    /* Signature HTML */
-    var sigHTML = withSig
-      ? '<div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr 1fr;'
-        + 'gap:20px;padding:0 10mm;">'
-        + ['Received By', 'Signature', 'Date'].map(function (l) {
-            return '<div style="text-align:center;">'
-              + '<div style="border-top:1px solid #333;padding-top:6px;font-size:9px;color:#555;">' + l + '</div>'
-              + '</div>';
-          }).join('')
-        + '</div>'
-      : '';
-
-    /* Build pages */
-    var pages = queue.map(function (type, idx) {
-      var cfg   = COPY_DEFS.filter(function (c) { return c.id === type; })[0] || COPY_DEFS[0];
-      var clone = docEl.cloneNode(true);
-      clone.removeAttribute('id');
-      clone.style.cssText = 'transform:none!important;width:190mm;max-width:100%;margin:0;padding:0;';
-
-      /* Hide Rate column (4th col = index 3) for agent/packing */
-      if (!cfg.showRate) {
-        clone.querySelectorAll('tr').forEach(function (tr) {
-          var cells = tr.querySelectorAll('th, td');
-          if (cells[3]) cells[3].style.display = 'none';
-        });
-      }
-
-      /* Hide Total column (5th col = index 4) + totals section for packing */
-      if (!cfg.showTotal) {
-        clone.querySelectorAll('tr').forEach(function (tr) {
-          var cells = tr.querySelectorAll('th, td');
-          if (cells[4]) cells[4].style.display = 'none';
-        });
-        clone.querySelectorAll('.ea5-grand, .ea5-words').forEach(function (el) {
-          el.style.display = 'none';
-        });
-        clone.querySelectorAll('.ea5-tbl tfoot tr').forEach(function (tr) {
-          tr.style.display = 'none';
-        });
-      }
-
-      /* Copy-type badge in top-right of the page */
-      var badge = '<div style="text-align:right;font-size:8px;font-weight:700;color:#1a3a6b;'
-                + 'padding:0 0 4px;letter-spacing:.5px;text-transform:uppercase;">'
-                + cfg.label + '</div>';
-
-      /* Page break after each copy (except last) */
-      var brk = idx < queue.length - 1
-        ? '<div style="page-break-after:always;break-after:page;"></div>'
-        : '';
-
-      return badge + clone.outerHTML + sigHTML + brk;
-    }).join('\n');
-
-    /* Full HTML for the popup */
-    var css = getPrintCSS();
-    var html = [
-      '<!DOCTYPE html><html><head>',
-      '<meta charset="utf-8">',
-      '<title>Shreeji Industries — Print</title>',
-      '<style>' + css + '</style>',
-      '</head><body>',
-      pages,
-      '<scr' + 'ipt>',
-      'window.onload = function () {',
-      '  setTimeout(function () { window.print(); }, 350);',
-      '  window.onafterprint = function () { window.close(); };',
-      '};',
-      '</' + 'script>',
-      '</body></html>',
-    ].join('\n');
-
-    /* Synchronous window.open — user gesture preserved → not blocked */
-    var w = window.open('', '_blank', 'width=860,height=750,menubar=no,toolbar=yes');
-    if (!w) { alert('Allow popups for this site to enable printing.'); return; }
-    w.document.open();
-    w.document.write(html);
-    w.document.close();
-  }
-
-  /* ── JPG export ─────────────────────────────────────────────── */
-  function doJPG() {
-    if (typeof window.estExportJPG === 'function') { window.estExportJPG(); return; }
-    var el = document.getElementById('est-doc');
-    if (!el || !el.innerHTML.trim()) { alert('Generate estimate first.'); return; }
-    if (typeof html2canvas !== 'function') { alert('Image export not available.'); return; }
-    var orig = el.style.transform;
-    el.style.transform = '';
-    html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#fff' }).then(function (cv) {
-      el.style.transform = orig;
-      var a = document.createElement('a');
-      a.href = cv.toDataURL('image/jpeg', 0.95);
-      var noEl = document.getElementById('est-no');
-      a.download = (noEl ? noEl.value : 'Estimate') + '.jpg';
-      a.click();
-    });
-  }
-
-  /* ── Print CSS (same as PATCH_v112) ─────────────────────────── */
-  function getPrintCSS() {
-    return [
-      '@page { size:A4 portrait; margin:10mm; }',
-      'html, body { margin:0; padding:0; background:#fff; }',
-      '.est-a5-doc { width:190mm; max-width:100%; font-family:Arial,"Helvetica Neue",sans-serif;',
-      '  font-size:9.5px; color:#111; border:1px solid #888; background:#fff; overflow:visible; }',
-      '.ea5-hdr  { text-align:center; border-bottom:2px solid #111; padding:6px 10px 5px; }',
-      '.ea5-co-name { font-size:15px; font-weight:800; letter-spacing:1px; text-transform:uppercase; }',
-      '.ea5-co-sub  { font-size:8px; color:#555; margin-top:1px; }',
-      '.ea5-title   { display:inline-block; background:#1a3a6b; color:#fff; font-size:9px;',
-      '               font-weight:800; letter-spacing:2px; padding:2px 14px; border-radius:2px; margin-top:4px; }',
-      '.ea5-info { display:flex; border-bottom:1.5px solid #111; page-break-inside:avoid; }',
-      '.ea5-info-party { flex:1; padding:5px 10px; border-right:1px solid #ccc; }',
-      '.ea5-info-doc   { flex:0 0 160px; padding:5px 10px; text-align:right; }',
-      '.ea5-info-row   { display:flex; justify-content:flex-start; margin-bottom:2px; font-size:9px; }',
-      '.ea5-info-row strong { min-width:60px; font-weight:700; }',
-      '.ea5-tbl { width:100%; border-collapse:collapse; font-size:9px; }',
-      '.ea5-tbl th { background:#1a3a6b; color:#fff; padding:4px 5px; text-align:center;',
-      '  font-weight:700; font-size:8.5px; border:1px solid #1a3a6b; }',
-      '.ea5-tbl th.ea5-thl { text-align:left; }',
-      '.ea5-tbl td { border:1px solid #d0d8e8; padding:3px 5px; vertical-align:middle; word-wrap:break-word; }',
-      '.ea5-tbl td.ea5-num { text-align:right; white-space:nowrap; }',
-      '.ea5-tbl td.ea5-ctr { text-align:center; white-space:nowrap; }',
-      '.ea5-tbl tfoot td   { border:1px solid #c8d0e0; padding:3px 5px; }',
-      '.ea5-tbl tr.ea5-odd { background:#f7f9ff; }',
-      '.ea5-grand td { background:#1a3a6b !important; color:#fff !important;',
-      '  font-weight:900 !important; font-size:10px !important; }',
-      '.ea5-words  { padding:3px 10px; font-size:8px; color:#555; border-top:1px solid #ddd; font-style:italic; }',
-      '.ea5-footer { display:flex; border-top:1.5px solid #111; padding:5px 10px;',
-      '  font-size:8px; color:#555; page-break-inside:avoid; break-inside:avoid; }',
-      '.ea5-footer-l  { flex:1; line-height:1.5; }',
-      '.ea5-footer-r  { flex:0 0 140px; text-align:center; }',
-      '.ea5-sig-line  { border-top:1px solid #111; margin-top:16px; padding-top:2px; font-size:8px; }',
-    ].join('\n');
-  }
-
-  /* ── Hook estGo('view') — rebuild on every PRINT tab open ───── */
-  var _origEstGo = window.estGo;
-  window.estGo = function (tab) {
-    if (_origEstGo) _origEstGo.apply(this, arguments);
-    if (tab === 'view') {
-      /* Use setTimeout 0 so original estGo finishes showing the page first */
-      setTimeout(buildLayout, 0);
-    }
-  };
-
-  /* Inject CSS immediately (hides old panels right away) */
-  injectLayoutCSS();
-
-  /* Also build if the print page is already active */
-  setTimeout(function () {
-    var pv = document.getElementById('est-page-view');
-    if (pv && pv.style.display !== 'none' && pv.style.display !== '') buildLayout();
-  }, 300);
-
-})();
-
-</script>
-
-<!-- PATCH_v117 — 2026-06-07 —— Correct print-page layout (vertical single-column) -->
-<script>
-;(function () {
-  'use strict';
-
-  /* ══════════════════════════════════════════════════════════════
-     PATCH v117  —  2026-06-07
-     Print Page — CORRECT LAYOUT (replaces PATCH v116 sidebar)
-
-     LAYOUT (single vertical column, full width):
-
-     ┌──────────────────────────────────────────┐
-     │         DOCUMENT PREVIEW                 │
-     │   (100% width, max 1000px, centred)      │
-     └──────────────────────────────────────────┘
-       ☑  Add Signature Section
-       Customer Copy        [ 1 ]
-       Agent Copy           [ 0 ]
-       Gate Pass Copy       [ 0 ]
-                 [ PRINT ]          ← 300px, centred
-       [ JPG ]  [ PDF ]  [ SAVE ]  [ EDIT ]
-  ══════════════════════════════════════════════════════════════ */
-
-  var WRAP_ID = 'shj-print-wrap-v117';
-
-  /* ── COPY DEFINITIONS ───────────────────────────────────────── */
-  var COPY_DEFS = [
-    { id:'customer', label:'Customer Copy',    showRate:true,  showTotal:true  },
-    { id:'agent',    label:'Agent Copy',       showRate:false, showTotal:true  },
-    { id:'packing',  label:'Gate Pass Copy',   showRate:false, showTotal:false },
-  ];
-
-  /* ── Full CSS override ──────────────────────────────────────── */
-  function injectCSS() {
-    var id = 'shj-css-v117';
-    var old = document.getElementById(id);
-    if (old) old.remove();
-    var s = document.createElement('style');
-    s.id = id;
-    s.textContent = [
-      /* Reset page-view to vertical scroll */
-      '#est-page-view {',
-      '  display:block !important;',
-      '  height:auto !important
+     • Removes the old sticky 

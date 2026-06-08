@@ -1,88 +1,98 @@
-# UPDATE LOG — ver 120
-**Serial:** SHJ-120  
-**Date:** 2026-06-07  
-**Base:** ver 119 (SHJ-119)
+# UPDATE LOG — ver 121
+**Serial:** SHJ-121  
+**Date:** 2026-06-08  
+**Base:** ver 118 (SHJ-118) — actual running file  
 
 ---
 
-## PATCH_v119 — Estimate Tab: ⚡ Grid Entry (4th Sub-Tab)
+## PATCH_v121 — Estimate Tab: ⚡ Grid Entry (4th Sub-Tab)
 
 ### Problem
-Estimate tab had only 3 sub-tabs (New / Preview / Saved).
-Report (Shreeji_System_Report.pdf + UI_Manual_v2.pdf) required a
-high-speed tabular "Data Entry Boy" grid layout for rapid keyboard entry.
+- Estimate section had only 3 sub-tabs: New | Preview | Saved
+- No high-speed tabular data-entry layout existed
+- Previous patches (ver 119, ver 120) applied to wrong file — app was loading from `ver 118/files/index.html`
 
 ### Fix
-Added **⚡ Grid Entry** as the 4th sub-tab inside the Estimate section.
+Added **⚡ Grid Entry** as the 4th sub-tab inside the Estimate section, applied directly to `ver 118/files/index.html`.
 
 ### UI Layout
 ```
-┌─────────────────────────────────────────────────────────┐
-│  📝 New  |  🖨 Preview  |  📋 Saved  |  ⚡ Grid Entry  │
-└─────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  📝 New  │  🖨 Preview  │  📋 Saved  │  ⚡ Grid Entry ←NEW  │
+└──────────────────────────────────────────────────────────────┘
 
- [Estimate No.]  [Date]  [Party Name............]  [GSTIN]
+ [Est No.]  [Date]  [Party Name.................]  [GSTIN]
 
  ┌──────┬──────────────────────┬──────┬──────┬────────┬────────┬───┐
  │ S.No │ Item Description     │  Qty │  UOM │ Rate ₹ │ Total ₹│   │
  ├──────┼──────────────────────┼──────┼──────┼────────┼────────┼───┤
- │  1   │ [___________________]│[____]│  kg  │[______]│   0.00 │ ✕ │
- │  2   │ [___________________]│[____]│  pcs │[______]│   0.00 │ ✕ │
+ │  1   │ [_________________]  │[___] │  kg  │[______]│   0.00 │ ✕ │
+ │  2   │ [_________________]  │[___] │  pcs │[______]│   0.00 │ ✕ │
  └──────┴──────────────────────┴──────┴──────┴────────┴────────┴───┘
- [＋ Add Row]
+ [＋ Add Row (or press Enter)]
 
-                              Sub Total       ₹ 0.00
-                  ☐ Previous Balance ₹  [______]
-                  ☐ Freight ₹          [______]
-                              Taxable         ₹ 0.00
-                  ☐ Tax %              [  18  ]
-                              Tax Amt         ₹ 0.00
-                          ─────────────────────────
-                              Grand Total     ₹ 0.00
+                          Sub Total           0.00
+              ☐ + Previous Balance ₹  [______]
+              ☐ + Freight ₹           [______]
+                          Taxable Amt         0.00
+              ☐ + Tax %               [  18  ]
+                          Tax Amount          0.00
+                      ─────────────────────────────
+                          Grand Total ₹       0.00
 
  [🗑 Clear]    [↗ Send to New Tab]    [🖨 Print]
 ```
 
-### Technical Changes
-- `#est-nav` — 4th tab button `id="est-tab-grid"` added
-- `#est-page-grid` — new page div with full tabular grid UI
-- `estGo()` — pages array updated to `['new','view','list','grid']`
-- `grdInit()` called on first open; seeds 5 blank rows, syncs date & Est No.
-- `parseFloat(value || 0)` on all inputs — prevents NaN totals
-- Checkbox-gated footer: Previous Balance, Freight, Tax %
-- **Print** — opens separate popup, forced borders + footer totals
-- **Send to New Tab** — copies all rows into main Estimate form
+### Technical Changes Made to `ver 118/files/index.html`
+| What | Detail |
+|------|--------|
+| Tab button | `id="est-tab-grid"` added to `#est-nav` |
+| Page div | `id="est-page-grid"` added before Product Picker modal |
+| estGo() | Pages array: `['new','view','list']` → `['new','view','list','grid']` |
+| estGo() | Added `if(page==='grid') grdInit()` |
+| JS functions | 11 new functions added (see below) |
 
 ### New JS Functions
-`grdInit` · `grdFillParty` · `grdMakeRow` · `grdAddRow` · `grdDelRow`  
-`grdCalcRow` · `grdCalcFooter` · `grdKey` · `grdClear` · `grdCopyToNew` · `grdPrint`
+| Function | Purpose |
+|----------|---------|
+| `grdInit()` | Seeds 5 rows on first open, syncs date & Est No |
+| `grdFillParty()` | Auto-fills GSTIN from saved customers |
+| `grdMakeRow(num)` | Builds one table row with inline inputs |
+| `grdAddRow()` | Appends new row, focuses first input |
+| `grdDelRow(num)` | Removes a row |
+| `grdCalcRow(num)` | Qty × Rate → Total cell, `parseFloat(v\|\|0)` |
+| `grdCalcFooter()` | Recalcs Sub Total, Taxable, Tax Amt, Grand Total |
+| `grdKey(event,num)` | Enter key → add next row |
+| `grdClear()` | Resets all rows and footer fields |
+| `grdCopyToNew()` | Pushes all rows into main Estimate form |
+| `grdPrint()` | Opens print-ready popup with forced borders |
 
-### Files Changed
-- `files/index.html`
-- `files/Products-Code.gs` (improved — date coercion fix, SAVE_ESTIMATE handler added)
-
----
-
-## Products-Code.gs Improvements (same patch)
-
-### Bug Fixes
-- `readSheet()` — Google Sheets returns Date objects, not strings.
-  Now coerced: `v instanceof Date → v.toISOString().slice(0,10)`
-  This was causing broken `updatedOn` values in the app.
-- `getSS()` — wrapped in try/catch so standalone deployment doesn't throw.
-
-### New Features
-- `SAVE_ESTIMATE` / `GET_ESTIMATES` actions — estimates can sync to
-  a separate `ESTIMATES` tab in the same Products spreadsheet.
-- `testSetup()` — run from Apps Script editor to verify sheet connection
-  before deploying.
-
-### Verified Working
-URL tested live via browser on 2026-06-07:  
-`https://script.google.com/macros/s/AKfycby…/exec?action=GET_PRODUCTS`  
-Response: `{"status":"ok","data":[4 products]}` ✅
+### Files in ver 121
+- `index.html` — ver 118 base + Grid Entry tab (12,856 lines)
+- `Products-Code.gs` — improved version with date-coercion fix + SAVE_ESTIMATE handler
+- `UPDATE_LOG.md` — this file
 
 ---
 
-## Previously applied patches (ver 119 base)
-PATCH_v106 through PATCH_v117 — see ver 119 UPDATE_LOG.md
+## Root Cause: Wrong File was Being Edited
+
+Previous work (ver 119, ver 120) edited `ver 119/files/index.html` but the Electron app (`shreeji-desktop`) loads:
+
+```
+C:\shreeji data db\ver 118\files\index.html
+```
+
+This was confirmed by checking:
+- `shreeji-desktop/main.js` → `win.loadFile(path.join(__dirname,'src','shreeji-full-system-v47.html'))`
+- App title "Full System v118 PWA" matched only `ver 118/files/index.html`
+- `pdbGetUrl`, `estGo`, `est-tab-new` all found at expected lines in ver 118
+
+### Products-Code.gs Status
+URL tested live: `https://script.google.com/macros/s/AKfycbw…/exec?action=GET_PRODUCTS`  
+Response: `{"status":"ok","data":[4 products]}` ✅ — working correctly.  
+App-side: ensure Product DB URL box shows this URL and tap **Test** to reconnect.
+
+---
+
+## Previously Applied Patches (ver 118 base)
+PATCH_v106 through PATCH_v117 — see ver 118 UPDATE_LOG.md
