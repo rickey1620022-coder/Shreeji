@@ -263,8 +263,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v123 PWA</title>
-<meta name="shj-build" content="v123|SHJ-123-080626|2026-06-08">
+<title>Shreeji Industries — Full System v124 PWA</title>
+<meta name="shj-build" content="v124|SHJ-124-100626|2026-06-10">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1264,7 +1264,7 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
     <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v117 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 7 June 2026 &nbsp;·&nbsp; S/N: SHJ-110-050626</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 10 June 2026 &nbsp;·&nbsp; S/N: SHJ-124-100626</div>
   </div>
 </div>
 <style>
@@ -8487,7 +8487,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v117';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v124';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -11386,25 +11386,22 @@ function pwaDismiss(){
      Inject directly into #est-page-view (the PRINT tab)
      ══════════════════════════════════════════════════════════════ */
   var COPIES = [
-    { id:'customer', label:'👤 Customer', sub:'Rate + Qty + Total', showRate:true,  showTotal:true  },
-    { id:'agent',    label:'🤝 Agent',    sub:'Qty + Total only',   showRate:false, showTotal:true  },
-    { id:'packing',  label:'📦 Packing',  sub:'Qty only',           showRate:false, showTotal:false },
+    { id:'customer', label:'👤 Customer Copy', sub:'Rate + Qty + Total', showRate:true,  showTotal:true  },
+    { id:'agent',    label:'🤝 Agent Copy',    sub:'Qty + Total only',   showRate:false, showTotal:true  },
+    { id:'gatepass', label:'🏷 Gate Pass',     sub:'Qty only',           showRate:false, showTotal:false },
   ];
 
   function buildCopyPanel() {
-    if (q('#shj-copy-panel-v106')) return;
+    if (q('#shj-copy-panel-v124')) return;
     var view = q('#est-page-view');
     if (!view) return;
 
-    /* Wrapper */
     var wrap = mk('div', 'background:#111620;border-radius:10px;margin:10px 10px 6px;padding:14px;border:1px solid #2a3a5a;');
-    wrap.id = 'shj-copy-panel-v106';
+    wrap.id = 'shj-copy-panel-v124';
 
-    /* Title */
     var hdr = mk('div', 'color:#ffd700;font-weight:800;font-size:.82rem;letter-spacing:.6px;margin-bottom:12px;', '🖨 PRINT COPIES');
     wrap.appendChild(hdr);
 
-    /* Copy-count grid */
     var grid = mk('div', 'display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;');
     var counters = {};
     COPIES.forEach(function (c) {
@@ -11412,60 +11409,38 @@ function pwaDismiss(){
       card.appendChild(mk('div', 'color:#e8eeff;font-size:.72rem;font-weight:700;margin-bottom:4px;', c.label));
       card.appendChild(mk('div', 'color:#6677aa;font-size:.6rem;margin-bottom:8px;', c.sub));
       var inp = mk('input', 'width:100%;background:#1e2d44;border:1px solid #2a3a5a;border-radius:6px;color:#fff;text-align:center;padding:5px 0;font-size:1rem;font-family:inherit;');
-      inp.type = 'number'; inp.min = '0'; inp.max = '9'; inp.value = '1';
+      inp.type = 'number'; inp.min = '0'; inp.max = '9'; inp.value = '0';
+      inp.addEventListener('blur', function() { if (inp.value === '' || isNaN(Number(inp.value))) inp.value = '0'; });
       counters[c.id] = inp;
       card.appendChild(inp);
       grid.appendChild(card);
     });
     wrap.appendChild(grid);
 
-    /* Signature checkbox */
     var sigRow = mk('div', 'display:flex;align-items:center;gap:8px;margin-bottom:12px;');
     var sigCb  = mk('input', 'width:16px;height:16px;cursor:pointer;accent-color:#3a7bd5;');
-    sigCb.type = 'checkbox'; sigCb.id = 'shj-sig-cb-v106';
+    sigCb.type = 'checkbox'; sigCb.id = 'shj-sig-cb-v124';
     var sigLbl = mk('label', 'color:#e8eeff;font-size:.78rem;cursor:pointer;', '✍ Add signature section (Received By / Signature / Date)');
-    sigLbl.htmlFor = 'shj-sig-cb-v106';
+    sigLbl.htmlFor = 'shj-sig-cb-v124';
     sigRow.appendChild(sigCb); sigRow.appendChild(sigLbl);
     wrap.appendChild(sigRow);
 
-    /* Print All button */
-    var btnRow = mk('div', 'display:flex;gap:8px;');
-
+    var printAllRow = mk('div', 'display:flex;justify-content:flex-end;margin-top:4px;');
     var printBtn = mk('button',
-      'flex:1;padding:11px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.82rem;cursor:pointer;letter-spacing:.4px;',
-      '🖨 PRINT ALL COPIES');
+      'padding:11px 28px;background:#1a3a6b;color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.82rem;cursor:pointer;letter-spacing:.4px;min-width:160px;',
+      '🖨 PRINT ALL');
     printBtn.onclick = function () { runAllCopies(counters, sigCb.checked); };
-    btnRow.appendChild(printBtn);
+    printAllRow.appendChild(printBtn);
+    wrap.appendChild(printAllRow);
 
-    var pdfBtn = mk('button',
-      'flex:1;padding:11px;background:#c0392b;color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.82rem;cursor:pointer;letter-spacing:.4px;',
-      '📄 PDF');
-    pdfBtn.onclick = function () { window.estExportPDF(); };
-    btnRow.appendChild(pdfBtn);
-
-    var jpgBtn = mk('button',
-      'flex:1;padding:11px;background:#1a5a30;color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.82rem;cursor:pointer;letter-spacing:.4px;',
-      '🖼 JPG');
-    jpgBtn.onclick = function () {
-      var el = q('#est-doc');
-      if (!el || !el.innerHTML.trim()) { alert('Generate estimate first.'); return; }
-      if (typeof html2canvas === 'function') {
-        var orig = el.style.transform; el.style.transform = '';
-        html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#fff' }).then(function (cv) {
-          el.style.transform = orig;
-          var a = document.createElement('a');
-          a.href = cv.toDataURL('image/jpeg', 0.95);
-          a.download = (q('#est-no') ? q('#est-no').value : 'Doc') + '.jpg';
-          a.click();
-        });
-      } else { alert('html2canvas not loaded.'); }
-    };
-    btnRow.appendChild(jpgBtn);
-
-    wrap.appendChild(btnRow);
-
-    /* Insert at top of PRINT page (before the existing button bar) */
-    view.insertBefore(wrap, view.firstChild);
+    /* Insert AFTER #est-doc so preview shows first */
+    var docEl = q('#est-doc');
+    if (docEl && docEl.parentNode === view) {
+      view.insertBefore(wrap, docEl.nextSibling);
+    } else {
+      view.appendChild(wrap);
+    }
+    view.style.paddingBottom = '64px';
   }
 
   /* ── Print one copy type in popup ── */
@@ -11554,8 +11529,65 @@ function pwaDismiss(){
   /* ══════════════════════════════════════════════════════════════
      INIT
      ══════════════════════════════════════════════════════════════ */
+  function buildStickyBar() {
+    if (document.getElementById('shj-sticky-bar-v124')) return;
+    var bar = document.createElement('div');
+    bar.id = 'shj-sticky-bar-v124';
+    bar.style.cssText = 'position:fixed;bottom:0;left:0;width:100%;z-index:9999;display:flex;background:#0d1117;border-top:2px solid #2a3a5a;box-shadow:0 -3px 16px rgba(0,0,0,.6);';
+    var BTNS = [
+      { icon:'✏', label:'Edit',  bg:'#1a2a3a', fn: function(){ var t = window.shjTab || function(){}; t('estimate'); } },
+      { icon:'🖨', label:'Print', bg:'#1a3a6b', fn: function(){
+          var el = document.getElementById('est-doc');
+          if (!el || !el.innerHTML.trim()) { alert('Generate estimate first.'); return; }
+          var w = window.open('','_blank','width=900,height=700');
+          if (!w) return;
+          w.document.write('<html><head><style>body{margin:0;background:#fff;}@media print{body{margin:0;}}</style></head><body>' + el.outerHTML + '</body></html>');
+          w.document.close(); w.focus(); w.print();
+        }
+      },
+      { icon:'🖼', label:'JPG',   bg:'#1a5a30', fn: function(){
+          var el = document.getElementById('est-doc');
+          if (!el || !el.innerHTML.trim()) { alert('Generate estimate first.'); return; }
+          if (typeof html2canvas === 'function') {
+            var orig = el.style.transform; el.style.transform = '';
+            html2canvas(el, { scale:2, useCORS:true, backgroundColor:'#fff' }).then(function(cv){
+              el.style.transform = orig;
+              var a = document.createElement('a');
+              a.href = cv.toDataURL('image/jpeg', 0.95);
+              a.download = (document.getElementById('est-no') ? document.getElementById('est-no').value : 'Doc') + '.jpg';
+              a.click();
+            });
+          } else { alert('html2canvas not loaded.'); }
+        }
+      },
+      { icon:'📄', label:'PDF',   bg:'#7b1a1a', fn: function(){ if (window.estExportPDF) window.estExportPDF(); else alert('PDF export not available.'); } },
+      { icon:'💾', label:'Save',  bg:'#1a4a2a', fn: function(){
+          if (window.saveEstimate) window.saveEstimate();
+          else if (window.estSave) window.estSave();
+          else if (window.saveEst) window.saveEst();
+          else { var btn = document.querySelector('[onclick*="save"],[data-action="save"]'); if(btn) btn.click(); }
+        }
+      },
+    ];
+    BTNS.forEach(function(b) {
+      var btn = document.createElement('button');
+      btn.style.cssText = 'flex:1;background:' + b.bg + ';color:#fff;border:none;border-right:1px solid #1a2a3a;padding:8px 4px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:inherit;';
+      var ic = document.createElement('span');
+      ic.style.cssText = 'font-size:1.2rem;line-height:1;';
+      ic.textContent = b.icon;
+      var lb = document.createElement('span');
+      lb.style.cssText = 'font-size:.58rem;font-weight:700;letter-spacing:.4px;color:rgba(255,255,255,.75);';
+      lb.textContent = b.label;
+      btn.appendChild(ic); btn.appendChild(lb);
+      btn.onclick = b.fn;
+      bar.appendChild(btn);
+    });
+    document.body.appendChild(bar);
+  }
+
   function init() {
     buildCopyPanel();
+    buildStickyBar();
     /* Re-build if PRINT tab is opened (PATCH_v104 shows est-page-view) */
     var _origShjTab = window.shjTab;
     window.shjTab = function (id) {
