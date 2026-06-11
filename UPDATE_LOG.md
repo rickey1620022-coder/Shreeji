@@ -1,3 +1,50 @@
+# UPDATE LOG — ver 126
+**Serial:** SHJ-126-110626
+**Date:** 2026-06-11
+**Base:** ver 125 (SHJ-125)
+
+---
+
+## PATCH_v126 — PDF ALL fix + unified product.gs
+
+### 1. FIX — "PDF libraries not loaded." on 📄 PDF ALL
+
+**Root cause:** index.html loaded html2canvas + html2pdf via script tags, but **jsPDF was never loaded**. `pdfAllCopies()` requires `window.jspdf` → it always alerted "PDF libraries not loaded."
+
+**Fixes:**
+| # | Fix | Detail |
+|---|-----|--------|
+| 1 | Static script tag added | `jspdf/2.5.1/jspdf.umd.min.js` now loads at startup (next to html2canvas) |
+| 2 | Lazy-load fallback | `shjLoadPdfLibs()` — if libs are still missing when PDF ALL is clicked, they're loaded on demand and the export retries automatically. Alert only shows if the CDN truly can't be reached (offline). |
+
+### 2. FIX — product.gs not working (DEEP CHECK)
+
+**Root cause:** the app calls the web app from TWO modules with DIFFERENT expectations:
+| Module | Actions used | Expected reply key |
+|--------|--------------|--------------------|
+| Product DB tab | GET_PRODUCTS, SAVE_PRODUCT, DELETE_PRODUCT, SAVE_ESTIMATE | `data` |
+| Estimate auto-sync (PATCH_v107) | PULL_DATA, PUSH_ESTIMATE | `products` / `estimates` / `purgeKeys` |
+
+- Old **product.gs v1** answered GET_PRODUCTS with key `products` → Product DB tab showed "reply looks wrong" and Pull failed.
+- Old **Products-Code.gs (v125)** did not know PUSH_ESTIMATE / PULL_DATA → estimate auto-sync silently failed; estimates never pulled back to other devices.
+
+**Fix: NEW unified `product.gs` v2 (Serial SHJ-126-110626)** — replaces BOTH old files:
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | All actions supported | PULL_DATA, GET_PRODUCTS, GET_ESTIMATES, SAVE/DELETE/SYNC_PRODUCT(S), SAVE/PUSH/DELETE/SYNC_ESTIMATE(S) |
+| 2 | Dual reply keys | GET replies carry BOTH `data` and `products`/`estimates` → both app modules work |
+| 3 | One estimate handler | SAVE_ESTIMATE and PUSH_ESTIMATE share one upsert (dedup by estNo) — payload shapes of both modules accepted |
+| 4 | Sheet header upgrade | Existing v125 ESTIMATES sheet keeps its 14 columns; `purgeDate` + `data` (full JSON) are auto-appended — no data loss |
+| 5 | 20-day purge kept | 30-min cron: purge old estimates + dedup PRODUCTS/ESTIMATES. Old rows without purgeDate fall back to date+20 |
+| 6 | Serial in replies | Every reply carries `serial: SHJ-126-110626` so you can verify which version is deployed |
+
+**Deploy:** paste `product.gs` into the Apps Script of the Products sheet (delete ALL old code) → Save → Deploy → Manage deployments → ✏ → New version → Deploy. Do NOT create a new deployment (URL must stay the same).
+
+### 3. Version stamps synced
+title `v126 PWA` · meta `shj-build v126|SHJ-126-110626|2026-06-11` · SW cache `shreeji-v126` · footer S/N `SHJ-126-110626`
+
+---
+
 # UPDATE LOG — ver 125
 **Serial:** SHJ-125
 **Date:** 2026-06-10
