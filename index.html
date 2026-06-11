@@ -263,8 +263,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v126 PWA</title>
-<meta name="shj-build" content="v126|SHJ-126-110626|2026-06-11">
+<title>Shreeji Industries — Full System v127 PWA</title>
+<meta name="shj-build" content="v127|SHJ-127-110626|2026-06-11">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1264,7 +1264,7 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
     <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v117 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 11 June 2026 &nbsp;·&nbsp; S/N: SHJ-126-110626</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 11 June 2026 &nbsp;·&nbsp; S/N: SHJ-127-110626</div>
   </div>
 </div>
 <style>
@@ -4218,6 +4218,8 @@ function toggleStage(id,sk){
       const code=document.getElementById('cac-hid-'+id)?.value||'';
       const used=parseInt(document.getElementById('cac-qty-'+id)?.value)||0;
       if(code&&used>0){
+        const cutDateEl=document.getElementById('cac-date-'+id);
+        ord.cutDate=cutDateEl&&cutDateEl.value?cutDateEl.value:today();
         let it=data.items.find(r=>r.code===code)||data.items.find(r=>r.name.trim().toLowerCase()===code.trim().toLowerCase());
         if(it){
           ord.matCode=it.code;ord.matName=it.name;ord.matPcs=used;
@@ -4330,13 +4332,16 @@ function renderFlow(data){
           </div>
           <input type="hidden" id="cac-hid-${ord.id}">
           <input type="number" class="pcs-inp" id="cac-qty-${ord.id}" placeholder="PCS used" min="0" step="1">
+          <input type="date" id="cac-date-${ord.id}" value="${today()}" style="border:1.5px solid #e74c3c;border-radius:7px;background:rgba(231,76,60,.10);color:#e8ecf5;font-size:.85rem;padding:5px 8px;outline:none;min-width:130px;">
           <span id="cac-info-${ord.id}" style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;"></span>
           <span style="font-size:.65rem;color:#7b8499;">→ deducted on Cutting ✓</span></div>`;
       }else if(ord.matCode){
         cutRow=`<div class="cut-row"><label>✂ Used:</label>
           <span style="font-family:'Roboto Mono',monospace;font-size:1rem;color:#7b61ff;font-weight:700;">${esc(ord.matCode)}</span>
           <span style="font-size:1rem;font-weight:600;color:#e8ecf5;font-family:'Barlow',sans-serif;">${esc(ord.matName)}</span>
-          <span style="font-size:.9rem;color:#7b8499;font-family:'Barlow',sans-serif;">— ${ord.matPcs} PCS</span></div>`;
+          <span style="font-size:.9rem;color:#7b8499;font-family:'Barlow',sans-serif;">— ${ord.matPcs} PCS</span>
+          ${ord.cutDate?`<span style="font-size:.8rem;color:#e74c3c;font-weight:700;font-family:'Barlow',sans-serif;">✂ ${fmtDate(ord.cutDate)}</span>`:''}
+          </div>`;
       }
       const matChip=ord.matCode?`<span class="chip chip-mat">🧱 ${esc(ord.matCode)}</span>`:'';
       const adjVal=isNaN(parseInt(ord.cutterAdj))?0:parseInt(ord.cutterAdj);
@@ -8488,7 +8493,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v126';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v127';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
