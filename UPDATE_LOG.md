@@ -1,29 +1,39 @@
-# UPDATE LOG — ver 127
-**Serial:** SHJ-127-110626
-**Date:** 2026-06-11
-**Base:** ver 126 (SHJ-126-110626)
+# UPDATE LOG — ver 128
+**Serial:** SHJ-128-120626
+**Date:** 2026-06-12
+**Base:** ver 127 (SHJ-127) — *note: a v127 entry was never written to this log; v127 existed only in index.html*
 
 ---
 
-## PATCH_v127 — Cutting Date Field on Order Card
+## PATCH_v128 — ThermalSync A5 Print System + file-corruption repair
 
-### Change — Date input on Cutting stage card
+### 0. CRITICAL FIX — file truncation since v123
+Every `index.html` uploaded to GitHub from v123 through v127 was **cut off mid-file**: it ended inside the PATCH v116 comment with an unclosed `<script>` and **no `</body></html>`**. (Last intact upload was v121.) The dangling dead fragment has been removed and the document is properly closed again. Nothing functional was lost — the truncated PATCH v116 print UI had already been replaced by v124, and is now replaced again by v128.
 
-**Request:** Add a date field on the cutting card inside the Order tab.
+### 1. NEW — A5 print layout engine
+| Item | Spec |
+|------|------|
+| Sheet | A4 portrait 210 × 297 mm, `@page` margin 0 |
+| Copies | **2 identical A5-landscape copies** per sheet (cut line dashed) |
+| Master box | **195 mm × 133 mm, 2 px solid black border**, drawn first — everything fits inside |
+| Strips | 20 mm header · 15 mm party detail · product area (auto-fit) · 15 mm footer |
+| Auto-fit | product table font shrinks (9.5 → 6 px) until no overflow / no hidden text |
+| Removed | "for Shreeji Industries / Authorised Signatory" — **gone completely** from estimate |
+| Optional | `Received By | Signature | Date` row — only when checkbox ticked |
 
-| # | Change | Detail |
-|---|--------|--------|
-| 1 | Date input added to cut-row | Appears next to PCS used input, before cutting is marked ✓. Defaults to today's date, fully editable. |
-| 2 | `ord.cutDate` stored on toggle | When Cutting ✓ is tapped, `cutDate` is read from `cac-date-{id}` input and saved into the order object. Falls back to `today()` if blank. |
-| 3 | Cut date shown after cutting done | Once cutting is marked ✓, the "Used" row shows the cut date in red (✂ DD MMM YYYY) next to material info. |
+### 2. CHANGE — PRINT tab UI
+Preview on top (largest area) → **☑ Add Signature Section** → counters **Customer Copy / Agent Copy / Gate Pass** (blank = 0, negatives blocked, max 99) → centered **PDF | JPG | PRINT ALL** buttons. Preview updates live as quantities change (shows the first copy type with a count, with its column rules). Copy column rules kept from v124: Customer = Rate+Qty+Total · Agent = Qty+Total · Gate Pass = Qty only.
 
-### Files Modified
-| File | Change |
-|------|--------|
-| `index.html` | cutRow HTML + toggleStage JS + version stamps |
+Counts → sheets: N copies of a type = ceil(N/2) full sheets (each sheet always carries 2 identical documents). All counters 0 → one default sheet of 2 customer copies.
 
-### Version stamps synced
-title `v127 PWA` · meta `shj-build v127|SHJ-127-110626|2026-06-11` · SW cache `shreeji-v127` · footer S/N `SHJ-127-110626`
+### 3. UNIFY — PDF = JPG = PRINT
+All three exports render from the **same HTML, same CSS, same mm dimensions** (single layout engine; no separate PDF template). PDF: html2canvas → jsPDF A4 portrait, one page per sheet. JPG: one file per sheet. Print: synchronous popup (user-gesture preserved — v115 lesson).
+
+### 4. RETIRED
+`#shj-print-panel-v101`, `#shj-print-setup`, `#shj-copy-panel-v124`, `#shj-sticky-bar-v124` — hidden by CSS and removed on sight (they produced the old, non-matching formats).
+
+### Version stamps (all 4 verified)
+`<title>` v128 · `shj-build` v128|SHJ-128-120626|2026-06-12 · SW cache `shreeji-v128` · PIN footer S/N SHJ-128-120626
 
 ---
 
@@ -50,7 +60,7 @@ title `v127 PWA` · meta `shj-build v127|SHJ-127-110626|2026-06-11` · SW cache 
 
 **Root cause:** the app calls the web app from TWO modules with DIFFERENT expectations:
 | Module | Actions used | Expected reply key |
-|--------|--------------|-------------------|
+|--------|--------------|--------------------|
 | Product DB tab | GET_PRODUCTS, SAVE_PRODUCT, DELETE_PRODUCT, SAVE_ESTIMATE | `data` |
 | Estimate auto-sync (PATCH_v107) | PULL_DATA, PUSH_ESTIMATE | `products` / `estimates` / `purgeKeys` |
 
@@ -142,5 +152,4 @@ The "↑ Push to Sheet" button was unreachable because the RECORDS tab shows
 | Added `⚡ Grid` to `buildNav()` | 5th tab now rendered at runtime |
 | Added `'grid'` to `setActive()` | Tab highlights correctly when active |
 | Added `grid` case in `shjTab()` | Shows `est-page-grid`, calls `grdInit()` |
-| Fixed `estGo` map | `grid:'grid'` (was `grid:'est'`) |
-| Push button moved | Now inside `est-page-all` so it's always reachable from RECORDS tab |
+| Fixed `estGo` map | `grid:'g

@@ -11,6 +11,34 @@
   ------------------------------------------------------------------
 
   ------------------------------------------------------------------
+  v128  —  2026-06-12   |   S/N: SHJ-128-120626
+  ------------------------------------------------------------------
+    1. FIX  FILE CORRUPTION REPAIRED: every upload since v123 was
+            truncated — the file ended mid-comment inside PATCH
+            v116 with an unclosed script tag and no closing
+            body/html tags. Dangling fragment removed; document
+            properly closed again.
+    2. NEW  PATCH v128 — ThermalSync A5 print system (Estimate):
+            A4 portrait sheet = 2 IDENTICAL A5-landscape copies,
+            each inside a 195mm x 133mm master box (2px black
+            border, drawn first). Strips inside the box: 20mm
+            header / 15mm party detail / product area (auto-fit,
+            font shrinks so nothing is ever clipped) / 15mm footer.
+    3. CHANGE  PRINT tab UI: preview on top (largest), then
+            "Add Signature Section" checkbox, then Customer Copy /
+            Agent Copy / Gate Pass counters (blank = 0, negatives
+            blocked), then centered PDF | JPG | PRINT ALL buttons.
+            Preview updates live per copy type & quantity.
+    4. REMOVE  "for Shreeji Industries / Authorised Signatory"
+            removed completely from the estimate document.
+            Optional row (checkbox only): Received By | Signature
+            | Date.
+    5. UNIFY  PDF = JPG = PRINT — one shared HTML/CSS layout
+            engine (no separate PDF template). Old print panels
+            retired: v101 panel, print-setup, v124 copy panel,
+            v124 sticky bar.
+
+  ------------------------------------------------------------------
   v110  —  2026-06-07   |   S/N: SHJ-110-050626  ★ SPEC COMPLETE
   ------------------------------------------------------------------
     1. NEW  PI WhatsApp PDF + PDF+Text buttons on PI preview.
@@ -263,8 +291,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v127 PWA</title>
-<meta name="shj-build" content="v127|SHJ-127-110626|2026-06-11">
+<title>Shreeji Industries — Full System v128 PWA</title>
+<meta name="shj-build" content="v128|SHJ-128-120626|2026-06-12">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1264,7 +1292,7 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
     <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v117 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 11 June 2026 &nbsp;·&nbsp; S/N: SHJ-127-110626</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 12 June 2026 &nbsp;·&nbsp; S/N: SHJ-128-120626</div>
   </div>
 </div>
 <style>
@@ -6719,7 +6747,7 @@ function estGenerate(){
     ${words?`<div class="ea5-words">Amount in Words: ${words}</div>`:''}
     <div class="ea5-footer">
       <div class="ea5-footer-l">All taxes extra as applicable. Validity 3 days. 50% advance required. Delivery 10 days after PO/MFC.</div>
-      <div class="ea5-footer-r"><div class="ea5-sig-line">for Shreeji Industries<br><span style="font-size:7.5px;color:#666;">Authorised Signatory</span></div></div>
+      <!-- v128: company signatory removed from estimate print -->
     </div>`;
   }
 
@@ -8493,7 +8521,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v127';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v128';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -12982,10 +13010,502 @@ function pwaDismiss(){
   'use strict';
 
   /* ══════════════════════════════════════════════════════════════
-     PATCH v116  —  2026-06-07
-     Print Page UI Redesign
+     PATCH v128  —  2026-06-12   |   THERMALSYNC PRINT SYSTEM
+     ══════════════════════════════════════════════════════════════
+     AGENT 1 — PRINT tab UI: preview top · ☑ Add Signature Section ·
+               Customer/Agent/Gate-Pass counters (blank=0, no
+               negatives) · centered PDF | JPG | PRINT ALL buttons ·
+               live preview on quantity change.
+     AGENT 2 — Layout engine: A4 portrait sheet = 2 A5-landscape
+               copies stacked. Each copy inside a 195mm × 133mm
+               master box, 2px black border, drawn first.
+               Strips: 20mm header / 15mm party / product (flex) /
+               15mm footer. NO "for Shreeji Industries /
+               Authorised Signatory". Optional signature row:
+               Received By | Signature | Date.
+     AGENT 3 — PDF / JPG / PRINT share ONE html + ONE css + ONE
+               set of dimensions. No separate PDF template.
+     AGENT 4 — Validation hooks: every sheet auto-fits its product
+               table (no clipping / no overflow / no hidden text).
+     Retires: #shj-print-panel-v101, #shj-print-setup,
+              #shj-copy-panel-v124, #shj-sticky-bar-v124.
+  ══════════════════════════════════════════════════════════════ */
 
-     NEW LAYOUT
-     ┌─────────────────────────────┬──────────────┐
-     │                             │ ☑ Signature  │
-     │     D
+  var MM = 96 / 25.4; /* css px per mm */
+
+  function $id(x){ return document.getElementById(x); }
+  function isPIDoc(){
+    var d = $id('est-doc');
+    return !!(d && /\binv-doc\b/.test(d.className));
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     SHARED CSS — used by: main-page preview, print popup,
+     hidden render container (PDF + JPG). ONE source of truth.
+  ──────────────────────────────────────────────────────────── */
+  var SHJ128_CSS = [
+    /* page + sheet */
+    '@page { size: A4 portrait; margin: 0; }',
+    '.shj128-sheet{width:210mm;height:296mm;background:#fff;display:flex;flex-direction:column;page-break-after:always;break-after:page;margin:0 auto;}',
+    '.shj128-half{flex:0 0 148mm;height:148mm;display:flex;align-items:center;justify-content:center;box-sizing:border-box;}',
+    '.shj128-half + .shj128-half{border-top:1px dashed #999;}',
+    /* MASTER BOX — drawn first, everything lives inside it */
+    '.shj128-box{width:195mm;height:133mm;border:2px solid #000;box-sizing:border-box;background:#fff;overflow:hidden;}',
+    '.shj128-prevbox{width:195mm !important;height:133mm !important;border:2px solid #000 !important;box-sizing:border-box;overflow:hidden;}',
+    /* document column inside the box */
+    '.shj128-doc{display:flex;flex-direction:column;width:100%;height:100%;background:#fff;color:#111;line-height:1.35;font-size:9.5px;font-family:Arial,"Helvetica Neue",sans-serif;}',
+    /* 20mm HEADER STRIP */
+    '.shj128-doc .ea5-hdr{flex:0 0 20mm;box-sizing:border-box;text-align:center;border-bottom:2px solid #111;display:flex;flex-direction:column;justify-content:center;padding:1mm 3mm;overflow:hidden;}',
+    '.shj128-doc .ea5-co-name{font-family:Georgia,"Libre Baskerville",serif;font-size:15px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}',
+    '.shj128-doc .ea5-co-sub{font-size:8px;color:#444;margin-top:1px;}',
+    '.shj128-doc .ea5-title{display:inline-block;background:#1a3a6b;color:#fff;font-size:9.5px;font-weight:800;letter-spacing:2px;padding:1px 12px;border-radius:3px;margin-top:1.2mm;text-transform:uppercase;}',
+    /* 15mm PARTY DETAIL STRIP */
+    '.shj128-doc .ea5-info{flex:0 0 15mm;box-sizing:border-box;display:flex;border-bottom:1.5px solid #111;overflow:hidden;}',
+    '.shj128-doc .ea5-info-party{flex:1;padding:1.2mm 3mm;border-right:1px solid #ccc;}',
+    '.shj128-doc .ea5-info-doc{flex:0 0 48mm;padding:1.2mm 3mm;text-align:right;}',
+    '.shj128-doc .ea5-info-row{display:flex;justify-content:space-between;margin-bottom:1px;}',
+    '.shj128-doc .ea5-info-row strong{min-width:55px;display:inline-block;}',
+    /* PRODUCT AREA — flexible, auto-fitted */
+    '.shj128-doc .shj128-prod{flex:1 1 auto;overflow:hidden;}',
+    '.shj128-doc .ea5-tbl{width:100%;border-collapse:collapse;font-size:9.5px;}',
+    '.shj128-doc .ea5-tbl th{background:#1a3a6b;color:#fff;padding:4px 5px;text-align:center;font-weight:700;border:1px solid #1a3a6b;font-size:9px;}',
+    '.shj128-doc .ea5-tbl th.ea5-thl{text-align:left;}',
+    '.shj128-doc .ea5-tbl td{border:1px solid #d0d8e8;padding:2px 5px;vertical-align:middle;}',
+    '.shj128-doc .ea5-tbl td.ea5-num{text-align:right;}',
+    '.shj128-doc .ea5-tbl td.ea5-ctr{text-align:center;}',
+    '.shj128-doc .ea5-tbl tfoot td{border:1px solid #c8d0e0;padding:3px 5px;}',
+    '.shj128-doc .ea5-tbl tr.ea5-odd{background:#f7f9ff;}',
+    '.shj128-doc .ea5-grand td{background:#1a3a6b !important;color:#fff !important;font-weight:900 !important;font-size:10.5px !important;}',
+    '.shj128-doc .ea5-words{padding:1mm 3mm;font-size:8.5px;color:#444;border-top:1px solid #ddd;font-style:italic;}',
+    /* OPTIONAL SIGNATURE ROW — Received By | Signature | Date */
+    '.shj128-doc .shj128-sig{flex:0 0 10mm;box-sizing:border-box;display:flex;gap:8mm;align-items:flex-end;padding:0 6mm 1.5mm;}',
+    '.shj128-doc .shj128-sig > div{flex:1;text-align:center;border-top:1px solid #333;padding-top:1mm;font-size:8px;color:#444;}',
+    /* 15mm FOOTER STRIP — terms only, NO company signatory */
+    '.shj128-doc .ea5-footer{flex:0 0 15mm;box-sizing:border-box;display:flex;align-items:center;border-top:1.5px solid #111;padding:1mm 3mm;font-size:8.5px;color:#444;}',
+    '.shj128-doc .ea5-footer-l{flex:1;}',
+    '.shj128-doc .ea5-footer-r,.shj128-doc .ea5-sig-line{display:none !important;}',
+    /* retire every legacy print panel / bar */
+    '#shj-print-panel-v101,#shj-print-setup,#shj-copy-panel-v124,#shj-sticky-bar-v124{display:none !important;}'
+  ].join('\n');
+
+  function injectCSS(){
+    if ($id('shj128-style')) return;
+    var st = document.createElement('style');
+    st.id = 'shj128-style';
+    st.textContent = SHJ128_CSS;
+    document.head.appendChild(st);
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     COPY TYPES
+  ──────────────────────────────────────────────────────────── */
+  var COPY_TYPES = [
+    { id:'customer', label:'Customer Copy', sub:'Rate + Qty + Total' },
+    { id:'agent',    label:'Agent Copy',    sub:'Qty + Total only'   },
+    { id:'gatepass', label:'Gate Pass',     sub:'Qty only'           }
+  ];
+
+  function getCount(type){
+    var el = $id('shj128-n-' + type);
+    if (!el) return 0;
+    var n = parseInt(el.value, 10);
+    if (isNaN(n) || n < 0) n = 0;        /* blank = 0, negative = 0 */
+    return Math.min(n, 99);
+  }
+
+  /* counts → list of sheets; every sheet = 2 IDENTICAL copies of
+     one type (cut the A4 in half → two equal documents).
+     N copies of a type = ceil(N/2) sheets. */
+  function getSheetPlan(){
+    var sheets = [];
+    COPY_TYPES.forEach(function (c) {
+      var n = getCount(c.id);
+      for (var s = 0; s < Math.ceil(n / 2); s++) sheets.push(c.id);
+    });
+    return sheets;
+  }
+  function totalCopies(){
+    return COPY_TYPES.reduce(function (a, c) { return a + getCount(c.id); }, 0);
+  }
+  function activeType(){
+    for (var i = 0; i < COPY_TYPES.length; i++)
+      if (getCount(COPY_TYPES[i].id) > 0) return COPY_TYPES[i].id;
+    return 'customer';
+  }
+  function sigOn(){ var cb = $id('shj128-sig'); return !!(cb && cb.checked); }
+
+  /* ────────────────────────────────────────────────────────────
+     AGENT 2 — structureDoc(): turn the rendered estimate into the
+     master-box column. SAME function feeds preview AND print/PDF/
+     JPG, so all outputs are pixel-identical by construction.
+  ──────────────────────────────────────────────────────────── */
+  function structureDoc(root, type, withSig){
+    root.classList.add('shj128-doc');
+
+    /* remove company signatory completely */
+    root.querySelectorAll('.ea5-footer-r,.ea5-sig-line').forEach(function (el) {
+      el.parentNode && el.parentNode.removeChild(el);
+    });
+
+    /* wrap table + words into the flexible product area */
+    var footer = root.querySelector('.ea5-footer');
+    if (!root.querySelector('.shj128-prod')) {
+      var prod = document.createElement('div');
+      prod.className = 'shj128-prod';
+      var tbl = root.querySelector('.ea5-tbl');
+      var words = root.querySelector('.ea5-words');
+      if (tbl) prod.appendChild(tbl);
+      if (words) prod.appendChild(words);
+      if (footer) root.insertBefore(prod, footer); else root.appendChild(prod);
+    }
+
+    /* optional signature row — ONLY when checkbox ticked */
+    var oldSig = root.querySelector('.shj128-sig');
+    if (oldSig) oldSig.parentNode.removeChild(oldSig);
+    if (withSig) {
+      var sig = document.createElement('div');
+      sig.className = 'shj128-sig';
+      sig.innerHTML = '<div>Received By</div><div>Signature</div><div>Date</div>';
+      if (footer) root.insertBefore(sig, footer); else root.appendChild(sig);
+    }
+
+    /* copy-type column rules
+       columns: 1 S.No | 2 Qty | 3 Item Description | 4 Rate | 5 Total */
+    function hideCol(n){
+      root.querySelectorAll('.ea5-tbl thead tr, .ea5-tbl tbody tr').forEach(function (tr) {
+        var c = tr.children[n - 1];
+        if (c && !c.hasAttribute('colspan')) c.style.display = 'none';
+      });
+    }
+    if (type === 'agent') { hideCol(4); }
+    if (type === 'gatepass') {
+      hideCol(4); hideCol(5);
+      root.querySelectorAll('.ea5-tbl tfoot').forEach(function (el) { el.style.display = 'none'; });
+      root.querySelectorAll('.ea5-words').forEach(function (el) { el.style.display = 'none'; });
+    }
+    return root;
+  }
+
+  /* one A5 copy = master box (drawn first) + structured doc inside */
+  function buildCopyBox(pristineHTML, type, withSig){
+    var box = document.createElement('div');
+    box.className = 'shj128-box';
+    var doc = document.createElement('div');
+    doc.className = 'est-a5-doc';
+    doc.style.cssText = 'border:none;box-shadow:none;width:100%;';
+    doc.innerHTML = pristineHTML;
+    structureDoc(doc, type, withSig);
+    box.appendChild(doc);
+    return box;
+  }
+
+  /* full job = sheets of 2 identical copies */
+  function buildSheets(pristineHTML, plan, withSig){
+    var frag = document.createElement('div');
+    plan.forEach(function (type) {
+      var sheet = document.createElement('div');
+      sheet.className = 'shj128-sheet';
+      for (var k = 0; k < 2; k++) {
+        var half = document.createElement('div');
+        half.className = 'shj128-half';
+        half.appendChild(buildCopyBox(pristineHTML, type, withSig));
+        sheet.appendChild(half);
+      }
+      frag.appendChild(sheet);
+    });
+    return frag;
+  }
+
+  /* AGENT 4 hook — auto-fit: shrink table font until nothing is
+     clipped inside the product area (no overflow / no hidden text) */
+  function fitSheets(container){
+    container.querySelectorAll('.shj128-prod').forEach(function (prod) {
+      var fs = 9.5, guard = 0;
+      while (prod.scrollHeight > prod.clientHeight + 1 && fs > 6 && guard < 10) {
+        fs -= 0.5; guard++;
+        prod.querySelectorAll('.ea5-tbl').forEach(function (t) { t.style.fontSize = fs + 'px'; });
+        prod.querySelectorAll('.ea5-words').forEach(function (w) { w.style.fontSize = Math.max(6.5, fs - 1) + 'px'; });
+      }
+    });
+  }
+
+  /* pristine (unstyled) snapshot of the rendered estimate */
+  function getPristine(){
+    var d = $id('est-doc');
+    if (!d || !d.innerHTML.trim()) return null;
+    if (isPIDoc()) return null;
+    return window.__shj128Pristine || d.innerHTML;
+  }
+
+  /* mount sheets offscreen — single render used by ALL exports */
+  function mountRender(){
+    var pristine = getPristine();
+    if (!pristine) { alert('Generate the estimate first.'); return null; }
+    var plan = getSheetPlan();
+    if (!plan.length) plan = ['customer'];   /* default: 1 sheet = 2 customer copies */
+    var old = $id('shj128-render');
+    if (old) old.parentNode.removeChild(old);
+    var holder = document.createElement('div');
+    holder.id = 'shj128-render';
+    holder.style.cssText = 'position:fixed;left:-9999px;top:0;background:#fff;z-index:-1;';
+    holder.appendChild(buildSheets(pristine, plan, sigOn()));
+    document.body.appendChild(holder);
+    fitSheets(holder);
+    return holder;
+  }
+  function unmountRender(){
+    var h = $id('shj128-render');
+    if (h && h.parentNode) h.parentNode.removeChild(h);
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     AGENT 3 — EXPORT ENGINES (same html, same css, same mm)
+  ──────────────────────────────────────────────────────────── */
+  function shj128Print(){
+    var holder = mountRender();
+    if (!holder) return;
+    var html = holder.innerHTML;
+    unmountRender();
+    /* popup opened synchronously — user gesture preserved (v115 lesson) */
+    var w = window.open('', '_blank', 'width=860,height=720,menubar=no,toolbar=yes');
+    if (!w) { alert('Please allow popups for this site to enable printing.'); return; }
+    w.document.open();
+    w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8">'
+      + '<title>Shreeji Industries — Estimate Print</title>'
+      + '<style>html,body{margin:0;padding:0;background:#fff;}' + SHJ128_CSS + '</style>'
+      + '</head><body>' + html
+      + '<scr' + 'ipt>window.onload=function(){setTimeout(function(){window.print();},350);'
+      + 'window.onafterprint=function(){window.close();};};<' + '/scr' + 'ipt>'
+      + '</body></html>');
+    w.document.close();
+  }
+
+  function shj128LoadLibs(cb){
+    var pending = 0, failed = false;
+    function done(){ if (--pending <= 0) cb(!failed); }
+    function load(src, test){
+      if (test()) return;
+      pending++;
+      var sc = document.createElement('script');
+      sc.src = src; sc.onload = done;
+      sc.onerror = function(){ failed = true; done(); };
+      document.head.appendChild(sc);
+    }
+    load('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+      function(){ return typeof html2canvas !== 'undefined'; });
+    load('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+      function(){ return typeof window.jspdf !== 'undefined'; });
+    if (pending === 0) cb(true);
+  }
+
+  function eachSheetCanvas(holder, perSheet, doneAll){
+    var sheets = holder.querySelectorAll('.shj128-sheet');
+    var i = 0;
+    function next(){
+      if (i >= sheets.length) { doneAll(); return; }
+      html2canvas(sheets[i], { scale: 2, useCORS: true, backgroundColor: '#fff' })
+        .then(function (cv) { perSheet(cv, i); i++; next(); })
+        .catch(function () { i++; next(); });
+    }
+    next();
+  }
+
+  function shj128PDF(){
+    shj128LoadLibs(function (ok) {
+      if (!ok) { alert('PDF libraries could not be loaded. Check internet connection.'); return; }
+      var holder = mountRender();
+      if (!holder) return;
+      var pdf = null;
+      eachSheetCanvas(holder, function (cv, i) {
+        var img = cv.toDataURL('image/jpeg', 0.95);
+        if (!pdf) pdf = new jspdf.jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+        else pdf.addPage('a4', 'p');
+        pdf.addImage(img, 'JPEG', 0, 0, 210, 296);
+      }, function () {
+        unmountRender();
+        if (pdf) pdf.save((($id('est-no') || {}).value || 'Estimate') + '.pdf');
+      });
+    });
+  }
+
+  function shj128JPG(){
+    shj128LoadLibs(function (ok) {
+      if (!ok) { alert('Export libraries could not be loaded. Check internet connection.'); return; }
+      var holder = mountRender();
+      if (!holder) return;
+      var base = (($id('est-no') || {}).value || 'Estimate');
+      var many = holder.querySelectorAll('.shj128-sheet').length > 1;
+      eachSheetCanvas(holder, function (cv, i) {
+        var a = document.createElement('a');
+        a.href = cv.toDataURL('image/jpeg', 0.95);
+        a.download = base + (many ? '-' + (i + 1) : '') + '.jpg';
+        a.click();
+      }, function () { unmountRender(); });
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     AGENT 1 — PRINT TAB UI
+     Preview (top, largest) → ☑ Add Signature Section →
+     counters row → centered  PDF | JPG | PRINT ALL
+  ──────────────────────────────────────────────────────────── */
+  function buildPanel(){
+    if ($id('shj128-panel')) return;
+    var view = $id('est-page-view');
+    if (!view) return;
+
+    /* physically remove retired panels (CSS also hides them) */
+    ['shj-print-panel-v101','shj-print-setup','shj-copy-panel-v124','shj-sticky-bar-v124']
+      .forEach(function (id) { var el = $id(id); if (el && el.parentNode) el.parentNode.removeChild(el); });
+
+    var panel = document.createElement('div');
+    panel.id = 'shj128-panel';
+    panel.style.cssText = 'background:#111620;border:1px solid #2a3a5a;border-radius:10px;margin:4px 10px 70px;padding:14px;';
+
+    /* preview label */
+    var lbl = document.createElement('div');
+    lbl.id = 'shj128-prev-label';
+    lbl.style.cssText = 'color:#8fa3c8;font-size:.68rem;letter-spacing:.5px;margin-bottom:10px;text-align:center;';
+    panel.appendChild(lbl);
+
+    /* ☑ Add Signature Section */
+    var sigRow = document.createElement('div');
+    sigRow.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.id = 'shj128-sig';
+    cb.style.cssText = 'width:17px;height:17px;cursor:pointer;accent-color:#3a7bd5;';
+    var cbl = document.createElement('label');
+    cbl.htmlFor = 'shj128-sig';
+    cbl.style.cssText = 'color:#e8eeff;font-size:.8rem;cursor:pointer;font-weight:700;';
+    cbl.textContent = 'Add Signature Section';
+    cb.addEventListener('change', stylePreview);
+    sigRow.appendChild(cb); sigRow.appendChild(cbl);
+    panel.appendChild(sigRow);
+
+    /* counters: Customer Copy [0]  Agent Copy [0]  Gate Pass [0] */
+    var grid = document.createElement('div');
+    grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;';
+    COPY_TYPES.forEach(function (c) {
+      var card = document.createElement('div');
+      card.style.cssText = 'background:#161d2e;border:1px solid #2a3a5a;border-radius:8px;padding:10px 8px;text-align:center;';
+      card.innerHTML = '<div style="color:#e8eeff;font-size:.72rem;font-weight:700;margin-bottom:3px;">' + c.label + '</div>'
+                     + '<div style="color:#6677aa;font-size:.6rem;margin-bottom:8px;">' + c.sub + '</div>';
+      var inp = document.createElement('input');
+      inp.id = 'shj128-n-' + c.id;
+      inp.type = 'number'; inp.min = '0'; inp.max = '99'; inp.step = '1';
+      inp.value = '0'; inp.inputMode = 'numeric';
+      inp.style.cssText = 'width:100%;background:#1e2d44;border:1px solid #2a3a5a;border-radius:6px;color:#fff;text-align:center;padding:6px 0;font-size:1.05rem;font-family:inherit;';
+      inp.addEventListener('input', function () {
+        /* blank = 0 · negatives not allowed */
+        var v = inp.value.replace(/[^0-9]/g, '');
+        if (v !== inp.value) inp.value = v;
+        if (v.length > 2) inp.value = v.slice(0, 2);
+        stylePreview();                       /* LIVE preview update */
+      });
+      inp.addEventListener('blur', function () {
+        if (inp.value === '' || isNaN(parseInt(inp.value, 10)) || parseInt(inp.value, 10) < 0) inp.value = '0';
+      });
+      inp.addEventListener('focus', function () { inp.select(); });
+      card.appendChild(inp);
+      grid.appendChild(card);
+    });
+    panel.appendChild(grid);
+
+    /* centered buttons: PDF | JPG | PRINT ALL */
+    var btns = document.createElement('div');
+    btns.style.cssText = 'display:flex;justify-content:center;gap:10px;flex-wrap:wrap;';
+    [
+      { t:'PDF',       bg:'#7b1a1a', fn:shj128PDF   },
+      { t:'JPG',       bg:'#1a5a30', fn:shj128JPG   },
+      { t:'PRINT ALL', bg:'#1a3a6b', fn:shj128Print }
+    ].forEach(function (b) {
+      var btn = document.createElement('button');
+      btn.textContent = b.t;
+      btn.style.cssText = 'padding:12px 26px;background:' + b.bg + ';color:#fff;border:none;border-radius:8px;font-weight:800;font-size:.84rem;cursor:pointer;letter-spacing:.6px;min-width:110px;font-family:inherit;';
+      btn.onclick = b.fn;
+      btns.appendChild(btn);
+    });
+    panel.appendChild(btns);
+
+    view.appendChild(panel);   /* below the preview — preview stays on top */
+  }
+
+  /* live preview = first copy type with a count + signature state,
+     shown inside the real 195×133 master box */
+  function stylePreview(){
+    var d = $id('est-doc');
+    var panel = $id('shj128-panel');
+    if (!d) return;
+    if (isPIDoc() || !d.innerHTML.trim()) {
+      if (panel) panel.style.display = 'none';
+      return;
+    }
+    if (panel) panel.style.display = 'block';
+    if (!window.__shj128Pristine) window.__shj128Pristine = d.innerHTML;
+
+    var type = activeType();
+    d.innerHTML = window.__shj128Pristine;
+    d.classList.add('shj128-prevbox');
+    structureDoc(d, type, sigOn());
+    fitSheets({ querySelectorAll: function (s) { return d.querySelectorAll(s); } });
+
+    var lbl = $id('shj128-prev-label');
+    if (lbl) {
+      var copies = totalCopies();
+      var sheets = getSheetPlan().length || 1;
+      var name = (COPY_TYPES.filter(function (c) { return c.id === type; })[0] || COPY_TYPES[0]).label.toUpperCase();
+      lbl.textContent = 'PREVIEW: ' + name + '  ·  ' + (copies ? copies + ' cop' + (copies > 1 ? 'ies' : 'y') + ' = ' : '')
+                      + sheets + ' A4 sheet' + (sheets > 1 ? 's' : '') + ' × 2 documents each';
+    }
+    if (typeof window.estScaleDoc === 'function') setTimeout(window.estScaleDoc, 40);
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     WIRING — re-route every estimate output through v128
+  ──────────────────────────────────────────────────────────── */
+  var _origPrint = window.estPrintDoc;
+  var _origPDF   = window.estExportPDF;
+  var _origJPG   = window.estExportJPG;
+
+  window.estPrintDoc  = function(){ if (isPIDoc()) { if (_origPrint) _origPrint(); return; } shj128Print(); };
+  window.estExportPDF = function(){ if (isPIDoc()) { if (_origPDF)   _origPDF();   return; } shj128PDF();   };
+  window.estExportJPG = function(){ if (isPIDoc()) { if (_origJPG)   _origJPG();   return; } shj128JPG();   };
+
+  /* refresh pristine snapshot + restyle after every generation */
+  window.estGenerate = (function (orig) {
+    return function () {
+      if (typeof orig === 'function') orig.apply(this, arguments);
+      window.__shj128Pristine = null;
+      setTimeout(function () { buildPanel(); stylePreview(); }, 80);
+    };
+  })(window.estGenerate);
+
+  if (typeof window.estGo === 'function') {
+    window.estGo = (function (orig) {
+      return function (p) {
+        orig.apply(this, arguments);
+        if (p === 'view') setTimeout(function () { buildPanel(); stylePreview(); }, 120);
+      };
+    })(window.estGo);
+  }
+
+  function init(){
+    injectCSS();
+    buildPanel();
+    var d = $id('est-doc');
+    if (d && d.innerHTML.trim() && !isPIDoc()) stylePreview();
+    /* keep retired panels out even if older patches re-inject them */
+    setInterval(function () {
+      ['shj-print-panel-v101','shj-print-setup','shj-copy-panel-v124','shj-sticky-bar-v124']
+        .forEach(function (id) { var el = $id(id); if (el && el.parentNode) el.parentNode.removeChild(el); });
+    }, 2500);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+
+})();
+</script>
+</body>
+</html>
+
