@@ -1,3 +1,32 @@
+# UPDATE LOG — ver 127
+**Serial:** SHJ-127-110626
+**Date:** 2026-06-11
+**Base:** ver 126 (SHJ-126-110626)
+
+---
+
+## PATCH_v127 — Cutting Date Field on Order Card
+
+### Change — Date input on Cutting stage card
+
+**Request:** Add a date field on the cutting card inside the Order tab.
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Date input added to cut-row | Appears next to PCS used input, before cutting is marked ✓. Defaults to today's date, fully editable. |
+| 2 | `ord.cutDate` stored on toggle | When Cutting ✓ is tapped, `cutDate` is read from `cac-date-{id}` input and saved into the order object. Falls back to `today()` if blank. |
+| 3 | Cut date shown after cutting done | Once cutting is marked ✓, the "Used" row shows the cut date in red (✂ DD MMM YYYY) next to material info. |
+
+### Files Modified
+| File | Change |
+|------|--------|
+| `index.html` | cutRow HTML + toggleStage JS + version stamps |
+
+### Version stamps synced
+title `v127 PWA` · meta `shj-build v127|SHJ-127-110626|2026-06-11` · SW cache `shreeji-v127` · footer S/N `SHJ-127-110626`
+
+---
+
 # UPDATE LOG — ver 126
 **Serial:** SHJ-126-110626
 **Date:** 2026-06-11
@@ -21,7 +50,7 @@
 
 **Root cause:** the app calls the web app from TWO modules with DIFFERENT expectations:
 | Module | Actions used | Expected reply key |
-|--------|--------------|--------------------|
+|--------|--------------|-------------------|
 | Product DB tab | GET_PRODUCTS, SAVE_PRODUCT, DELETE_PRODUCT, SAVE_ESTIMATE | `data` |
 | Estimate auto-sync (PATCH_v107) | PULL_DATA, PUSH_ESTIMATE | `products` / `estimates` / `purgeKeys` |
 
@@ -113,4 +142,5 @@ The "↑ Push to Sheet" button was unreachable because the RECORDS tab shows
 | Added `⚡ Grid` to `buildNav()` | 5th tab now rendered at runtime |
 | Added `'grid'` to `setActive()` | Tab highlights correctly when active |
 | Added `grid` case in `shjTab()` | Shows `est-page-grid`, calls `grdInit()` |
-| Fixed `estGo` map | `grid:'g
+| Fixed `estGo` map | `grid:'grid'` (was `grid:'est'`) |
+| Push button moved | Now inside `est-page-all` so it's always reachable from RECORDS tab |
