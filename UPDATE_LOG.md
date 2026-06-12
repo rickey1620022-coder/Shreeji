@@ -1,3 +1,16 @@
+# UPDATE LOG — ver 129
+**Serial:** SHJ-129-120626
+**Date:** 2026-06-12
+**Base:** ver 128 (SHJ-128)
+
+---
+
+## RELEASE_v129 — version bump to push exe auto-update
+
+No functional change. v128 was uploaded to GitHub correctly (verified complete, ends with `</html>`), but the desktop exe reported "v127 is latest" — raw.githubusercontent.com caches the file ~5 minutes, so the exe checked a stale copy. v129 gives a clean newer marker for the updater. Pairs with **product.gs v2** on the Google Sheet side (unified actions, serial numbers, date+time stamps, ARCHIVE sheet).
+
+---
+
 # UPDATE LOG — ver 128
 **Serial:** SHJ-128-120626
 **Date:** 2026-06-12
