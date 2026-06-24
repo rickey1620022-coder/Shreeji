@@ -1,3 +1,40 @@
+# UPDATE LOG — ver 131
+**Serial:** SHJ-131-240626
+**Date:** 2026-06-24
+**Base:** ver 130 (SHJ-130-240626)
+
+---
+
+## PATCH_v131 — Service Worker redirect bypass for sync
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Exclude Apps Script Redirect from SW | Added `script.googleusercontent.com` to the Service Worker's bypass list so GET redirects work over network without triggering offline fallback error. |
+| 2 | Version stamps unified | All version strings bumped to v131. |
+
+---
+
+# UPDATE LOG — ver 130
+**Serial:** SHJ-130-240626
+**Date:** 2026-06-24
+**Base:** ver 129 (SHJ-129)
+
+---
+
+## PATCH_v130 — CORS preflight & redirect fixes for estimate sync
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | PUSH_ESTIMATE CORS preflight fix | Changed Content-Type from `application/json` to `text/plain` and added `redirect: 'follow'` to prevent OPTIONS preflight blocks on Google Apps Script Web App. |
+| 2 | PULL_DATA GET redirect & cache fix | Appended cache-buster `&v=` timestamp parameter and added `redirect: 'follow'` to ensure GET request follows Apps Script redirects correctly on all devices. |
+| 3 | Version stamps unified | Title, build metadata, SW cache (`shreeji-v130`), and PIN screen updated to `v130` (SHJ-130-240626). |
+
+---
+
 # UPDATE LOG — ver 129
 **Serial:** SHJ-129-120626
 **Date:** 2026-06-12
