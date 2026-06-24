@@ -11,6 +11,18 @@
   ------------------------------------------------------------------
 
   ------------------------------------------------------------------
+  v130  —  2026-06-24   |   S/N: SHJ-130-240626
+  ------------------------------------------------------------------
+    1. FIX  CORS Preflight & Redirect Issues on Push/Pull Sync:
+            - pullFromSheet() now appends a cache-buster parameter `&v=`
+              and explicitly uses `{ redirect: 'follow' }` to ensure
+              compatibility with Google Apps Script 302 redirects.
+            - pushEstimate() now uses `headers: { 'Content-Type': 'text/plain' }`
+              and `{ redirect: 'follow' }` to prevent browser CORS
+              preflight OPTIONS blocks.
+    2. UNIFY Version stamps bumped to v130 (SHJ-130-240626).
+
+  ------------------------------------------------------------------
   v129  —  2026-06-12   |   S/N: SHJ-129-120626
   ------------------------------------------------------------------
     1. RELEASE  Version bump only (no functional change) to push
@@ -301,8 +313,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v129 PWA</title>
-<meta name="shj-build" content="v129|SHJ-129-120626|2026-06-12">
+<title>Shreeji Industries — Full System v130 PWA</title>
+<meta name="shj-build" content="v130|SHJ-130-240626|2026-06-24">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1301,8 +1313,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v117 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 12 June 2026 &nbsp;·&nbsp; S/N: SHJ-129-120626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v130 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-130-240626</div>
   </div>
 </div>
 <style>
@@ -8531,7 +8543,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v129';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v130';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -11880,7 +11892,7 @@ function pwaDismiss(){
     setStatus('syncing');
 
     /* Try new product.gs PULL_DATA first, fallback to old GET_PRODUCTS */
-    fetch(url + '?action=PULL_DATA', { method: 'GET' })
+    fetch(url + '?action=PULL_DATA&v=' + Date.now(), { method: 'GET', redirect: 'follow' })
       .then(function (r) { return r.json(); })
       .then(function (resp) {
         if (resp.status !== 'ok') { setStatus('err'); return; }
@@ -11972,7 +11984,8 @@ function pwaDismiss(){
 
     fetch(url, {
       method  : 'POST',
-      headers : { 'Content-Type': 'application/json' },
+      redirect: 'follow',
+      headers : { 'Content-Type': 'text/plain' },
       body    : JSON.stringify(payload)
     }).catch(function () {});     /* silent — never alert user */
   }
