@@ -11,6 +11,16 @@
   ------------------------------------------------------------------
 
   ------------------------------------------------------------------
+  v135  —  2026-06-24   |   S/N: SHJ-135-240626
+  ------------------------------------------------------------------
+    1. ADD  Copy indicator labels ("CUSTOMER COPY", "AGENT COPY",
+            "GATE PASS COPY") at the top right of each A5 document.
+    2. FIX  Column alignment issue on Agent & Gate Pass copies by dynamically
+            adjusting colspan of footer cells and notes row to eliminate blank
+            columns on the right.
+    3. UNIFY Version stamps bumped to v135 (SHJ-135-240626).
+
+  ------------------------------------------------------------------
   v134  —  2026-06-24   |   S/N: SHJ-134-240626
   ------------------------------------------------------------------
     1. FIX  Service Worker GET fetch interception issue:
@@ -321,8 +331,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v134 PWA</title>
-<meta name="shj-build" content="v134|SHJ-134-240626|2026-06-24">
+<title>Shreeji Industries — Full System v135 PWA</title>
+<meta name="shj-build" content="v135|SHJ-135-240626|2026-06-24">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1321,8 +1331,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v134 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-134-240626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v135 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-135-240626</div>
   </div>
 </div>
 <style>
@@ -8552,7 +8562,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v134';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v135';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -13095,7 +13105,8 @@ function pwaDismiss(){
     '.shj128-box{width:195mm;height:133mm;border:2px solid #000;box-sizing:border-box;background:#fff;overflow:hidden;}',
     '.shj128-prevbox{width:195mm !important;height:133mm !important;border:2px solid #000 !important;box-sizing:border-box;overflow:hidden;}',
     /* document column inside the box */
-    '.shj128-doc{display:flex;flex-direction:column;width:100%;height:100%;background:#fff;color:#111;line-height:1.35;font-size:9.5px;font-family:Arial,"Helvetica Neue",sans-serif;}',
+    '.shj128-doc{position:relative;display:flex;flex-direction:column;width:100%;height:100%;background:#fff;color:#111;line-height:1.35;font-size:9.5px;font-family:Arial,"Helvetica Neue",sans-serif;}',
+    '.shj128-doc .shj128-copy-indicator{position:absolute;top:1.5mm;right:2mm;font-size:6.5px;font-weight:bold;color:#444;border:1px solid #444;padding:1px 3.5px;border-radius:2px;text-transform:uppercase;background:#fff;line-height:1;z-index:10;}',
     /* 20mm HEADER STRIP */
     '.shj128-doc .ea5-hdr{flex:0 0 20mm;box-sizing:border-box;text-align:center;border-bottom:2px solid #111;display:flex;flex-direction:column;justify-content:center;padding:1mm 3mm;overflow:hidden;}',
     '.shj128-doc .ea5-co-name{font-family:Georgia,"Libre Baskerville",serif;font-size:15px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}',
@@ -13211,6 +13222,19 @@ function pwaDismiss(){
       if (footer) root.insertBefore(sig, footer); else root.appendChild(sig);
     }
 
+    // Add copy indicator on top right
+    var oldIndicator = root.querySelector('.shj128-copy-indicator');
+    if (oldIndicator) oldIndicator.parentNode.removeChild(oldIndicator);
+    var indicator = document.createElement('div');
+    indicator.className = 'shj128-copy-indicator';
+    var labelMap = {
+      'customer': 'CUSTOMER COPY',
+      'agent': 'AGENT COPY',
+      'gatepass': 'GATE PASS COPY'
+    };
+    indicator.textContent = labelMap[type] || 'CUSTOMER COPY';
+    root.appendChild(indicator);
+
     /* copy-type column rules
        columns: 1 S.No | 2 Qty | 3 Item Description | 4 Rate | 5 Total */
     function hideCol(n){
@@ -13219,11 +13243,22 @@ function pwaDismiss(){
         if (c && !c.hasAttribute('colspan')) c.style.display = 'none';
       });
     }
-    if (type === 'agent') { hideCol(4); }
+    if (type === 'agent') {
+      hideCol(4);
+      root.querySelectorAll('.ea5-tbl tfoot td[colspan="4"]').forEach(function (td) {
+        td.setAttribute('colspan', '3');
+      });
+      root.querySelectorAll('.ea5-tbl tbody td[colspan="5"]').forEach(function (td) {
+        td.setAttribute('colspan', '4');
+      });
+    }
     if (type === 'gatepass') {
       hideCol(4); hideCol(5);
       root.querySelectorAll('.ea5-tbl tfoot').forEach(function (el) { el.style.display = 'none'; });
       root.querySelectorAll('.ea5-words').forEach(function (el) { el.style.display = 'none'; });
+      root.querySelectorAll('.ea5-tbl tbody td[colspan="5"]').forEach(function (td) {
+        td.setAttribute('colspan', '3');
+      });
     }
     return root;
   }

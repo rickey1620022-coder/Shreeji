@@ -1,3 +1,22 @@
+# UPDATE LOG — ver 135
+**Serial:** SHJ-135-240626
+**Date:** 2026-06-24
+**Base:** ver 134 (SHJ-134-240626)
+
+---
+
+## PATCH_v135 — Copy Indicator Labels & Column Alignment Fixes
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Copy Indicator Labels | Added small copy indicator text ("CUSTOMER COPY", "AGENT COPY", "GATE PASS COPY") at the top right of each A5 document box for both preview and export. |
+| 2 | Table Colspan Alignment | Resolved the layout engine column mismatch (blank right column) in Agent and Gate Pass copies by dynamically adjusting the `colspan` of notes row and `tfoot` cells based on the number of hidden columns. |
+| 3 | Version stamps unified | All version strings bumped to v135.
+
+---
+
 # UPDATE LOG — ver 134
 **Serial:** SHJ-134-240626
 **Date:** 2026-06-24
