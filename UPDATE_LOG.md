@@ -1,3 +1,23 @@
+# UPDATE LOG — ver 132
+**Serial:** SHJ-132-240626
+**Date:** 2026-06-24
+**Base:** ver 131 (SHJ-131-240626)
+
+---
+
+## PATCH_v132 — Sync Robustness, Error Logging & Service Worker Safeguards
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Service Worker Bypass List | Added `googleusercontent.com` and `action=` parameters to Service Worker bypass condition to prevent caching or intercepting sync traffic. |
+| 2 | Service Worker reg.update() | Added `reg.update()` to service worker registration to force-check and apply SW code changes immediately. |
+| 3 | Detailed Sync Error Reporting | Modified `pullFromSheet` and `setStatus` to capture, log, and display the exact error message (e.g. JSON parsing, HTTP errors) on the status dot tooltip. |
+| 4 | Version stamps unified | All version strings bumped to v132.
+
+---
+
 # UPDATE LOG — ver 131
 **Serial:** SHJ-131-240626
 **Date:** 2026-06-24
