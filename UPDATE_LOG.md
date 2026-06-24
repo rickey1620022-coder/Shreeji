@@ -1,3 +1,22 @@
+# UPDATE LOG — ver 133
+**Serial:** SHJ-133-240626
+**Date:** 2026-06-24
+**Base:** ver 132 (SHJ-132-240626)
+
+---
+
+## PATCH_v133 — Local Storage & Pull Null-Safety Fixes
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Robust lsGet wrapper | Modified `lsGet` to ensure that it never returns `null` or `undefined` when a fallback value is provided (preventing `TypeError` on `.forEach` calls if `null` is saved in `localStorage`). |
+| 2 | Robust pullFromSheet assignments | Coerced `products`, `estimates`, and `purgeKeys` variables to always default to `[]` in `pullFromSheet` to prevent errors from empty/null API responses. |
+| 3 | Version stamps unified | All version strings bumped to v133.
+
+---
+
 # UPDATE LOG — ver 132
 **Serial:** SHJ-132-240626
 **Date:** 2026-06-24
