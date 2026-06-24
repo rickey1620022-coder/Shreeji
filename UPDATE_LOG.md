@@ -1,3 +1,22 @@
+# UPDATE LOG — ver 134
+**Serial:** SHJ-134-240626
+**Date:** 2026-06-24
+**Base:** ver 133 (SHJ-133-240626)
+
+---
+
+## PATCH_v134 — PDF Auto-Open & Copy Columns Formatting Fixes
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | PDF Auto-Opening | Modified PDF export functions (`estExportPDF`, `shj128PDF`, `pdfAllCopies`) to automatically open the generated PDF file in a new browser tab/viewer after download using `window.open(pdf.output('bloburl'), '_blank')`. |
+| 2 | Robust Copy Column Hiding | Standardized `pdfAllCopies` and `printOneCopy` column hiding logic with the `hideCol` helper function. Hides the 4th column (`Rate`) for Agent Copy, and both the 4th (`Rate`) and 5th (`Total`) columns along with footers for Gate Pass copy. |
+| 3 | Version stamps unified | All version strings bumped to v134.
+
+---
+
 # UPDATE LOG — ver 133
 **Serial:** SHJ-133-240626
 **Date:** 2026-06-24

