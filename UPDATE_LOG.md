@@ -1,3 +1,22 @@
+# UPDATE LOG — ver 136
+**Serial:** SHJ-136-240626
+**Date:** 2026-06-24
+**Base:** ver 135 (SHJ-135-240626)
+
+---
+
+## PATCH_v136 — Price-less Agent Copy & Single A5 Layout
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Agent Copy No Price | Modified Agent Copy to hide both `Rate` and `Total` columns, footers (`tfoot`), and the amount in words, matching the Gate Pass copy style (zero price information shown). |
+| 2 | Single A5 Sheet Split | Changed the A5 printing/PDF generation layout to print only one copy on the top half of the page, leaving the bottom half of the sheet blank. |
+| 3 | Version stamps unified | All version strings bumped to v136.
+
+---
+
 # UPDATE LOG — ver 135
 **Serial:** SHJ-135-240626
 **Date:** 2026-06-24

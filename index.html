@@ -11,6 +11,16 @@
   ------------------------------------------------------------------
 
   ------------------------------------------------------------------
+  v136  —  2026-06-24   |   S/N: SHJ-136-240626
+  ------------------------------------------------------------------
+    1. CHANGE Printing format: modified buildSheets() to print only ONE A5 copy
+              in the top half of each A4 portrait sheet, leaving the bottom
+              half blank (1 copy per page as requested by hand drawing).
+    2. CHANGE Agent Copy columns: modified structureDoc() so Agent Copy hides
+              all pricing info (hides Rate, Total, Totals Footer, and Words).
+    3. UNIFY  Version stamps bumped to v136 (SHJ-136-240626).
+
+  ------------------------------------------------------------------
   v135  —  2026-06-24   |   S/N: SHJ-135-240626
   ------------------------------------------------------------------
     1. ADD  Copy indicator labels ("CUSTOMER COPY", "AGENT COPY",
@@ -331,8 +341,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v135 PWA</title>
-<meta name="shj-build" content="v135|SHJ-135-240626|2026-06-24">
+<title>Shreeji Industries — Full System v136 PWA</title>
+<meta name="shj-build" content="v136|SHJ-136-240626|2026-06-24">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1331,8 +1341,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v135 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-135-240626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v136 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-136-240626</div>
   </div>
 </div>
 <style>
@@ -8562,7 +8572,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v135';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v136';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -11466,8 +11476,8 @@ function pwaDismiss(){
      ══════════════════════════════════════════════════════════════ */
   var COPIES = [
     { id:'customer', label:'👤 Customer Copy', sub:'Rate + Qty + Total', showRate:true,  showTotal:true  },
-    { id:'agent',    label:'🤝 Agent Copy',    sub:'Qty + Total only',   showRate:false, showTotal:true  },
-    { id:'gatepass', label:'🏷 Gate Pass',     sub:'Qty only',           showRate:false, showTotal:false },
+    { id:'agent',    label:'🤝 Agent Copy',    sub:'Qty only (No Price)', showRate:false, showTotal:false },
+    { id:'gatepass', label:'🏷 Gate Pass',     sub:'Qty only (No Price)', showRate:false, showTotal:false },
   ];
 
   function buildCopyPanel() {
@@ -13154,8 +13164,8 @@ function pwaDismiss(){
   ──────────────────────────────────────────────────────────── */
   var COPY_TYPES = [
     { id:'customer', label:'Customer Copy', sub:'Rate + Qty + Total' },
-    { id:'agent',    label:'Agent Copy',    sub:'Qty + Total only'   },
-    { id:'gatepass', label:'Gate Pass',     sub:'Qty only'           }
+    { id:'agent',    label:'Agent Copy',    sub:'Qty only (No Price)' },
+    { id:'gatepass', label:'Gate Pass',     sub:'Qty only (No Price)' }
   ];
 
   function getCount(type){
@@ -13173,7 +13183,7 @@ function pwaDismiss(){
     var sheets = [];
     COPY_TYPES.forEach(function (c) {
       var n = getCount(c.id);
-      for (var s = 0; s < Math.ceil(n / 2); s++) sheets.push(c.id);
+      for (var s = 0; s < n; s++) sheets.push(c.id);
     });
     return sheets;
   }
@@ -13243,16 +13253,7 @@ function pwaDismiss(){
         if (c && !c.hasAttribute('colspan')) c.style.display = 'none';
       });
     }
-    if (type === 'agent') {
-      hideCol(4);
-      root.querySelectorAll('.ea5-tbl tfoot td[colspan="4"]').forEach(function (td) {
-        td.setAttribute('colspan', '3');
-      });
-      root.querySelectorAll('.ea5-tbl tbody td[colspan="5"]').forEach(function (td) {
-        td.setAttribute('colspan', '4');
-      });
-    }
-    if (type === 'gatepass') {
+    if (type === 'agent' || type === 'gatepass') {
       hideCol(4); hideCol(5);
       root.querySelectorAll('.ea5-tbl tfoot').forEach(function (el) { el.style.display = 'none'; });
       root.querySelectorAll('.ea5-words').forEach(function (el) { el.style.display = 'none'; });
@@ -13285,7 +13286,9 @@ function pwaDismiss(){
       for (var k = 0; k < 2; k++) {
         var half = document.createElement('div');
         half.className = 'shj128-half';
-        half.appendChild(buildCopyBox(pristineHTML, type, withSig));
+        if (k === 0) {
+          half.appendChild(buildCopyBox(pristineHTML, type, withSig));
+        }
         sheet.appendChild(half);
       }
       frag.appendChild(sheet);
