@@ -1,3 +1,22 @@
+# UPDATE LOG — ver 137
+**Serial:** SHJ-137-240626
+**Date:** 2026-06-24
+**Base:** ver 136 (SHJ-136-240626)
+
+---
+
+## PATCH_v137 — 90-Degree Print Rotation & Agent Copy Column Fix
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | 90-Degree A5 Layout Rotation | Rotated the A5 printing and preview formats by 90 degrees clockwise. The A5 page is now oriented as portrait (133mm × 195mm) inside a horizontal wrapper (195mm × 133mm), rendering sideways on the A4 portrait sheet. |
+| 2 | Agent Copy Pricing Restored | Restored pricing columns for the Agent Copy: it now hides the `Rate` column but displays the `Total` column, the totals footer (`tfoot`), and the amount in words. |
+| 3 | Version stamps unified | All version strings bumped to v137.
+
+---
+
 # UPDATE LOG — ver 136
 **Serial:** SHJ-136-240626
 **Date:** 2026-06-24

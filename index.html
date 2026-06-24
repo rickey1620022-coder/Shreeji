@@ -341,8 +341,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v136 PWA</title>
-<meta name="shj-build" content="v136|SHJ-136-240626|2026-06-24">
+<title>Shreeji Industries — Full System v137 PWA</title>
+<meta name="shj-build" content="v137|SHJ-137-240626|2026-06-24">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1341,8 +1341,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v136 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-136-240626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v137 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-137-240626</div>
   </div>
 </div>
 <style>
@@ -8572,7 +8572,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v136';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v137';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -13111,9 +13111,10 @@ function pwaDismiss(){
     '.shj128-sheet{width:210mm;height:296mm;background:#fff;display:flex;flex-direction:column;page-break-after:always;break-after:page;margin:0 auto;}',
     '.shj128-half{flex:0 0 148mm;height:148mm;display:flex;align-items:center;justify-content:center;box-sizing:border-box;}',
     '.shj128-half + .shj128-half{border-top:1px dashed #999;}',
-    /* MASTER BOX — drawn first, everything lives inside it */
-    '.shj128-box{width:195mm;height:133mm;border:2px solid #000;box-sizing:border-box;background:#fff;overflow:hidden;}',
-    '.shj128-prevbox{width:195mm !important;height:133mm !important;border:2px solid #000 !important;box-sizing:border-box;overflow:hidden;}',
+    /* MASTER BOX & WRAPPER — wrapper takes up landscape space, actual box is portrait rotated 90deg */
+    '.shj128-box-wrapper{width:195mm;height:133mm;display:flex;align-items:center;justify-content:center;overflow:visible;box-sizing:border-box;background:transparent;}',
+    '.shj128-box{width:133mm;height:195mm;transform:rotate(90deg);transform-origin:center;flex-shrink:0;border:2px solid #000;box-sizing:border-box;background:#fff;overflow:hidden;}',
+    '.shj128-prevbox{width:133mm !important;height:195mm !important;transform:rotate(90deg);transform-origin:center;flex-shrink:0;border:2px solid #000 !important;box-sizing:border-box;background:#fff;overflow:hidden;}',
     /* document column inside the box */
     '.shj128-doc{position:relative;display:flex;flex-direction:column;width:100%;height:100%;background:#fff;color:#111;line-height:1.35;font-size:9.5px;font-family:Arial,"Helvetica Neue",sans-serif;}',
     '.shj128-doc .shj128-copy-indicator{position:absolute;top:1.5mm;right:2mm;font-size:6.5px;font-weight:bold;color:#444;border:1px solid #444;padding:1px 3.5px;border-radius:2px;text-transform:uppercase;background:#fff;line-height:1;z-index:10;}',
@@ -13253,7 +13254,15 @@ function pwaDismiss(){
         if (c && !c.hasAttribute('colspan')) c.style.display = 'none';
       });
     }
-    if (type === 'agent' || type === 'gatepass') {
+    if (type === 'agent') {
+      hideCol(4);
+      root.querySelectorAll('.ea5-tbl tfoot td[colspan="4"]').forEach(function (td) {
+        td.setAttribute('colspan', '3');
+      });
+      root.querySelectorAll('.ea5-tbl tbody td[colspan="5"]').forEach(function (td) {
+        td.setAttribute('colspan', '4');
+      });
+    } else if (type === 'gatepass') {
       hideCol(4); hideCol(5);
       root.querySelectorAll('.ea5-tbl tfoot').forEach(function (el) { el.style.display = 'none'; });
       root.querySelectorAll('.ea5-words').forEach(function (el) { el.style.display = 'none'; });
@@ -13266,6 +13275,8 @@ function pwaDismiss(){
 
   /* one A5 copy = master box (drawn first) + structured doc inside */
   function buildCopyBox(pristineHTML, type, withSig){
+    var wrapper = document.createElement('div');
+    wrapper.className = 'shj128-box-wrapper';
     var box = document.createElement('div');
     box.className = 'shj128-box';
     var doc = document.createElement('div');
@@ -13274,7 +13285,8 @@ function pwaDismiss(){
     doc.innerHTML = pristineHTML;
     structureDoc(doc, type, withSig);
     box.appendChild(doc);
-    return box;
+    wrapper.appendChild(box);
+    return wrapper;
   }
 
   /* full job = sheets of 2 identical copies */
@@ -13521,15 +13533,29 @@ function pwaDismiss(){
     if (!d) return;
     if (isPIDoc() || !d.innerHTML.trim()) {
       if (panel) panel.style.display = 'none';
+      d.removeAttribute('style');
+      d.className = '';
       return;
     }
     if (panel) panel.style.display = 'block';
     if (!window.__shj128Pristine) window.__shj128Pristine = d.innerHTML;
 
     var type = activeType();
-    d.innerHTML = window.__shj128Pristine;
-    d.classList.add('shj128-prevbox');
-    structureDoc(d, type, sigOn());
+    d.innerHTML = '';
+    d.className = '';
+    d.style.cssText = 'width:195mm;height:133mm;display:flex;align-items:center;justify-content:center;box-sizing:border-box;background:transparent;overflow:visible;';
+
+    var box = document.createElement('div');
+    box.className = 'shj128-prevbox';
+
+    var doc = document.createElement('div');
+    doc.className = 'est-a5-doc';
+    doc.style.cssText = 'border:none;box-shadow:none;width:100%;';
+    doc.innerHTML = window.__shj128Pristine;
+    structureDoc(doc, type, sigOn());
+    box.appendChild(doc);
+    d.appendChild(box);
+
     fitSheets({ querySelectorAll: function (s) { return d.querySelectorAll(s); } });
 
     var lbl = $id('shj128-prev-label');
@@ -13538,7 +13564,7 @@ function pwaDismiss(){
       var sheets = getSheetPlan().length || 1;
       var name = (COPY_TYPES.filter(function (c) { return c.id === type; })[0] || COPY_TYPES[0]).label.toUpperCase();
       lbl.textContent = 'PREVIEW: ' + name + '  ·  ' + (copies ? copies + ' cop' + (copies > 1 ? 'ies' : 'y') + ' = ' : '')
-                      + sheets + ' A4 sheet' + (sheets > 1 ? 's' : '') + ' × 2 documents each';
+                      + sheets + ' A4 sheet' + (sheets > 1 ? 's' : '') + ' × 1 document each';
     }
     if (typeof window.estScaleDoc === 'function') setTimeout(window.estScaleDoc, 40);
   }
