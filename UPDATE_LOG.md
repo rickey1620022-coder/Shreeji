@@ -1,3 +1,22 @@
+# UPDATE LOG — ver 138
+**Serial:** SHJ-138-250626
+**Date:** 2026-06-25
+**Base:** ver 137 (SHJ-137-250626)
+
+---
+
+## PATCH_v138 — Agent Copy Total Restored & Table Style Exclusions & Landscape Exports
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Restore Agent Copy Total Column | Restored the `Total` column (Qty × Rate) to the Agent Copy, showing S.No, Qty, Description, Total, and hiding only the `Rate` column, as well as updating its subtext description. |
+| 2 | Exclude Print Layout Tables | Excluded `.shj128-doc` and `.ea5-tbl` tables from the general `applyRoleStyles` loop to prevent overriding of column visibility in A5 print preview or exports. |
+| 3 | A5 Rotate Center PDF & PRINT | Pre-rendered the landscape canvas with a 90-degree clockwise rotation (making it vertical) and centered it inside the top half of the A4 portrait sheet for PDF/PRINT exports, ensuring identical visual alignments. |
+
+---
+
 # UPDATE LOG — ver 137
 **Serial:** SHJ-137-240626
 **Date:** 2026-06-24

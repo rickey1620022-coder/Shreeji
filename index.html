@@ -9,6 +9,17 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
+  v138  —  2026-06-25   |   S/N: SHJ-138-250626
+  ------------------------------------------------------------------
+    1. RESTORE  Total column on Agent Copy (displays S.No, Qty, Description, Total; hides Rate).
+    2. FIX      Table loop conflict: excluded A5 print layout tables from applyRoleStyles loop.
+    3. FIX      PDF/PRINT Exports: pre-rendered landscape canvas centered in top half of A4 portrait page.
+
+  ------------------------------------------------------------------
+  v137  —  2026-06-25   |   S/N: SHJ-137-250626
+  ------------------------------------------------------------------
+    1. FIX      A5 Print Rotation: drew master box in landscape (195mm x 133mm) and rotated 90 degrees
+                clockwise to fit perfectly as landscape in the top half of the A4 portrait sheet.
 
   ------------------------------------------------------------------
   v136  —  2026-06-24   |   S/N: SHJ-136-240626
@@ -341,8 +352,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v137 PWA</title>
-<meta name="shj-build" content="v137|SHJ-137-240626|2026-06-24">
+<title>Shreeji Industries — Full System v138 PWA</title>
+<meta name="shj-build" content="v138|SHJ-138-250626|2026-06-25">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1341,8 +1352,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v137 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 24 June 2026 &nbsp;·&nbsp; S/N: SHJ-137-240626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v138 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 25 June 2026 &nbsp;·&nbsp; S/N: SHJ-138-250626</div>
   </div>
 </div>
 <style>
@@ -8572,7 +8583,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v137';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v138';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -10522,6 +10533,9 @@ function pwaDismiss(){
 
     /* Also hide/show by column index (table col 3 = Rate) */
     $qa('table').forEach(function(tbl){
+      if (tbl.closest('.shj128-doc') || tbl.closest('.shj128-sheet') || tbl.closest('.shj128-prevbox') || tbl.classList.contains('ea5-tbl')) {
+        return;
+      }
       $qa('tr',tbl).forEach(function(row){
         var cells=row.querySelectorAll('td,th');
         var n=cells.length;
@@ -13113,7 +13127,7 @@ function pwaDismiss(){
     '.shj128-half + .shj128-half{border-top:1px dashed #999;}',
     /* MASTER BOX & WRAPPER — wrapper takes up landscape space, actual box is portrait rotated 90deg */
     '.shj128-box-wrapper{width:195mm;height:133mm;display:flex;align-items:center;justify-content:center;overflow:visible;box-sizing:border-box;background:transparent;}',
-    '.shj128-box{width:133mm;height:195mm;transform:rotate(90deg);transform-origin:center;flex-shrink:0;border:2px solid #000;box-sizing:border-box;background:#fff;overflow:hidden;}',
+    '.shj128-box{width:133mm;height:195mm;border:2px solid #000;box-sizing:border-box;background:#fff;overflow:hidden;}',
     '.shj128-prevbox{width:133mm !important;height:195mm !important;transform:rotate(90deg);transform-origin:center;flex-shrink:0;border:2px solid #000 !important;box-sizing:border-box;background:#fff;overflow:hidden;}',
     /* document column inside the box */
     '.shj128-doc{position:relative;display:flex;flex-direction:column;width:100%;height:100%;background:#fff;color:#111;line-height:1.35;font-size:9.5px;font-family:Arial,"Helvetica Neue",sans-serif;}',
@@ -13165,7 +13179,7 @@ function pwaDismiss(){
   ──────────────────────────────────────────────────────────── */
   var COPY_TYPES = [
     { id:'customer', label:'Customer Copy', sub:'Rate + Qty + Total' },
-    { id:'agent',    label:'Agent Copy',    sub:'Qty only (No Price)' },
+    { id:'agent',    label:'Agent Copy',    sub:'Qty + Total (No Rate)' },
     { id:'gatepass', label:'Gate Pass',     sub:'Qty only (No Price)' }
   ];
 
@@ -13334,13 +13348,23 @@ function pwaDismiss(){
     var pristine = getPristine();
     if (!pristine) { alert('Generate the estimate first.'); return null; }
     var plan = getSheetPlan();
-    if (!plan.length) plan = ['customer'];   /* default: 1 sheet = 2 customer copies */
+    if (!plan.length) plan = ['customer'];
     var old = $id('shj128-render');
     if (old) old.parentNode.removeChild(old);
     var holder = document.createElement('div');
     holder.id = 'shj128-render';
     holder.style.cssText = 'position:fixed;left:-9999px;top:0;background:#fff;z-index:-1;';
-    holder.appendChild(buildSheets(pristine, plan, sigOn()));
+    plan.forEach(function (type) {
+      var box = document.createElement('div');
+      box.className = 'shj128-box';
+      var doc = document.createElement('div');
+      doc.className = 'est-a5-doc';
+      doc.style.cssText = 'border:none;box-shadow:none;width:100%;';
+      doc.innerHTML = pristine;
+      structureDoc(doc, type, sigOn());
+      box.appendChild(doc);
+      holder.appendChild(box);
+    });
     document.body.appendChild(holder);
     fitSheets(holder);
     return holder;
@@ -13354,22 +13378,48 @@ function pwaDismiss(){
      AGENT 3 — EXPORT ENGINES (same html, same css, same mm)
   ──────────────────────────────────────────────────────────── */
   function shj128Print(){
-    var holder = mountRender();
-    if (!holder) return;
-    var html = holder.innerHTML;
-    unmountRender();
-    /* popup opened synchronously — user gesture preserved (v115 lesson) */
-    var w = window.open('', '_blank', 'width=860,height=720,menubar=no,toolbar=yes');
-    if (!w) { alert('Please allow popups for this site to enable printing.'); return; }
-    w.document.open();
-    w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8">'
-      + '<title>Shreeji Industries — Estimate Print</title>'
-      + '<style>html,body{margin:0;padding:0;background:#fff;}' + SHJ128_CSS + '</style>'
-      + '</head><body>' + html
-      + '<scr' + 'ipt>window.onload=function(){setTimeout(function(){window.print();},350);'
-      + 'window.onafterprint=function(){window.close();};};<' + '/scr' + 'ipt>'
-      + '</body></html>');
-    w.document.close();
+    shj128LoadLibs(function (ok) {
+      if (!ok) { alert('Libraries could not be loaded. Check internet connection.'); return; }
+      var holder = mountRender();
+      if (!holder) return;
+      var images = [];
+      eachSheetCanvas(holder, function (cv, i) {
+        images.push(cv.toDataURL('image/jpeg', 0.95));
+      }, function () {
+        unmountRender();
+        if (!images.length) return;
+        var w = window.open('', '_blank', 'width=860,height=720,menubar=no,toolbar=yes');
+        if (!w) { alert('Please allow popups for this site to enable printing.'); return; }
+        
+        var html = '<!DOCTYPE html><html><head><meta charset="utf-8">'
+          + '<title>Shreeji Industries — Estimate Print</title>'
+          + '<style>'
+          + '  @page { size: A4 portrait; margin: 0; }'
+          + '  html, body { margin: 0; padding: 0; background: #fff; }'
+          + '  .print-page { width: 210mm; height: 297mm; display: flex; flex-direction: column; page-break-after: always; break-after: page; box-sizing: border-box; }'
+          + '  .print-half { flex: 0 0 148.5mm; height: 148.5mm; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }'
+          + '  .print-img { width: 195mm; height: 133mm; object-fit: contain; }'
+          + '</style>'
+          + '</head><body>';
+          
+        images.forEach(function (src) {
+          html += '<div class="print-page">'
+            + '  <div class="print-half">'
+            + '    <img src="' + src + '" class="print-img">'
+            + '  </div>'
+            + '  <div class="print-half"></div>'
+            + '</div>';
+        });
+        
+        html += '<scr' + 'ipt>window.onload=function(){setTimeout(function(){window.print();},350);'
+          + 'window.onafterprint=function(){window.close();};};<' + '/scr' + 'ipt>'
+          + '</body></html>';
+          
+        w.document.open();
+        w.document.write(html);
+        w.document.close();
+      });
+    });
   }
 
   function shj128LoadLibs(cb){
@@ -13391,12 +13441,23 @@ function pwaDismiss(){
   }
 
   function eachSheetCanvas(holder, perSheet, doneAll){
-    var sheets = holder.querySelectorAll('.shj128-sheet');
+    var boxes = holder.querySelectorAll('.shj128-box');
     var i = 0;
     function next(){
-      if (i >= sheets.length) { doneAll(); return; }
-      html2canvas(sheets[i], { scale: 2, useCORS: true, backgroundColor: '#fff' })
-        .then(function (cv) { perSheet(cv, i); i++; next(); })
+      if (i >= boxes.length) { doneAll(); return; }
+      html2canvas(boxes[i], { scale: 3, useCORS: true, backgroundColor: '#fff' })
+        .then(function (cv) {
+          var rotated = document.createElement('canvas');
+          rotated.width = cv.height;
+          rotated.height = cv.width;
+          var ctx = rotated.getContext('2d');
+          ctx.translate(rotated.width / 2, rotated.height / 2);
+          ctx.rotate(Math.PI / 2);
+          ctx.drawImage(cv, -cv.width / 2, -cv.height / 2);
+          perSheet(rotated, i);
+          i++;
+          next();
+        })
         .catch(function () { i++; next(); });
     }
     next();
@@ -13412,7 +13473,7 @@ function pwaDismiss(){
         var img = cv.toDataURL('image/jpeg', 0.95);
         if (!pdf) pdf = new jspdf.jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
         else pdf.addPage('a4', 'p');
-        pdf.addImage(img, 'JPEG', 0, 0, 210, 296);
+        pdf.addImage(img, 'JPEG', 7.5, 7.75, 195, 133);
       }, function () {
         unmountRender();
         if (pdf) {
@@ -13429,7 +13490,7 @@ function pwaDismiss(){
       var holder = mountRender();
       if (!holder) return;
       var base = (($id('est-no') || {}).value || 'Estimate');
-      var many = holder.querySelectorAll('.shj128-sheet').length > 1;
+      var many = holder.querySelectorAll('.shj128-box').length > 1;
       eachSheetCanvas(holder, function (cv, i) {
         var a = document.createElement('a');
         a.href = cv.toDataURL('image/jpeg', 0.95);
