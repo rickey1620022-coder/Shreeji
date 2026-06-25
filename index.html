@@ -9,6 +9,21 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
+  v141  —  2026-06-25   |   S/N: SHJ-141-250626
+  ------------------------------------------------------------------
+    1. FIX      Trading items selection via autocomplete Enter key now works.
+    2. FIX      Sync background re-render no longer clears active inputs (protects focus).
+    3. OPTIMIZE Autocomplete datalist lookup is now shared, fixing lags on estimate rows.
+    4. UNIFY    Version stamps bumped to v141 (SHJ-141-250626).
+
+  ------------------------------------------------------------------
+  v140  —  2026-06-25   |   S/N: SHJ-140-250626
+  ------------------------------------------------------------------
+    1. HIDE     Party Name and Amount columns completely on Records list in Agent mode.
+    2. FIX      Field extraction in getAllRecords() to support both Admin/Agent modes correctly.
+    3. VERIFIED 20-day purge rule is active and fully functional on sheet pull sync.
+
+  ------------------------------------------------------------------
   v139  —  2026-06-25   |   S/N: SHJ-139-250626
   ------------------------------------------------------------------
     1. REMOVE   Blank rows completely from estimate A5 copies (Customer, Agent, Gate Pass) and re-index S.No.
@@ -359,8 +374,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a3a6b">
-<title>Shreeji Industries — Full System v138 PWA</title>
-<meta name="shj-build" content="v138|SHJ-138-250626|2026-06-25">
+<title>Shreeji Industries — Full System v141 PWA</title>
+<meta name="shj-build" content="v141|SHJ-141-250626|2026-06-25">
 <meta name="shj-update-source" content="https://raw.githubusercontent.com/rickey1620022-coder/Shreeji/main/index.html">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@300;400;600;700&family=Roboto+Mono:wght@400;500;700&family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -1219,7 +1234,14 @@ async function v42PullMerge(){
   // Mirror to IndexedDB
   await v42Mirror();
   // Trigger UI refresh if available
-  if(typeof render==='function') try{render();}catch(e){}
+  if(typeof render==='function'){
+    try{
+      var active = document.activeElement;
+      if(!active || (active.tagName !== 'INPUT' && active.tagName !== 'TEXTAREA')){
+        render();
+      }
+    }catch(e){}
+  }
   if(typeof refreshPrev==='function') try{refreshPrev();}catch(e){}
   // v85 FIX (money-flow cross-device): the pull merged money-flow data into
   // localStorage but never re-rendered the Money Flow screen, so entries added
@@ -1359,8 +1381,8 @@ body { padding-bottom: env(safe-area-inset-bottom); }
   </div>
   <div id="pin-err" style="margin-top:20px;font-size:.78rem;color:#ff6b6b;opacity:0;transition:opacity .3s;letter-spacing:.5px;">Incorrect PIN. Try again.</div>
   <div style="margin-top:32px;text-align:center;line-height:1.7;">
-    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v138 · PROTECTED</div>
-    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 25 June 2026 &nbsp;·&nbsp; S/N: SHJ-138-250626</div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:1px;">SHREEJI v141 · PROTECTED</div>
+    <div style="font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.5px;">Updated 25 June 2026 &nbsp;·&nbsp; S/N: SHJ-141-250626</div>
   </div>
 </div>
 <style>
@@ -3757,14 +3779,14 @@ function hlText(t,q){if(!q)return esc(t);const i=t.toLowerCase().indexOf(q.toLow
 function score(it,q){if(!q)return 0;const ql=q.toLowerCase();
   if(it.code.toLowerCase()===ql||it.name.toLowerCase()===ql)return 100;
   if(it.code.toLowerCase().startsWith(ql))return 80;if(it.name.toLowerCase().startsWith(ql))return 70;
-  if(it.wpl.toFixed(3).startsWith(q))return 65;if(it.code.toLowerCase().includes(ql))return 50;
+  if(Number(it.wpl||0).toFixed(3).startsWith(q))return 65;if(it.code.toLowerCase().includes(ql))return 50;
   if(it.name.toLowerCase().includes(ql))return 40;return-1;}
 function buildDrop(its,q,iid){
   if(!its.length)return'<div class="ac-empty">No matching items</div>';
   const st=acState[iid]||{};
   return its.map((it,i)=>{const sc=it.stock;const cls=sc<=0?'zero':sc<10?'low':'ok';
     return`<div class="ac-item${i===st.cursor?' active-item':''}" onmousedown="acSel('${iid}','${esc(it.code)}')" data-idx="${i}">
-      <div class="ail"><div class="aic">${hlText(it.code,q)}</div><div class="ain">${hlText(it.name,q)} · <span style="color:#2dd4bf;font-size:.66rem;">${hlText(it.wpl.toFixed(3),q)} kg/pcs</span></div></div>
+      <div class="ail"><div class="aic">${hlText(it.code,q)}</div><div class="ain">${hlText(it.name,q)} · <span style="color:#2dd4bf;font-size:.66rem;">${hlText(Number(it.wpl||0).toFixed(3),q)} kg/pcs</span></div></div>
       <div class="air"><div class="aistk ${cls}">${sc} PCS</div></div></div>`;}).join('');}
 function acSearch(iid){
   const isOut=iid==='out';
@@ -3860,7 +3882,22 @@ function acKey(e,iid){
   const st=acState[iid];
   if(e.key==='ArrowDown'){e.preventDefault();st.cursor=Math.min(st.cursor+1,its.length-1);}
   else if(e.key==='ArrowUp'){e.preventDefault();st.cursor=Math.max(st.cursor-1,-1);}
-  else if(e.key==='Enter'){e.preventDefault();if(st.cursor>=0&&its[st.cursor]){const m=its[st.cursor].getAttribute('onmousedown').match(/'([^']+)'/g);if(m&&m[1])acSel(iid,m[1].replace(/'/g,''));}return;}
+  else if(e.key==='Enter'){
+    e.preventDefault();
+    if(st.cursor>=0&&its[st.cursor]){
+      const om = its[st.cursor].getAttribute('onmousedown');
+      const m = om.match(/'([^']+)'/g);
+      if(m && m[1]){
+        const code = m[1].replace(/'/g,'');
+        if(code.startsWith('TR-')){
+          acSelTrade(null, iid, code);
+        } else {
+          acSel(iid, code);
+        }
+      }
+    }
+    return;
+  }
   else if(e.key==='Escape'){acClose(iid);return;}
   its.forEach((el,i)=>el.classList.toggle('active-item',i===st.cursor));
   if(st.cursor>=0&&its[st.cursor])its[st.cursor].scrollIntoView({block:'nearest'});
@@ -6487,10 +6524,12 @@ function estSuggestRate(i, desc){
 // ── Line item renderer ──────────────────────────────────────
 function estRenderItems(){
   const tbody=document.getElementById('est-items-tbody'); if(!tbody) return;
+  const dl = document.getElementById('est-prod-list');
+  if(dl && !dl.children.length){ dl.innerHTML = estProdOptions(); }
   tbody.innerHTML=estItems.map((it,i)=>`
   <tr${i%2?' style="background:#f7f9ff;"':''}>
     <td style="padding:4px 3px;"><input type="text" value="${it.no||String(i+1)}" style="width:44px;text-align:center;border:1px solid #cdd;border-radius:5px;padding:4px 2px;font-size:.75rem;" oninput="estItems[${i}].no=this.value"></td>
-    <td style="padding:4px 3px;"><input type="text" value="${(it.desc||'').replace(/"/g,'&quot;')}" list="est-prod-list-${i}" style="width:100%;min-width:130px;border:1px solid #cdd;border-radius:5px;padding:4px 5px;font-size:.75rem;" placeholder="Desc or code" oninput="estItems[${i}].desc=this.value" onchange="estFillProduct(${i},this.value);estSuggestRate(${i},this.value)"><datalist id="est-prod-list-${i}">${estProdOptions()}</datalist></td>
+    <td style="padding:4px 3px;"><input type="text" value="${(it.desc||'').replace(/"/g,'&quot;')}" list="est-prod-list" style="width:100%;min-width:130px;border:1px solid #cdd;border-radius:5px;padding:4px 5px;font-size:.75rem;" placeholder="Desc or code" oninput="estItems[${i}].desc=this.value" onchange="estFillProduct(${i},this.value);estSuggestRate(${i},this.value)"></td>
     <td style="padding:4px 3px;"><input type="number" value="${it.qty}" min="0" step="any" style="width:54px;text-align:right;border:1px solid #cdd;border-radius:5px;padding:4px 3px;font-size:.75rem;" oninput="estItems[${i}].qty=parseFloat(this.value)||0;estCalc()"></td>
     <td style="padding:4px 3px;"><input type="text" value="${it.uom||'PCS'}" style="width:46px;text-align:center;border:1px solid #cdd;border-radius:5px;padding:4px 2px;font-size:.72rem;" oninput="estItems[${i}].uom=this.value"></td>
     <td style="padding:4px 3px;"><input type="number" value="${it.rate}" min="0" step="any" style="width:72px;text-align:right;border:1px solid #cdd;border-radius:5px;padding:4px 3px;font-size:.75rem;" oninput="estItems[${i}].rate=parseFloat(this.value)||0;estCalc()"></td>
@@ -7860,6 +7899,7 @@ function nmqShareWA(){
           </tr></thead>
           <tbody id="est-items-tbody"></tbody>
         </table>
+        <datalist id="est-prod-list"></datalist>
       </div>
       <div style="display:flex;gap:8px;margin-top:8px;">
         <button onclick="estAddItem()" style="flex:1;padding:9px;background:#f0f4ff;border:1.5px dashed #8899cc;border-radius:7px;color:#1a3a6b;font-weight:700;font-size:.8rem;cursor:pointer;">+ Blank Row</button>
@@ -8590,7 +8630,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v139';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v141';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -10533,6 +10573,9 @@ function pwaDismiss(){
         '.inv-doc [class*="rate"],.est-doc [class*="rate"]{display:none!important}',
         /* Hide price/rate labels */
         '[class*="rate-label"],[id*="rate-label"]{display:none!important}',
+        /* Hide Party Name and Amount columns in Records tab table for Agent */
+        '.shj-all-tbl th:nth-child(4), .shj-all-tbl td:nth-child(4){display:none!important}',
+        '.shj-all-tbl th:nth-child(5), .shj-all-tbl td:nth-child(5){display:none!important}',
       ].join('\n');
     } else {
       styleEl.textContent=''; /* restore all */
@@ -10823,8 +10866,8 @@ function pwaDismiss(){
           type:     'EST',
           date:     e.date || e.savedAt || '',
           number:   e.estNo || e.id || '',
-          party:    e.customer || e.customerName || '',
-          amount:   parseFloat(e.grandTotal || e.total || 0),
+          party:    e.customer || e.customerName || e.custName || '',
+          amount:   parseFloat(e.grandTotal || e.total || e.grand || 0),
           raw:      e,
           key:      'shj_estimates',
         });
@@ -10839,8 +10882,8 @@ function pwaDismiss(){
           type:   'PI',
           date:   p.date || p.savedAt || '',
           number: p.piNo || p.id || '',
-          party:  p.customer || p.customerName || '',
-          amount: parseFloat(p.grandTotal || p.total || 0),
+          party:  p.customer || p.customerName || p.custName || '',
+          amount: parseFloat(p.grandTotal || p.total || p.grand || 0),
           raw:    p,
           key:    'shj_pi',
         });
