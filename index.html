@@ -9,13 +9,6 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
-  v140  —  2026-06-25   |   S/N: SHJ-140-250626
-  ------------------------------------------------------------------
-    1. HIDE     Party Name and Amount columns completely on Records list in Agent mode.
-    2. FIX      Field extraction in getAllRecords() to support both Admin/Agent modes correctly.
-    3. VERIFIED 20-day purge rule is active and fully functional on sheet pull sync.
-
-  ------------------------------------------------------------------
   v139  —  2026-06-25   |   S/N: SHJ-139-250626
   ------------------------------------------------------------------
     1. REMOVE   Blank rows completely from estimate A5 copies (Customer, Agent, Gate Pass) and re-index S.No.
@@ -8597,7 +8590,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v140';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v139';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -10540,9 +10533,6 @@ function pwaDismiss(){
         '.inv-doc [class*="rate"],.est-doc [class*="rate"]{display:none!important}',
         /* Hide price/rate labels */
         '[class*="rate-label"],[id*="rate-label"]{display:none!important}',
-        /* Hide Party Name and Amount columns in Records tab table for Agent */
-        '.shj-all-tbl th:nth-child(4), .shj-all-tbl td:nth-child(4){display:none!important}',
-        '.shj-all-tbl th:nth-child(5), .shj-all-tbl td:nth-child(5){display:none!important}',
       ].join('\n');
     } else {
       styleEl.textContent=''; /* restore all */
@@ -10833,8 +10823,8 @@ function pwaDismiss(){
           type:     'EST',
           date:     e.date || e.savedAt || '',
           number:   e.estNo || e.id || '',
-          party:    e.customer || e.customerName || e.custName || '',
-          amount:   parseFloat(e.grandTotal || e.total || e.grand || 0),
+          party:    e.customer || e.customerName || '',
+          amount:   parseFloat(e.grandTotal || e.total || 0),
           raw:      e,
           key:      'shj_estimates',
         });
@@ -10849,8 +10839,8 @@ function pwaDismiss(){
           type:   'PI',
           date:   p.date || p.savedAt || '',
           number: p.piNo || p.id || '',
-          party:  p.customer || p.customerName || p.custName || '',
-          amount: parseFloat(p.grandTotal || p.total || p.grand || 0),
+          party:  p.customer || p.customerName || '',
+          amount: parseFloat(p.grandTotal || p.total || 0),
           raw:    p,
           key:    'shj_pi',
         });
