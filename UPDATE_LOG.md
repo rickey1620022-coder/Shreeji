@@ -1,3 +1,22 @@
+# UPDATE LOG — ver 139
+**Serial:** SHJ-139-250626
+**Date:** 2026-06-25
+**Base:** ver 138 (SHJ-138-250626)
+
+---
+
+## PATCH_v139 — Blank Row Removal & Robust Column Hiding
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Remove Blank Rows completely | Modified `clearBlankRows()` to completely delete any item rows that have no description from the DOM of all A5 print/preview layout copies (Customer, Agent, Gate Pass) and automatically re-index the S.No column sequentially (1, 2, 3...) for the remaining visible rows. |
+| 2 | Robust Column Hiding selectors | Simplified `hideCol()` in `structureDoc`, `printOneCopy`, and `pdfAllCopies` to target cell elements across all table rows directly (instead of using `.ea5-tbl thead tr, .ea5-tbl tbody tr`), preventing selector mismatches. |
+| 3 | Align COPIES configuration | Updated the `COPIES` array configuration for the Agent copy (`showTotal: true`) to align with the restored total column and adjusted colspan calculations for footer elements. |
+
+---
+
 # UPDATE LOG — ver 138
 **Serial:** SHJ-138-250626
 **Date:** 2026-06-25
