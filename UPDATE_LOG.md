@@ -1,3 +1,22 @@
+# UPDATE LOG — ver 140
+**Serial:** SHJ-140-250626
+**Date:** 2026-06-25
+**Base:** ver 139 (SHJ-139-250626)
+
+---
+
+## PATCH_v140 — Agent Records list Privacy & 20-Day Rule Verification
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Hide columns in Agent mode | Added CSS rules to `applyRoleStyles()` to completely hide the `PARTY NAME` and `AMOUNT` columns in the Records tab list when in Agent mode, keeping their details private. |
+| 2 | Fix `getAllRecords()` mapping | Updated field extraction in `getAllRecords()` to support both `custName` and `grand` key names from `localStorage` estimates, allowing full customer and amount rendering in Admin mode. |
+| 3 | Verified 20-day rule | Inspected and confirmed that the 20-day local storage purge rule is fully active and working in `buildPullData()` on sync operations. |
+
+---
+
 # UPDATE LOG — ver 139
 **Serial:** SHJ-139-250626
 **Date:** 2026-06-25
