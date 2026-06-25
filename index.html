@@ -9,6 +9,13 @@
     Live : https://rickey1620022-coder.github.io/Shreeji/
 
   ------------------------------------------------------------------
+  v142  —  2026-06-25   |   S/N: SHJ-142-250626
+  ------------------------------------------------------------------
+    1. FIX      Agent Copy: completely hide/remove the Rate column and properly align Subtotal and Total in tfoot.
+    2. FIX      Gate Pass Copy: completely hide/remove the Rate and Total columns, showing only S.No, Qty, and Item Description.
+    3. UNIFY    Version stamps bumped to v142 (SHJ-142-250626).
+
+  ------------------------------------------------------------------
   v141  —  2026-06-25   |   S/N: SHJ-141-250626
   ------------------------------------------------------------------
     1. FIX      Trading items selection via autocomplete Enter key now works.
@@ -8630,7 +8637,7 @@ function mfInit(){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     // Inline service worker as blob
-    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v141';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
+    var swCode = "// ================================================================\n//  SHREEJI INDUSTRIES \u2014 Service Worker (sw.js)\n//  Enables offline mode and app caching\n// ================================================================\n\nconst CACHE_NAME = 'shreeji-v142';\nconst ASSETS = [\n  './',\n  './index.html'\n];\n\n// Install \u2014 cache the app shell\nself.addEventListener('install', function(e){\n  e.waitUntil(\n    caches.open(CACHE_NAME).then(function(cache){\n      return cache.addAll(ASSETS);\n    })\n  );\n  self.skipWaiting();\n});\n\n// Activate \u2014 clean old caches\nself.addEventListener('activate', function(e){\n  e.waitUntil(\n    caches.keys().then(function(keys){\n      return Promise.all(\n        keys.filter(function(k){ return k !== CACHE_NAME; })\n            .map(function(k){ return caches.delete(k); })\n      );\n    })\n  );\n  self.clients.claim();\n});\n\n// Fetch \u2014 serve from cache, fall back to network\nself.addEventListener('fetch', function(e){\n  // Don't cache Google Apps Script calls \u2014 always go online\n  if(e.request.url.includes('script.google.com') || e.request.url.includes('script.googleusercontent.com') || e.request.url.includes('googleusercontent.com') || e.request.url.includes('action=')){\n    return; // pass through to network\n  }\n  // Don't cache POST requests\n  if(e.request.method !== 'GET') return;\n\n  e.respondWith(\n    caches.match(e.request).then(function(cached){\n      if(cached) return cached;\n      return fetch(e.request).then(function(response){\n        // Cache successful responses for app files\n        if(response && response.status === 200 && response.type === 'basic'){\n          const clone = response.clone();\n          caches.open(CACHE_NAME).then(function(cache){\n            cache.put(e.request, clone);\n          });\n        }\n        return response;\n      }).catch(function(){\n        // Offline fallback \u2014 return cached index\n        return caches.match('./index.html');\n      });\n    })\n  );\n});\n";
     var blob = new Blob([swCode], {type:'application/javascript'});
     var swUrl = URL.createObjectURL(blob);
     navigator.serviceWorker.register(swUrl)
@@ -13327,27 +13334,31 @@ function pwaDismiss(){
 
     /* copy-type column rules
        columns: 1 S.No | 2 Qty | 3 Item Description | 4 Rate | 5 Total */
-    function hideCol(n){
+    function hideCols(indices){
       root.querySelectorAll('tr').forEach(function (tr) {
-        var c = tr.children[n - 1];
-        if (c && !c.hasAttribute('colspan')) c.style.display = 'none';
+        var cells = Array.from(tr.children).filter(function (c) { return !c.hasAttribute('colspan'); });
+        indices.slice().sort(function (a, b) { return b - a; }).forEach(function (n) {
+          var c = cells[n - 1];
+          if (c) c.parentNode.removeChild(c);
+        });
+      });
+    }
+    function adjustColspans(from, to) {
+      root.querySelectorAll('.ea5-tbl td, .ea5-tbl th').forEach(function (cell) {
+        if (cell.getAttribute('colspan') === String(from)) {
+          cell.setAttribute('colspan', String(to));
+        }
       });
     }
     if (type === 'agent') {
-      hideCol(4);
-      root.querySelectorAll('.ea5-tbl tfoot td[colspan="4"]').forEach(function (td) {
-        td.setAttribute('colspan', '3');
-      });
-      root.querySelectorAll('.ea5-tbl tbody td[colspan="5"]').forEach(function (td) {
-        td.setAttribute('colspan', '4');
-      });
+      hideCols([4]);
+      adjustColspans(4, 3);
+      adjustColspans(5, 4);
     } else if (type === 'gatepass') {
-      hideCol(4); hideCol(5);
+      hideCols([4, 5]);
       root.querySelectorAll('.ea5-tbl tfoot').forEach(function (el) { el.style.display = 'none'; });
       root.querySelectorAll('.ea5-words').forEach(function (el) { el.style.display = 'none'; });
-      root.querySelectorAll('.ea5-tbl tbody td[colspan="5"]').forEach(function (td) {
-        td.setAttribute('colspan', '3');
-      });
+      adjustColspans(5, 3);
     }
     return root;
   }

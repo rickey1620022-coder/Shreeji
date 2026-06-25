@@ -1,3 +1,21 @@
+# UPDATE LOG — ver 142
+**Serial:** SHJ-142-250626
+**Date:** 2026-06-25
+**Base:** ver 141 (SHJ-141-250626)
+
+---
+
+## PATCH_v142 — Print Layout Column Visibility & Colspan Alignment
+
+### Changes
+
+| # | Change | Detail |
+|---|--------|--------|
+| 1 | Agent Copy Rate Removal | Modified `structureDoc` to physically remove the `Rate` column cells from the table DOM (instead of setting `display: none`) to guarantee it is hidden under all rendering engines, and dynamically adjusted subtotal/total label colspans to keep numerical columns aligned. |
+| 2 | Gate Pass Copy Column Removal | Modified `structureDoc` to physically remove both the `Rate` and `Total` column cells from the table DOM (leaving only S.No, Qty, and Item Description), ensuring the columns scale and align perfectly. |
+
+---
+
 # UPDATE LOG — ver 141
 **Serial:** SHJ-141-250626
 **Date:** 2026-06-25
